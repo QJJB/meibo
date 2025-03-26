@@ -27,5 +27,6 @@
     <p>
         Created at: {{ $projects['created_at'] }}.
     </p>
+    <a href="{{ url('/home/' . $projects['id'] . '/newtask') }}">Create new task</a>
 </body>
 </html>

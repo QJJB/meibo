@@ -2,10 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Models\Project;
 use Inertia\Inertia;
 use \App\Http\Controllers\ProjectController;
+use \App\Http\Controllers\TaskController;
+use App\Models\Task;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,27 +30,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/test', [ProjectController::class, 'project'])->middleware('auth');
 
-Route::post('/test', [ProjectController::class, 'projectPost'])->middleware('auth');
+Route::get('/newproject', [ProjectController::class, 'newProject'])->middleware('auth');
 
-Route::get('/home', function(){
-    return view('home', [
-        'projects' => Project::all()
-    ]);
-})->middleware('auth');
+Route::post('/newproject', [ProjectController::class, 'projectPost'])->middleware('auth');
 
-Route::get('/home/{id}', function($id){
-    $project = Arr::first(Project::all(), fn($job) => $job['id'] ==$id);
+Route::get('/home', [ProjectController::class, 'home'])->middleware('auth');
 
-    if(! $project){
-        abort(404);
-    }
+Route::get('/home/{d}', [ProjectController::class, 'show'])->middleware('auth');
 
-    return view('project', [
-        'projects' => $project
-    ]);
-})->middleware('auth');
+Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
 
+Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth');
 
 require __DIR__.'/auth.php';
