@@ -12,23 +12,25 @@
 
 </head>
 <body class="font-sans antialiased">
+    <h1>New task</h1>
+    <a href="../../home">Home</a>
 <form action="" method="POST">
     @csrf <!-- CSRF protection -->
 
     <!-- Task Title -->
-    <label for="title">Task Title:</label>
+    <label for="title">Task Title:</label> <br>
     <input type="text" id="title" name="title" required>
-    <br>
+    <br> <br>
 
     <!-- Description -->
-    <label for="description">Description:</label>
+    <label for="description">Description:</label> <br>
     <textarea id="description" name="description" required></textarea>
-    <br>
+    <br> <br>
 
     <!-- Due Date -->
-    <label for="due_date">Due Date:</label>
+    <label for="due_date">Due Date:</label> <br>
     <input type="date" id="due_date" name="due_date" required>
-    <br>
+    <br> <br>
 
     <!-- Type -->
     <label for="type">Type:</label>
@@ -36,7 +38,7 @@
         <option value="task">Task</option>
         <option value="event">Event</option>
     </select>
-
+    <br> <br>
     <!-- Priority -->
     <label for="priority">Priority:</label>
     <select id="priority" name="priority" required>
@@ -44,7 +46,7 @@
         <option value="2">Medium</option>
         <option value="3">High</option>
     </select>
-    <br>
+    <br> <br>
 
     <!-- Status -->
     <label for="status">Status:</label>
@@ -53,14 +55,14 @@
         <option value="in_progress">In Progress</option>
         <option value="done">Done</option>
     </select>
-    <br>
+    <br> <br>
 
     <!-- Assigned User -->
     <label for="user">Assigned User:</label>
     <select id="user" name="user_id" required>
         <option value="no user found">No user</option>
     </select>
-    <br>
+    <br> <br>
 
     <!-- Role -->
     <label for="role">Role:</label>
@@ -69,17 +71,17 @@
         <option value="editor">Editor</option>
         <option value="viewer">Viewer</option>
     </select>
-    <br>
+    <br> <br>
 
     <!-- Notification -->
     <label for="notification">Notification:</label>
     <input type="checkbox" id="notification" name="notification">
-    <br>
+    <br> <br>
 
-    <label for="message">Notification Message:</label>
-    <input type="date" id="due_date" name="due_date" required>
+    <label for="message">Notification Message:</label> <br>
+    <input type="date" id="due_date" name="due_date" required> <br>
     <textarea id="message" name="message"></textarea>
-    <br>
+    <br> <br>
 
     <!-- Submit Button -->
     <button type="submit">Add Task</button>

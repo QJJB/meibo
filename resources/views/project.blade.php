@@ -13,6 +13,7 @@
 </head>
 <body class="font-sans antialiased">
     <h1>Project</h1>
+    <a href="/home">Home</a>
     <h2 class="font-bold text-lg">{{ $projects ['name'] }}</h2>
 
     <p>

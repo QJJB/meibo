@@ -2,14 +2,11 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Models\Project;
 use Inertia\Inertia;
 use \App\Http\Controllers\ProjectController;
 use \App\Http\Controllers\TaskController;
-use App\Models\Task;
-use Illuminate\Http\Request;
+
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -35,9 +32,9 @@ Route::get('/newproject', [ProjectController::class, 'newProject'])->middleware(
 
 Route::post('/newproject', [ProjectController::class, 'projectPost'])->middleware('auth');
 
-Route::get('/home', [ProjectController::class, 'home'])->middleware('auth');
+Route::get('/home', [ProjectController::class, 'home'])->middleware('auth')->name('home');
 
-Route::get('/home/{d}', [ProjectController::class, 'show'])->middleware('auth');
+Route::get('/home/{id}', [ProjectController::class, 'show'])->middleware('auth');
 
 Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
 

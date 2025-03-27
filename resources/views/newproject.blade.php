@@ -12,30 +12,31 @@
 
 </head>
 <body class="font-sans antialiased">
-<h1>Coucouuu7777uu</h1>
-<form action="/test" method="POST">
+<h1>New project</h1>
+<a href="home">Home</a>
+<form action="/newproject" method="POST">
     @csrf
 
     <div class="mb-3">
-        <label for="name" class="form-label">Nom du projet</label>
+        <label for="name" class="form-label">Nom du projet:</label> <br>
         <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">
     </div>
-
+    <br>
     <div class="mb-3">
-        <label for="description" class="form-label">Description</label>
+        <label for="description" class="form-label">Description:</label> <br>
         <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
     </div>
-
+    <br>
     <div class="mb-3">
-        <label for="start_date" class="form-label">Date de début</label>
+        <label for="start_date" class="form-label">Date de début:</label> <br>
         <input type="date" class="form-control" id="start_date" name="start_date" required value="{{ old('start_date') }}">
     </div>
-
+    <br>
     <div class="mb-3">
-        <label for="end_date" class="form-label">Date de fin</label>
+        <label for="end_date" class="form-label">Date de fin:</label> <br>
         <input type="date" class="form-control" id="end_date" name="end_date" required value="{{ old('end_date') }}">
     </div>
-
+    <br>
     <button type="submit" class="btn btn-primary">Créer le projet</button>
 </form>
 </body>

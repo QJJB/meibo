@@ -3,26 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Arr;
+
 
 class ProjectController extends Controller
 {
     public function home() : View
     {
+        $user = Auth::user();
+        $projects = $user->projects;
+
         return view('home', [
-            'projects' => Project::all()
+            'projects' => $projects
         ]);
     }
 
     public function show($id) : View
     {
-        $project = Arr::first(Project::all(), fn($job) => $job['id'] ==$id);
+        $user = Auth::user();
+        $project = Project::findOrFail($id);
 
-        if(! $project){
-            abort(404);
+        if (!$project->users->contains($user)) {
+            abort(403, 'Unauthorized');
         }
 
         return view('project', [
@@ -32,21 +36,26 @@ class ProjectController extends Controller
 
     public function newProject() : View
      {
-        return view('test');
+        return view('newproject');
      }
 
-    public function projectPost() : View
+    public function projectPost() : RedirectResponse
     {
-        $project = Project::create(request()->validate([
+        $validatedData = request()->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
-        ]));
+        ]);
+
+        $validatedData['name'] = strip_tags($validatedData['name']);
+        $validatedData['description'] = isset($validatedData['description']) ? strip_tags($validatedData['description']) : null;
+
+        $project = Project::create($validatedData);
 
         $user = Auth::user();
         $project->users()->attach($user->id);
 
-        return view('/test');
+        return redirect()->route('home');
     }
 }

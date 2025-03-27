@@ -13,6 +13,7 @@
 </head>
 <body class="font-sans antialiased">
 <h1>Home page</h1>
+<a href="/newproject">Create new project</a>
     <ul>
         @foreach($projects as $project)
             <li>
