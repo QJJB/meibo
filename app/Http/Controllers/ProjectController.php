@@ -6,6 +6,8 @@ use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
+use App\Models\User;
 
 
 class ProjectController extends Controller
@@ -51,11 +53,26 @@ class ProjectController extends Controller
         $validatedData['name'] = strip_tags($validatedData['name']);
         $validatedData['description'] = isset($validatedData['description']) ? strip_tags($validatedData['description']) : null;
 
+        // Création du projet
         $project = Project::create($validatedData);
 
+        // Récupération de l'utilisateur
         $user = Auth::user();
+
+        // Attache l'utilisateur au projet
         $project->users()->attach($user->id);
+
+        // Création des rôles s'ils n'existent pas
+        $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $guestRole = Role::firstOrCreate(['name' => 'guest']);
+
+        // Associe le rôle "admin" à ce projet (si nécessaire)
+        //$project->roles()->attach($adminRole->id);
+
+        // Associe l'utilisateur à ce projet avec le rôle "admin"
+        //$user->roles()->attach($adminRole->id, ['project_id' => $project->id]);
 
         return redirect()->route('home');
     }
+
 }

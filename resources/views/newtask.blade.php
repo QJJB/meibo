@@ -61,8 +61,12 @@
     <label for="user">Assigned User:</label>
     <select id="user" name="user_id" required>
         <option value="no user found">No user</option>
+        @foreach($users as $user)
+            <option value="{{$user->id}}">{{$user->name}}</option>
+        @endforeach
     </select>
     <br> <br>
+
 
     <!-- Role -->
     <label for="role">Role:</label>
