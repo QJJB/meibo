@@ -15,7 +15,11 @@
     <h1>Project</h1>
     <a href="/home">Home</a>
     <h2 class="font-bold text-lg">{{ $projects ['name'] }}</h2>
-
+    <form action="{{ route('projects.delete', $projects['id']) }}" method="POST" style="display: inline;">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="text-red-500" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
+    </form>
     <p>
         Description: {{ $projects['description'] }}.
     </p>

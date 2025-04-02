@@ -12,7 +12,7 @@ use App\Models\User;
 
 class ProjectController extends Controller
 {
-    public function home() : View
+    public function showAll() : View
     {
         $user = Auth::user();
         $projects = $user->projects;
@@ -75,4 +75,11 @@ class ProjectController extends Controller
         return redirect()->route('home');
     }
 
+    public function destroy($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->delete();
+
+        return redirect('/home')->with('success', 'Project deleted successfully.');
+    }
 }

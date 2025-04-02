@@ -31,7 +31,9 @@ Route::get('/newproject', [ProjectController::class, 'newProject'])->middleware(
 
 Route::post('/newproject', [ProjectController::class, 'projectPost'])->middleware('auth');
 
-Route::get('/home', [ProjectController::class, 'home'])->middleware('auth')->name('home');
+Route::delete('/home/{id}', [ProjectController::class, 'destroy'])->middleware('auth')->name('projects.delete');
+
+Route::get('/home', [ProjectController::class, 'showAll'])->middleware('auth')->name('home');
 
 Route::get('/home/{id}', [ProjectController::class, 'show'])->middleware('auth');
 
