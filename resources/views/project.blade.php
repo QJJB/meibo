@@ -20,6 +20,7 @@
         @method('DELETE')
         <button type="submit" class="text-red-500" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
     </form>
+    <a href="/home/{{ $projects['id'] }}/edit">Edit</a>
     <p>
         Description: {{ $projects['description'] }}.
     </p>

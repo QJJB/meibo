@@ -31,7 +31,11 @@ Route::get('/newproject', [ProjectController::class, 'newProject'])->middleware(
 
 Route::post('/newproject', [ProjectController::class, 'projectPost'])->middleware('auth');
 
-Route::delete('/home/{id}', [ProjectController::class, 'destroy'])->middleware('auth')->name('projects.delete');
+Route::put('/home/{id}', [ProjectController::class, 'update'])->name('projects.update');
+
+Route::get('/home/{id}/edit', [ProjectController::class, 'editPost'])->middleware('auth');
+
+Route::delete('/home/{id}', [ProjectController::class, 'delete'])->middleware('auth')->name('projects.delete');
 
 Route::get('/home', [ProjectController::class, 'showAll'])->middleware('auth')->name('home');
 
