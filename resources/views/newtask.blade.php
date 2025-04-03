@@ -1,3 +1,4 @@
+<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\newtask.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -10,86 +11,167 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
+    <style>
+        body {
+            font-family: 'Figtree', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #007BFF;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #007BFF;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
 </head>
-<body class="font-sans antialiased">
-    <h1>New task</h1>
-    <a href="../../home">Home</a>
-<form action="" method="POST">
-    @csrf <!-- CSRF protection -->
+<body>
+    <header>
+        <h1>Create New Task</h1>
+    </header>
+    <div class="container">
+        <a href="/home" class="btn btn-secondary">Back to Home</a>
+        <form action="/newtask" method="POST" style="margin-top: 20px;">
+            @csrf
 
-    <!-- Task Title -->
-    <label for="title">Task Title:</label> <br>
-    <input type="text" id="title" name="title" required>
-    <br> <br>
+            <div class="form-group">
+                <label for="title">Task Title:</label>
+                <input type="text" class="form-control" id="title" name="title" required>
+            </div>
 
-    <!-- Description -->
-    <label for="description">Description:</label> <br>
-    <textarea id="description" name="description" required></textarea>
-    <br> <br>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            </div>
 
-    <!-- Due Date -->
-    <label for="due_date">Due Date:</label> <br>
-    <input type="date" id="due_date" name="due_date" required>
-    <br> <br>
+            <div class="form-group">
+                <label for="due_date">Due Date:</label>
+                <input type="date" class="form-control" id="due_date" name="due_date" required>
+            </div>
 
-    <!-- Type -->
-    <label for="type">Type:</label>
-    <select id="type" name="type" required>
-        <option value="task">Task</option>
-        <option value="event">Event</option>
-    </select>
-    <br> <br>
-    <!-- Priority -->
-    <label for="priority">Priority:</label>
-    <select id="priority" name="priority" required>
-        <option value="1">Low</option>
-        <option value="2">Medium</option>
-        <option value="3">High</option>
-    </select>
-    <br> <br>
+            <div class="form-group">
+                <label for="type">Type:</label>
+                <select class="form-control" id="type" name="type" required>
+                    <option value="task">Task</option>
+                    <option value="event">Event</option>
+                </select>
+            </div>
 
-    <!-- Status -->
-    <label for="status">Status:</label>
-    <select id="status" name="status" required>
-        <option value="todo">To Do</option>
-        <option value="in_progress">In Progress</option>
-        <option value="done">Done</option>
-    </select>
-    <br> <br>
+            <div class="form-group">
+                <label for="priority">Priority:</label>
+                <select class="form-control" id="priority" name="priority" required>
+                    <option value="1">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
+                </select>
+            </div>
 
-    <!-- Assigned User -->
-    <label for="user">Assigned User:</label>
-    <select id="user" name="user_id" required>
-        <option value="no user found">No user</option>
-        @foreach($users as $user)
-            <option value="{{$user->id}}">{{$user->name}}</option>
-        @endforeach
-    </select>
-    <br> <br>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <select class="form-control" id="status" name="status" required>
+                    <option value="todo">To Do</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="done">Done</option>
+                </select>
+            </div>
 
+            <div class="form-group">
+                <label for="user">Assigned User:</label>
+                <select class="form-control" id="user" name="user_id" required>
+                    <option value="no user found">No user</option>
+                    @foreach($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @endforeach
+                </select>
+            </div>
 
-    <!-- Role -->
-    <label for="role">Role:</label>
-    <select id="role" name="role">
-        <option value="admin">Admin</option>
-        <option value="editor">Editor</option>
-        <option value="viewer">Viewer</option>
-    </select>
-    <br> <br>
+            <div class="form-group">
+                <label for="role">Role:</label>
+                <select class="form-control" id="role" name="role">
+                    <option value="admin">Admin</option>
+                    <option value="editor">Editor</option>
+                    <option value="viewer">Viewer</option>
+                </select>
+            </div>
 
-    <!-- Notification -->
-    <label for="notification">Notification:</label>
-    <input type="checkbox" id="notification" name="notification">
-    <br> <br>
+            <div class="form-group">
+                <label for="notification">Notification:</label>
+                <input type="checkbox" id="notification" name="notification">
+            </div>
 
-    <label for="message">Notification Message:</label> <br>
-    <input type="date" id="due_date" name="due_date" required> <br>
-    <textarea id="message" name="message"></textarea>
-    <br> <br>
+            <div class="form-group">
+                <label for="message">Notification Message:</label>
+                <textarea class="form-control" id="message" name="message"></textarea>
+            </div>
 
-    <!-- Submit Button -->
-    <button type="submit">Add Task</button>
-</form>
-
+            <button type="submit" class="btn">Add Task</button>
+        </form>
+    </div>
 </body>
 </html>

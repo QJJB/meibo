@@ -6,29 +6,35 @@ use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Role;
-use App\Models\User;
 
-
+/**
+ * Class ProjectController
+ *
+ * Ce contrôleur gère toutes les actions liées aux projets,
+ * comme la création, l'affichage, la mise à jour et la suppression.
+ */
 class ProjectController extends Controller
 {
+    // Affiche tous les projets associés à l'utilisateur connecté.
     public function showAll() : View
     {
-        $user = Auth::user();
-        $projects = $user->projects;
+        $user = Auth::user(); // Récupère l'utilisateur connecté
+        $projects = $user->projects; // Récupère les projets associés à cet utilisateur
 
         return view('home', [
             'projects' => $projects
         ]);
     }
 
+    // Affiche un projet spécifique.
     public function show($id) : View
     {
         $user = Auth::user();
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($id); // Récupère le projet ou renvoie une erreur 404
 
+        // Vérifie si l'utilisateur connecté est associé au projet
         if (!$project->users->contains($user)) {
-            abort(403, 'Unauthorized');
+            abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
         }
 
         return view('project', [
@@ -36,13 +42,16 @@ class ProjectController extends Controller
         ]);
     }
 
+    // Afficher le formulaire de création d'un projet
     public function newProject() : View
      {
         return view('newproject');
      }
 
+    // Enregistre un nouveau projet dans la base de données.
     public function projectPost() : RedirectResponse
     {
+        // Validation des données
         $validatedData = request()->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:1000',
@@ -50,70 +59,81 @@ class ProjectController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
+        // Nettoyage des données pour éviter les attaques XSS
         $validatedData['name'] = strip_tags($validatedData['name']);
         $validatedData['description'] = isset($validatedData['description']) ? strip_tags($validatedData['description']) : null;
 
         // Création du projet
         $project = Project::create($validatedData);
 
-        // Récupération de l'utilisateur
+        // Associe le projet à l'utilisateur connecté
         $user = Auth::user();
-
-        // Attache l'utilisateur au projet
         $project->users()->attach($user->id);
-
-        // Création des rôles s'ils n'existent pas
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $guestRole = Role::firstOrCreate(['name' => 'guest']);
-
-        // Associe le rôle "admin" à ce projet (si nécessaire)
-        //$project->roles()->attach($adminRole->id);
-
-        // Associe l'utilisateur à ce projet avec le rôle "admin"
-        //$user->roles()->attach($adminRole->id, ['project_id' => $project->id]);
 
         return redirect()->route('home');
     }
 
-    public function editPost()
+    // Afficher le formulaire d'édition d'un projet
+    public function editPost($id)
     {
-        return view('editproject');
+        $user = Auth::user();
+        $project = Project::findOrFail($id);
+
+        // Vérifie si l'utilisateur est associé au projet
+        if (!$project->users()->where('users.id', $user->id)->exists()) {
+            abort(403, 'Unauthorized');
+        }
+        return view('editproject', ['projects' => $project]);
     }
 
+    // Met à jour un projet existant.
     public function update($id)
     {
         $user = Auth::user();
-
         $project = Project::findOrFail($id);
-        if (!$project->users()->where('id', $user->id)->exists()) {
+
+        // Vérifie si l'utilisateur est associé au projet
+        if (!$project->users()->where('users.id', $user->id)->exists()) {
             abort(403, 'Unauthorized');
         }
 
+        // Validation des données
         $validatedData = request()->validate([
             'name' => 'sometimes|string|max:255',
             'description' => 'sometimes|nullable|string|max:1000',
             'start_date' => 'sometimes|date',
             'end_date' => 'sometimes|date|after_or_equal:start_date',
-        ], [
-            'name.string' => 'The project name must be a string.',
-            'start_date.date' => 'The start date must be a valid date.',
-            'end_date.after_or_equal' => 'The end date must be after or equal to the start date.',
         ]);
 
+        // Nettoyage des données pour éviter les attaques XSS
         if (isset($validatedData['name'])) {
             $validatedData['name'] = strip_tags($validatedData['name']);
         }
         if (isset($validatedData['description'])) {
             $validatedData['description'] = strip_tags($validatedData['description']);
         }
-        $project->update($validatedData);
+
+        // Mise à jour des champs
+        $project->update([
+            'name' => $validatedData['name'] ?? $project->name,
+            'description' => $validatedData['description'] ?? $project->description,
+            'start_date' => $validatedData['start_date'] ?? $project->start_date,
+            'end_date' => $validatedData['end_date'] ?? $project->end_date,
+        ]);
 
         return redirect('/home')->with('success', 'Project edited successfully.');
     }
 
+    // Supprime un projet
     public function delete($id)
     {
+        $user = Auth::user();
         $project = Project::findOrFail($id);
+
+        // Vérifie si l'utilisateur est associé au projet
+        if (!$project->users()->where('users.id', $user->id)->exists()) {
+            abort(403, 'Unauthorized');
+        }
         $project->delete();
 
         return redirect('/home')->with('success', 'Project deleted successfully.');
