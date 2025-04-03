@@ -8,6 +8,8 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\ProjectUser;
+use App\Models\ProjectRole;
 
 
 class ProjectController extends Controller
@@ -62,15 +64,22 @@ class ProjectController extends Controller
         // Attache l'utilisateur au projet
         $project->users()->attach($user->id);
 
+        $lastProjectUser = ProjectUser::latest('id')->first();
+        $lastInsertedId = $lastProjectUser->id;
+
+        // Récupère la dernière insertion dans la table project_members
+        //dd($lastInsertedId);
+
+
         // Création des rôles s'ils n'existent pas
-        $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $guestRole = Role::firstOrCreate(['name' => 'guest']);
+        $adminRole = Role::create(['name' => 'admin']);
+        //$guestRole = Role::firstOrCreate(['name' => 'guest']);
+        //dd($adminRole->id);
 
-        // Associe le rôle "admin" à ce projet (si nécessaire)
-        //$project->roles()->attach($adminRole->id);
-
-        // Associe l'utilisateur à ce projet avec le rôle "admin"
-        //$user->roles()->attach($adminRole->id, ['project_id' => $project->id]);
+        //Associer id recuperer et le lier au role admin
+        $lastProjectUser->project_roles()->create([
+            'role_id' => $adminRole->id
+        ]);
 
         return redirect()->route('home');
     }
