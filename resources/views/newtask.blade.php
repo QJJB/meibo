@@ -97,7 +97,7 @@
     </header>
     <div class="container">
         <a href="/home" class="btn btn-secondary">Back to Home</a>
-        <form action="/newtask" method="POST" style="margin-top: 20px;">
+        <form action="{{ route('task.post', $project_id) }}" method="POST" style="margin-top: 20px;">
             @csrf
 
             <div class="form-group">

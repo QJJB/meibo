@@ -39,6 +39,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
 
-Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth');
+Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth')->name('task.post');
 
 require __DIR__.'/auth.php';
