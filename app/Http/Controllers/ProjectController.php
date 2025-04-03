@@ -6,6 +6,12 @@ use App\Models\Project;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Role;
+use App\Models\User;
+use App\Models\ProjectUser;
+use App\Models\ProjectRole;
+
+
 
 /**
  * Class ProjectController
@@ -69,6 +75,25 @@ class ProjectController extends Controller
         // Associe le projet à l'utilisateur connecté
         $user = Auth::user();
         $project->users()->attach($user->id);
+
+        $lastProjectUser = ProjectUser::latest('id')->first();
+        $lastInsertedId = $lastProjectUser->id;
+
+        // Récupère la dernière insertion dans la table project_members
+        //dd($lastInsertedId);
+
+
+        // Création des rôles s'ils n'existent pas
+        $adminRole = Role::create(['name' => 'admin']);
+        //$guestRole = Role::firstOrCreate(['name' => 'guest']);
+        //dd($adminRole->id);
+
+        //Associer id recuperer et le lier au role admin
+        $lastProjectUser->project_roles()->create([
+            'role_id' => $adminRole->id
+        ]);
+
+        // Création des permissions pour l'Admin
 
         return redirect()->route('home');
     }
