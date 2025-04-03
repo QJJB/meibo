@@ -81,6 +81,8 @@ class ProjectController extends Controller
             'role_id' => $adminRole->id
         ]);
 
+        // Création des permissions pour l'Admin
+
         return redirect()->route('home');
     }
 
