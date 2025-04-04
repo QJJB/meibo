@@ -1,9 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\User;
 use Illuminate\View\View;
-use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -13,7 +11,8 @@ class TaskController extends Controller
 {
     public function newTask($id) : View
     {
-        $users = User::all();
+        $project = Project::findOrFail($id);
+        $users = $project->users; // Récupère les utilisateurs associés au projet
 
         return view('newtask', [
             'project_id' => $id,

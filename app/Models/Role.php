@@ -31,5 +31,4 @@ class Role extends Model
     {
         return $this->hasMany(ProjectRole::class, 'role_id');
     }
-
 }

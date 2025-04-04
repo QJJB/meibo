@@ -7,10 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
-use App\Models\User;
 use App\Models\ProjectUser;
-use App\Models\ProjectRole;
-
 
 
 /**
@@ -154,7 +151,7 @@ class ProjectController extends Controller
     {
         $user = Auth::user();
         $project = Project::findOrFail($id);
-        
+
 
         // Vérifie si l'utilisateur est associé au projet
         if (!$project->users()->where('users.id', $user->id)->exists()) {
