@@ -18,8 +18,12 @@ class Project extends Model
     }
 
     public function users(){
-        return $this->belongsToMany(User::class, 'project_members', 'project_id', 'user_id')
-            ->using(ProjectUser::class);
+        return $this->belongsToMany(User::class, 'project_members');
+    }
+
+    public function members()
+    {
+        return $this->hasMany(ProjectMember::class);
     }
 
 }

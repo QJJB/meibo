@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use \App\Http\Controllers\ProjectController;
 use \App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\URL;
+
+use App\Http\Controllers\InvitationController;
 
 
 Route::get('/', function () {
@@ -40,5 +43,23 @@ Route::middleware('auth')->group(function () {
 Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
 
 Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth');
+
+//_________________________________________
+//
+// Test route création de lien d'ajout user
+
+Route::get('/shared/link/{project}', [InvitationController::class, 'accept'])
+    ->name('share-link')
+    ->middleware('signed');
+
+Route::get('/playground', function(){
+    $url = URL::temporarySignedRoute('share-link', now()->addMinute(10), [
+        'project' => 1
+    ]);
+    return $url;
+});
+
+
+
 
 require __DIR__.'/auth.php';

@@ -10,6 +10,7 @@ use App\Models\Role;
 use App\Models\User;
 use App\Models\ProjectUser;
 use App\Models\ProjectRole;
+use Illuminate\Support\Facades\URL;
 
 
 
@@ -43,19 +44,25 @@ class ProjectController extends Controller
             abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
         }
 
-        //$showAllUsers = $project->users;
+        // On récupère les ProjectMembers du projet, avec leurs users et rôles
+        $membersWithRoles = $project->members()
+            ->whereHas('roles') // filtre uniquement ceux qui ont des rôles
+            ->with(['user', 'roles']) // eager load user et roles
+            ->get();
 
-        $showAllUsers = $project->users->map(function ($user) use ($project) {
-            // Accède au pivot de la relation customisée (ProjectUser)
-            // et récupère le rôle associé via la relation project_roles
-            $projectRole = $user->pivot->project_roles()->first();
-            $user->role_name = $projectRole ? $projectRole->role->name : 'No role';
-            return $user;
+        // On transforme ça pour avoir une liste de users avec leurs rôles
+        $users = $membersWithRoles->map(function ($member) {
+            return [
+                'name' => $member->user->name,
+                'email' => $member->user->email,
+                'roles' => $member->roles->pluck('name'), // on prend juste les noms des rôles
+            ];
         });
+
 
         return view('project', [
             'projects' => $project,
-            'users' => $showAllUsers
+            'users' => $users,
         ]);
     }
 
@@ -175,5 +182,20 @@ class ProjectController extends Controller
         return redirect('/home')->with('success', 'Project deleted successfully.');
     }
 
+    //________________________________________________
+    //
+    // Création d'un lien d'invitation temporaire
+    //
+    //________________________________________________
+    public function generateInviteLink($projectId)
+    {
+        $url = URL::temporarySignedRoute(
+            'share-link',
+            now()->addMinutes(30),
+            ['project' => $projectId]
+        );
+
+        return redirect()->back()->with('invite_url', $url);
+    }
 
 }

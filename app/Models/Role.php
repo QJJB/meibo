@@ -29,7 +29,7 @@ class Role extends Model
 
     public function projectMembers()
     {
-        return $this->hasMany(ProjectRole::class, 'role_id');
+        return $this->belongsToMany(ProjectMember::class, 'project_roles', 'role_id', 'project_members_id');
     }
 
 }

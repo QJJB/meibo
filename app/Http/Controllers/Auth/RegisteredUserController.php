@@ -46,6 +46,16 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        // Insertion du code ici
+        if (session()->has('invited_project')) {
+            $projectId = session()->pull('invited_project');
+            $project = \App\Models\Project::find($projectId);
+
+            if ($project && !$project->users->contains($user->id)) {
+                $project->users()->attach($user->id);
+            }
+        }
+
         return redirect(route('dashboard', absolute: false));
     }
 }
