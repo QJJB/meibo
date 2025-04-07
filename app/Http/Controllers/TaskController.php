@@ -48,14 +48,7 @@ class TaskController extends Controller
             $task->assignees()->attach($validatedData['user_id']);
         }
 
-        // Récupère tous les utilisateurs pour la vue
-        $users = User::all();
-
-        return view('newtask', [
-            'project_id' => $id,
-            'users' => $users
-        ]);
+        // Redirige vers la page du projet avec un message de succès
+        return redirect()->route('home', ['id' => $project->id])->with('success', 'Task created successfully.');
     }
-
-
 }

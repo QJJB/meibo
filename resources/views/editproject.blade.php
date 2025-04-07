@@ -1,16 +1,13 @@
-<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\newproject.blade.php -->
+<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\editproject.blade.php -->
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title inertia>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Fonts -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Edit Project</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
     <style>
         body {
             font-family: 'Figtree', sans-serif;
@@ -93,34 +90,35 @@
 </head>
 <body>
     <header>
-        <h1>Create New Project</h1>
+        <h1>Edit Project</h1>
     </header>
     <div class="container">
-        <a href="/home" class="btn btn-secondary">Back to Home</a>
-        <form action="/newproject" method="POST" style="margin-top: 20px;">
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+        <form action="{{ route('projects.update', $projects->id) }}" method="POST" style="margin-top: 20px;">
             @csrf
+            @method('PUT')
 
             <div class="form-group">
                 <label for="name">Nom du projet:</label>
-                <input type="text" class="form-control" id="name" name="name" required value="{{ old('name') }}">
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $projects->name) }}">
             </div>
 
             <div class="form-group">
                 <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description" rows="4">{{ old('description') }}</textarea>
+                <textarea class="form-control" id="description" name="description" rows="4">{{ old('description', $projects->description) }}</textarea>
             </div>
 
             <div class="form-group">
                 <label for="start_date">Date de début:</label>
-                <input type="date" class="form-control" id="start_date" name="start_date" required value="{{ old('start_date') }}">
+                <input type="date" class="form-control" id="start_date" name="start_date" value="{{ old('start_date', $projects->start_date) }}">
             </div>
 
             <div class="form-group">
                 <label for="end_date">Date de fin:</label>
-                <input type="date" class="form-control" id="end_date" name="end_date" required value="{{ old('end_date') }}">
+                <input type="date" class="form-control" id="end_date" name="end_date" value="{{ old('end_date', $projects->end_date) }}">
             </div>
 
-            <button type="submit" class="btn">Créer le projet</button>
+            <button type="submit" class="btn">Save Changes</button>
         </form>
     </div>
 </body>

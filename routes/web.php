@@ -27,16 +27,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/newproject', [ProjectController::class, 'newProject'])->middleware('auth');
-
-Route::post('/newproject', [ProjectController::class, 'projectPost'])->middleware('auth');
-
-Route::get('/home', [ProjectController::class, 'home'])->middleware('auth')->name('home');
-
-Route::get('/home/{id}', [ProjectController::class, 'show'])->middleware('auth');
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [ProjectController::class, 'showAll'])->name('home');
+    Route::get('/home/{id}', [ProjectController::class, 'show']);
+    Route::get('/home/{id}/edit', [ProjectController::class, 'editPost']);
+    Route::put('/home/{id}/edit', [ProjectController::class, 'update'])->name('projects.update');
+    Route::delete('/home/{id}', [ProjectController::class, 'delete'])->name('projects.delete');
+    Route::get('/newproject', [ProjectController::class, 'newProject']);
+    Route::post('/newproject', [ProjectController::class, 'projectPost']);
+});
 
 Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
 
-Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth');
+Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth')->name('task.post');
 
 require __DIR__.'/auth.php';

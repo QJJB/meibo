@@ -12,9 +12,8 @@ export default function NavLink({
             className={
                 'inline-flex items-center px-1 pt-1 text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none no-underline ' +
                 (active
-                    ? 'text-white'  // lien actif sans bordure ni soulignement
-                    : 'text-gray-500 hover:text-gray-700 hover:underline focus:text-gray-700') +  // soulignement au hover pour les liens inactifs
-                className
+                    ? 'text-white'  
+                    : 'text-gray-500 hover:text-gray-700 hover:underline focus:text-gray-700') + className
             }
         >
             {children}
