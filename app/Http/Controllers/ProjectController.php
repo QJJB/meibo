@@ -43,8 +43,19 @@ class ProjectController extends Controller
             abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
         }
 
+        //$showAllUsers = $project->users;
+
+        $showAllUsers = $project->users->map(function ($user) use ($project) {
+            // Accède au pivot de la relation customisée (ProjectUser)
+            // et récupère le rôle associé via la relation project_roles
+            $projectRole = $user->pivot->project_roles()->first();
+            $user->role_name = $projectRole ? $projectRole->role->name : 'No role';
+            return $user;
+        });
+
         return view('project', [
-            'projects' => $project
+            'projects' => $project,
+            'users' => $showAllUsers
         ]);
     }
 
@@ -163,4 +174,6 @@ class ProjectController extends Controller
 
         return redirect('/home')->with('success', 'Project deleted successfully.');
     }
+
+
 }

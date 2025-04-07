@@ -106,6 +106,14 @@
             <a href="/home/{{ $projects['id'] }}/edit" class="btn">Edit</a>
             <a href="{{ url('/home/' . $projects['id'] . '/newtask') }}" class="btn">Create New Task</a>
         </div>
+
+        <div class="project-users">
+            @foreach($users as $user)
+                <p>{{ $user->name }}</p>
+                <p>{{ $user->role_name }}</p>
+            @endforeach
+        </div>
+
     </div>
 </body>
 </html>
