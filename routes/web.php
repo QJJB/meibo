@@ -48,18 +48,20 @@ Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middlewa
 //
 // Test route création de lien d'ajout user
 
-Route::get('/shared/link/{project}', [InvitationController::class, 'accept'])
-    ->name('share-link')
+
+Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
+    ->name('project.invite')
     ->middleware('signed');
 
-Route::get('/playground', function(){
-    $url = URL::temporarySignedRoute('share-link', now()->addMinute(10), [
-        'project' => 1
-    ]);
+Route::post('showProjectNumber/{id}', function ($id) {
+    $url = URL::temporarySignedRoute(
+        'project.invite',
+        now()->addMinutes(60),
+        ['projectId' => $id]
+    );
+
     return $url;
 });
-
-
 
 
 require __DIR__.'/auth.php';

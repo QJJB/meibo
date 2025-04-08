@@ -94,6 +94,7 @@ class ProjectController extends Controller
         $user = Auth::user();
         $project->users()->attach($user->id);
 
+        // dernier user ajouter à un projet
         $lastProjectUser = ProjectUser::latest('id')->first();
         $lastInsertedId = $lastProjectUser->id;
 
@@ -101,7 +102,7 @@ class ProjectController extends Controller
         //dd($lastInsertedId);
 
 
-        // Création des rôles s'ils n'existent pas
+        // Création des rôles
         $adminRole = Role::create(['name' => 'admin']);
         //$guestRole = Role::firstOrCreate(['name' => 'guest']);
         //dd($adminRole->id);
@@ -196,6 +197,20 @@ class ProjectController extends Controller
         );
 
         return redirect()->back()->with('invite_url', $url);
+    }
+
+    public function linkUsertoProject($projectId){
+        $user = Auth::user(); // Récupère l'utilisateur connecté
+
+        $project = Project::findOrFail($projectId);
+
+        // Associe le projet à l'utilisateur connecté
+        $project->users()->attach($user->id);
+
+        return response()->json([
+            'message' => 'Utilisateur ajouté au projet avec succès.',
+            'project_id' => $project->id
+        ]);
     }
 
 }
