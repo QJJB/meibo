@@ -6,15 +6,11 @@ export default function Dashboard() {
         <AuthenticatedLayout>
             <Head title="Dashboard" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            Saleeeeeee
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div className="mt-[15px] mb-[15px] mr-[15px] bg-dark-secondary rounded-[20px] shadow-sm overflow-hidden w-[calc(100%-15px)] h-[calc(100vh-30px)]">
+    <div className="p-6 text-white">
+        Saleeeeeee 
+    </div>
+</div>
         </AuthenticatedLayout>
     );
 }
