@@ -11,7 +11,7 @@ class Role extends Model
 
     protected $table = 'roles';
 
-    protected $fillable = ['name'];
+    protected $fillable = ['name', 'project_id'];
 
     public $timestamps = false;
 
@@ -29,7 +29,10 @@ class Role extends Model
 
     public function projectMembers()
     {
-        return $this->hasMany(ProjectRole::class, 'role_id');
+        return $this->belongsToMany(ProjectMember::class, 'project_roles', 'role_id', 'project_members_id');
     }
 
+    public function roles(){
+        return $this->belongsTo(Project::class, 'id');
+    }
 }

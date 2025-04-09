@@ -58,4 +58,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'project_members', 'user_id', 'role_id');
     }
+
+    //modif 07-04-25
+    public function projectMembers()
+    {
+        return $this->hasMany(ProjectMember::class);
+    }
+
 }
