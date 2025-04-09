@@ -18,6 +18,7 @@ export default function Dashboard() {
                         <div className="p-6 text-gray-900">
 
 
+                            Saleeeeeee
                         </div>
                     </div>
                 </div>
