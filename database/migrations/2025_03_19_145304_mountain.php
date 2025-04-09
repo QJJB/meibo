@@ -11,11 +11,6 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('roles', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-        });
-
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
             $table->string('name');
@@ -23,6 +18,12 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->timestamps();
+        });
+
+        Schema::create('roles', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
+            $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
         });
 
         Schema::create('project_members', function (Blueprint $table) {

@@ -8,6 +8,8 @@ use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
 use App\Models\ProjectUser;
+use App\Models\ProjectRole;
+use Illuminate\Support\Facades\URL;
 
 
 /**
@@ -40,8 +42,25 @@ class ProjectController extends Controller
             abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
         }
 
+        // On récupère les ProjectMembers du projet, avec leurs users et rôles
+        $membersWithRoles = $project->members()
+            ->whereHas('roles') // filtre uniquement ceux qui ont des rôles
+            ->with(['user', 'roles']) // eager load user et roles
+            ->get();
+
+        // On transforme ça pour avoir une liste de users avec leurs rôles
+        $users = $membersWithRoles->map(function ($member) {
+            return [
+                'name' => $member->user->name,
+                'email' => $member->user->email,
+                'roles' => $member->roles->pluck('name'), // on prend juste les noms des rôles
+            ];
+        });
+
+
         return view('project', [
-            'projects' => $project
+            'projects' => $project,
+            'users' => $users,
         ]);
     }
 
@@ -73,16 +92,16 @@ class ProjectController extends Controller
         $user = Auth::user();
         $project->users()->attach($user->id);
 
+        // récupère le dernier user ajouter à un projet
         $lastProjectUser = ProjectUser::latest('id')->first();
         $lastInsertedId = $lastProjectUser->id;
 
         // Récupère la dernière insertion dans la table project_members
         //dd($lastInsertedId);
 
-
-        // Création des rôles s'ils n'existent pas
-        $adminRole = Role::create(['name' => 'admin']);
-        //$guestRole = Role::firstOrCreate(['name' => 'guest']);
+        // Création des rôles
+        $adminRole = Role::create(['name' => 'admin', 'project_id' => $project->id]);
+        $guestRole = Role::create(['name' => 'guest', 'project_id' => $project->id]);
         //dd($adminRole->id);
 
         //Associer id recuperer et le lier au role admin
@@ -161,4 +180,35 @@ class ProjectController extends Controller
 
         return redirect('/home')->with('success', 'Project deleted successfully.');
     }
+
+    //________________________________________________
+    //
+    // Création d'un lien d'invitation temporaire
+    //
+    //________________________________________________
+    public function generateInviteLink($projectId)
+    {
+        $url = URL::temporarySignedRoute(
+            'share-link',
+            now()->addMinutes(30),
+            ['project' => $projectId]
+        );
+
+        return redirect()->back()->with('invite_url', $url);
+    }
+
+    public function linkUsertoProject($projectId){
+        $user = Auth::user(); // Récupère l'utilisateur connecté
+
+        $project = Project::findOrFail($projectId);
+
+        // Associe le projet à l'utilisateur connecté
+        $project->users()->attach($user->id);
+
+        return response()->json([
+            'message' => 'Utilisateur ajouté au projet avec succès.',
+            'project_id' => $project->id
+        ]);
+    }
+
 }

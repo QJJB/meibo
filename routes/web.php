@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use \App\Http\Controllers\ProjectController;
 use \App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\URL;
+
+use App\Http\Controllers\InvitationController;
 
 
 Route::get('/', function () {
@@ -40,5 +43,25 @@ Route::middleware('auth')->group(function () {
 Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
 
 Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth')->name('task.post');
+
+//_________________________________________
+//
+// Test route création de lien d'ajout user
+
+
+Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
+    ->name('project.invite')
+    ->middleware('signed');
+
+Route::post('showProjectNumber/{id}', function ($id) {
+    $url = URL::temporarySignedRoute(
+        'project.invite',
+        now()->addMinutes(60),
+        ['projectId' => $id]
+    );
+
+    return $url;
+});
+
 
 require __DIR__.'/auth.php';

@@ -7,7 +7,7 @@ const NavBarVertical = () => {
     const currentPath = url ? new URL(url, window.location.href).pathname : '/';
 
     return (
-        <div className="w-16 bg-dark-primary p-4 flex flex-col items-center space-y-6">
+        <div className="w-16 bg-dark-primary mt-[50px] pl-9 pr-9 flex flex-col items-center space-y-[50px]">
             <NavLink href="/dashboard">
                 <svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M1.26086 10L3.43478 8M3.43478 8L11.0435 1L18.6522 8M3.43478 8V18C3.43478 18.5523 3.92142 19 4.52173 19H7.7826M18.6522 8L20.8261 10M18.6522 8V18C18.6522 18.5523 18.1655 19 17.5652 19H14.3043M7.7826 19C8.38291 19 8.86956 18.5523 8.86956 18V14C8.86956 13.4477 9.35621 13 9.95652 13H12.1304C12.7307 13 13.2174 13.4477 13.2174 14V18C13.2174 18.5523 13.704 19 14.3043 19M7.7826 19H14.3043" stroke="#64646C" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>

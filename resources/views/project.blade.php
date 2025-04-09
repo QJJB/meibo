@@ -105,7 +105,18 @@
             </form>
             <a href="/home/{{ $projects['id'] }}/edit" class="btn">Edit</a>
             <a href="{{ url('/home/' . $projects['id'] . '/newtask') }}" class="btn">Create New Task</a>
+
+            <form action="/showProjectNumber/{{ $projects['id'] }}" method="POST" style="display: inline;">
+                @csrf
+                <button type="submit" class="btn">Générer un lien d'invitation</button>
+            </form>
+
         </div>
+
+        @foreach($users as $user)
+            <p>{{ $user['name'] }} ({{ $user['email'] }}) - Rôles : {{ $user['roles']->join(', ') }}</p>
+        @endforeach
+
     </div>
 </body>
 </html>
