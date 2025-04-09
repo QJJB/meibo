@@ -21,7 +21,8 @@
 
 ## Installation du projet Meibo
 
-### 1️⃣ Clonage du projet
+> Assure-toi d’avoir PHP, Composer et une base de données (MySQL/PostgreSQL) installés.
+> Assure-toi d’avoir Node.js et npm installés.
 
 Commence par cloner le dépôt :
 
@@ -35,64 +36,47 @@ Ensuite, entre dans le dossier du projet :
 cd meibo
 ```
 
----
+Installe les dépendances PHP avec Composer :
 
-### 2️⃣ Installation et configuration du backend (Laravel)
+```sh
+composer install
+```
 
-> Assure-toi d’avoir PHP, Composer et une base de données (MySQL/PostgreSQL) installés.
+Copie le fichier d’environnement et configure-le :
 
-1. Installe les dépendances PHP avec Composer :
+```sh
+cp .env.example .env
+```
 
-   ```sh
-   composer install
-   ```
+Génère la clé d’application :
 
-2. Copie le fichier d’environnement et configure-le :
+```sh
+php artisan key:generate
+```
 
-   ```sh
-   cp .env.example .env
-   ```
+Configure la base de données dans le fichier `.env`, puis exécute les migrations :
 
-3. Génère la clé d’application :
+```sh
+php artisan migrate --seed
+```
 
-   ```sh
-   php artisan key:generate
-   ```
+> [!NOTE]
+> Exécuter uniquement lors de la première configuration de la db
 
-4. Configure la base de données dans le fichier `.env`, puis exécute les migrations (uniquement lors de la première configuration) :
+Installe les dépendances JavaScript avec npm :
 
-   ```sh
-   php artisan migrate --seed
-   ```
+```sh
+npm install
+```
+   
+Lance le serveur React.js :
 
-5. Lance le serveur Laravel :
+```sh
+npm run dev
+```
 
-   ```sh
-   php artisan serve
-   ```
+Lance le serveur Laravel :
 
----
-
-### 3️⃣ Installation et lancement du frontend (React.js)
-
-> Assure-toi d’avoir Node.js et npm installés.
-
-1. Installe les dépendances :
-
-   ```sh
-   npm install
-   ```
-
-2. Copie le fichier des variables d'environnement :
-
-   ```sh
-   cp .env.example .env.local
-   ```
-
-3. Lance le serveur React.js :
-
-   ```sh
-   npm run dev
-   ```
-
----
+```sh
+php artisan serve
+```
