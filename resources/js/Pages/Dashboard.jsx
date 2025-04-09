@@ -6,7 +6,7 @@ export default function Dashboard({ projects }) {
         <AuthenticatedLayout>
             <Head title="Dashboard" />
 
-            <div className="mt-[15px] mb-[15px] mr-[15px] bg-red-600 rounded-[20px] shadow-sm overflow-hidden w-full h-screen">
+            <div className="mt-[15px] mb-[15px] mr-[15px] bg-dark-secondary rounded-[20px] shadow-sm overflow-hidden w-[calc(100%-15px)] h-[calc(100vh-30px)]">
     <div className="p-6 text-white">
         Saleeeeeee 
     </div>
