@@ -7,9 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
-use App\Models\User;
 use App\Models\ProjectUser;
-use App\Models\ProjectRole;
 
 
 
@@ -22,12 +20,12 @@ use App\Models\ProjectRole;
 class ProjectController extends Controller
 {
     // Affiche tous les projets associés à l'utilisateur connecté.
-    public function showAll() : View
+    public function index() : View
     {
         $user = Auth::user(); // Récupère l'utilisateur connecté
         $projects = $user->projects; // Récupère les projets associés à cet utilisateur
 
-        return view('home', [
+        return view('projects/index', [
             'projects' => $projects
         ]);
     }
@@ -43,19 +41,19 @@ class ProjectController extends Controller
             abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
         }
 
-        return view('project', [
+        return view('projects/show', [
             'projects' => $project
         ]);
     }
 
     // Afficher le formulaire de création d'un projet
-    public function newProject() : View
+    public function create() : View
      {
-        return view('newproject');
+        return view('projects/create');
      }
 
     // Enregistre un nouveau projet dans la base de données.
-    public function projectPost() : RedirectResponse
+    public function store() : RedirectResponse
     {
         // Validation des données
         $validatedData = request()->validate([
@@ -95,11 +93,11 @@ class ProjectController extends Controller
 
         // Création des permissions pour l'Admin
 
-        return redirect()->route('home');
+        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
 
     // Afficher le formulaire d'édition d'un projet
-    public function editPost($id)
+    public function edit($id)
     {
         $user = Auth::user();
         $project = Project::findOrFail($id);
@@ -108,7 +106,7 @@ class ProjectController extends Controller
         if (!$project->users()->where('users.id', $user->id)->exists()) {
             abort(403, 'Unauthorized');
         }
-        return view('editproject', ['projects' => $project]);
+        return view('projects/edit', ['projects' => $project]);
     }
 
     // Met à jour un projet existant.
@@ -146,15 +144,15 @@ class ProjectController extends Controller
             'end_date' => $validatedData['end_date'] ?? $project->end_date,
         ]);
 
-        return redirect('/home')->with('success', 'Project edited successfully.');
+        return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
     }
 
     // Supprime un projet
-    public function delete($id)
+    public function destroy($id)
     {
         $user = Auth::user();
         $project = Project::findOrFail($id);
-        
+
 
         // Vérifie si l'utilisateur est associé au projet
         if (!$project->users()->where('users.id', $user->id)->exists()) {
@@ -162,6 +160,6 @@ class ProjectController extends Controller
         }
         $project->delete();
 
-        return redirect('/home')->with('success', 'Project deleted successfully.');
+        return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
     }
 }

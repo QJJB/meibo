@@ -1,4 +1,4 @@
-<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\project.blade.php -->
+<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\home.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -56,56 +56,56 @@
             background-color: #0056b3;
         }
 
-        .btn-danger {
-            background-color: #dc3545;
+        a {
+            text-decoration: none;
+            color: inherit;
         }
 
-        .btn-danger:hover {
-            background-color: #a71d2a;
+        ul {
+            list-style: none;
+            padding: 0;
         }
 
-        .project-details p {
+        ul li {
             margin: 10px 0;
             padding: 10px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 5px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .actions {
-            margin-top: 20px;
+        ul li:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .actions a,
-        .actions button {
-            margin-right: 10px;
+        ul li a {
+            text-decoration: none;
+            color: #007BFF;
+            font-weight: bold;
+        }
+
+        ul li a:hover {
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Project Details</h1>
+        <h1>Tasks for {{$projects['name']}}</h1>
     </header>
     <div class="container">
-        <a href="/home" class="btn">Back to Home</a>
-        <h2 class="font-bold text-lg">{{ $projects['name'] }}</h2>
-
-        <div class="project-details">
-            <p><strong>Description:</strong> {{ $projects['description'] }}</p>
-            <p><strong>Start Date:</strong> {{ $projects['start_date'] }}</p>
-            <p><strong>End Date:</strong> {{ $projects['end_date'] }}</p>
-            <p><strong>Created At:</strong> {{ $projects['created_at'] }}</p>
-        </div>
-
-        <div class="actions">
-            <form action="{{ route('projects.delete', $projects['id']) }}" method="POST" style="display: inline;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
-            </form>
-            <a href="/home/{{ $projects['id'] }}/edit" class="btn">Edit</a>
-            <a href="{{ url('/home/' . $projects['id'] . '/newtask') }}" class="btn">Create New Task</a>
-        </div>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
+        <ul>
+            @foreach($tasks as $task)
+                    <a href="{{ route('projects.tasks.show', [$projects->id, $task->id]) }}">
+                        <li>
+                            {{ $task['title'] }}
+                        </li>
+                    </a>
+            @endforeach
+        </ul>
     </div>
 </body>
 </html>

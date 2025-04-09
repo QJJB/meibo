@@ -1,4 +1,4 @@
-<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\home.blade.php -->
+<!-- filepath: c:\Users\Quuee\OneDrive - Enseignement de la Province de Liège\Bureau\meibo\resources\views\project.blade.php -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -56,56 +56,57 @@
             background-color: #0056b3;
         }
 
-        a {
-            text-decoration: none;
-            color: inherit;
+        .btn-danger {
+            background-color: #dc3545;
         }
 
-        ul {
-            list-style: none;
-            padding: 0;
+        .btn-danger:hover {
+            background-color: #a71d2a;
         }
 
-        ul li {
+        .project-details p {
             margin: 10px 0;
             padding: 10px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 5px;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        ul li:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        .actions {
+            margin-top: 20px;
         }
 
-        ul li a {
-            text-decoration: none;
-            color: #007BFF;
-            font-weight: bold;
-        }
-
-        ul li a:hover {
-            text-decoration: none;
+        .actions a,
+        .actions button {
+            margin-right: 10px;
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>Home Page</h1>
+        <h1>Project Details</h1>
     </header>
     <div class="container">
-        <a href="/newproject" class="btn">Create New Project</a>
-        <ul>
-            @foreach($projects as $project)
-                    <a href="/home/{{ $project['id'] }}">
-                        <li>
-                            {{ $project['name'] }}
-                        </li>
-                    </a>
-            @endforeach
-        </ul>
+        <a href="{{ route('projects.index') }}" class="btn">Back to Home</a>
+        <a href="{{ route('projects.tasks.index', $projects->id) }}">Show tasks</a>
+        <h2 class="font-bold text-lg">{{ $projects['name'] }}</h2>
+
+        <div class="project-details">
+            <p><strong>Description:</strong> {{ $projects['description'] }}</p>
+            <p><strong>Start Date:</strong> {{ $projects['start_date'] }}</p>
+            <p><strong>End Date:</strong> {{ $projects['end_date'] }}</p>
+            <p><strong>Created At:</strong> {{ $projects['created_at'] }}</p>
+        </div>
+
+        <div class="actions">
+            <form action="{{ route('projects.destroy', $projects->id) }}" method="POST" style="display: inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
+            </form>
+            <a href="{{ route('projects.edit', $projects->id) }}" class="btn">Edit</a>
+            <a href="{{ route('projects.tasks.create', $projects->id) }}" class="btn">Create New Task</a>
+        </div>
     </div>
 </body>
 </html>
