@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\ProjectRole;
 use App\Models\ProjectUser;
 use App\Models\Role;
 use Illuminate\Http\Request;
@@ -17,6 +18,7 @@ class InvitationController extends Controller
             abort(401, 'Lien invalide ou expiré.');
         }
 
+        // récupère projet
         $project = Project::findOrFail($projectId);
 
         if (Auth::check()) {
@@ -26,16 +28,20 @@ class InvitationController extends Controller
                 $project->users()->attach($user->id);
             }
 
-            $lastProjectUser = ProjectUser::latest('id')->first();
+            // récupère le dernier user ajouter à un projet
+            $projectUser = ProjectUser::where('project_id', $project->id)
+                ->where('user_id', $user->id)
+                ->first();
 
-            // Création du rôle guest pour le nouvel user
-            // si on le fait de cette facon va y avoir un problème pcq va créer
-            // un role guest individuel pour chaque user
-            $guestRole = Role::create(['name' => 'guest']);
-            //dd($adminRole->id);
 
-            //Associer id recuperer et le lier au role admin
-            $lastProjectUser->project_roles()->create([
+            // Récupère le role guest créée lors de la création du projet
+            $guestRole = Role::where('project_id', $project->id)
+                        ->where('name', 'guest')
+                        ->first();
+            //dd($guestRole->id);
+
+            //Associe le dernier user créer à l'id de role guest
+            $projectUser->project_roles()->create([
                 'role_id' => $guestRole->id
             ]);
 
@@ -43,7 +49,7 @@ class InvitationController extends Controller
         } else {
             // Sauvegarde temporaire en session l'ID du projet à rejoindre
             Session::put('invited_project_id', $projectId);
-            return redirect()->route('register'); // ou 'login' si tu veux aussi permettre ça
+            return redirect()->route('login'); // ou 'login' si tu veux aussi permettre ça
         }
     }
 }

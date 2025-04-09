@@ -33,6 +33,33 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        // Vérifier s'il y a un projet en session
+        if (session()->has('invited_project_id')) {
+            $projectId = session()->pull('invited_project_id');  // Retirer l'ID du projet de la session
+            $project = \App\Models\Project::find($projectId);
+
+            // Si le projet existe et que l'utilisateur n'est pas déjà membre du projet
+            if ($project && !$project->users->contains(Auth::user()->id)) {
+                $project->users()->attach(Auth::user()->id);  // Ajouter l'utilisateur au projet
+
+                // Récupérer le rôle 'guest' du projet
+                $guestRole = \App\Models\Role::where('project_id', $projectId)
+                    ->where('name', 'guest')
+                    ->first();
+
+                // Associer le rôle 'guest' à l'utilisateur pour ce projet
+                $projectUser = \App\Models\ProjectUser::where('project_id', $projectId)
+                    ->where('user_id', Auth::user()->id)
+                    ->first();
+
+                if ($guestRole && $projectUser) {
+                    $projectUser->project_roles()->create([
+                        'role_id' => $guestRole->id,
+                    ]);
+                }
+            }
+        }
+
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

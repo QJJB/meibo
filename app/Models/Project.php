@@ -26,4 +26,7 @@ class Project extends Model
         return $this->hasMany(ProjectMember::class);
     }
 
+    public function roles(){
+        return $this->hasMany(Role::class, 'project_id');
+    }
 }

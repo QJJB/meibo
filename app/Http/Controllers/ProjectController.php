@@ -94,17 +94,16 @@ class ProjectController extends Controller
         $user = Auth::user();
         $project->users()->attach($user->id);
 
-        // dernier user ajouter à un projet
+        // récupère le dernier user ajouter à un projet
         $lastProjectUser = ProjectUser::latest('id')->first();
         $lastInsertedId = $lastProjectUser->id;
 
         // Récupère la dernière insertion dans la table project_members
         //dd($lastInsertedId);
 
-
         // Création des rôles
-        $adminRole = Role::create(['name' => 'admin']);
-        //$guestRole = Role::firstOrCreate(['name' => 'guest']);
+        $adminRole = Role::create(['name' => 'admin', 'project_id' => $project->id]);
+        $guestRole = Role::create(['name' => 'guest', 'project_id' => $project->id]);
         //dd($adminRole->id);
 
         //Associer id recuperer et le lier au role admin
