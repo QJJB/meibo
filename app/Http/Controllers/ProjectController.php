@@ -60,7 +60,8 @@ class ProjectController extends Controller
 
 
         return view('projects/show', [
-            'projects' => $project
+            'projects' => $project,
+            'users' => $users,
         ]);
     }
 

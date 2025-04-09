@@ -88,6 +88,7 @@
     </header>
     <div class="container">
         <a href="/home" class="btn">Back to Home</a>
+        <a href="{{ route('projects.tasks.index', $projects['id']) }}" class="btn">Show tasks</a>
         <h2 class="font-bold text-lg">{{ $projects['name'] }}</h2>
 
         <div class="project-details">
@@ -98,13 +99,13 @@
         </div>
 
         <div class="actions">
-            <form action="{{ route('projects.delete', $projects['id']) }}" method="POST" style="display: inline;">
+            <form action="{{ route('projects.destroy', $projects['id']) }}" method="POST" style="display: inline;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this project?')">Delete</button>
             </form>
-            <a href="/home/{{ $projects['id'] }}/edit" class="btn">Edit</a>
-            <a href="{{ url('/home/' . $projects['id'] . '/newtask') }}" class="btn">Create New Task</a>
+            <a href="{{ route('projects.edit', $projects['id']) }}" class="btn">Edit</a>
+            <a href="{{ route('projects.tasks.create', $projects['id']) }}" class="btn">Create New Task</a>
 
             <form action="/showProjectNumber/{{ $projects['id'] }}" method="POST" style="display: inline;">
                 @csrf
