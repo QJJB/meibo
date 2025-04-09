@@ -93,15 +93,15 @@
 </head>
 <body>
     <header>
-        <h1>Home Page</h1>
+        <h1>Tasks for {{$projects['name']}}</h1>
     </header>
     <div class="container">
-        <a href="/newproject" class="btn">Create New Project</a>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
         <ul>
-            @foreach($projects as $project)
-                    <a href="/home/{{ $project['id'] }}">
+            @foreach($tasks as $task)
+                    <a href="{{ route('projects.tasks.show', [$projects->id, $task->id]) }}">
                         <li>
-                            {{ $project['name'] }}
+                            {{ $task['title'] }}
                         </li>
                     </a>
             @endforeach

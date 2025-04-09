@@ -44,7 +44,7 @@ return new class extends Migration
             $table->string('type');
             $table->text('description')->nullable();
             $table->foreignId('project_id')->constrained('projects')->onDelete('cascade');
-            $table->timestamp('due_date')->nullable();
+            $table->date('due_date')->nullable();
             $table->integer('priority');
             $table->string('status');
             $table->foreignId('created_by')->constrained('users')->onDelete('cascade');

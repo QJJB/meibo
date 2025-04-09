@@ -96,8 +96,8 @@
         <h1>Create New Project</h1>
     </header>
     <div class="container">
-        <a href="/home" class="btn btn-secondary">Back to Home</a>
-        <form action="/newproject" method="POST" style="margin-top: 20px;">
+        <a href="/projects" class="btn btn-secondary">Back to Home</a>
+        <form action="{{ route('projects.store') }}" method="POST" style="margin-top: 20px;">
             @csrf
 
             <div class="form-group">

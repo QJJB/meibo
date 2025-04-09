@@ -31,18 +31,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/home', [ProjectController::class, 'showAll'])->name('home');
-    Route::get('/home/{id}', [ProjectController::class, 'show']);
-    Route::get('/home/{id}/edit', [ProjectController::class, 'editPost']);
-    Route::put('/home/{id}/edit', [ProjectController::class, 'update'])->name('projects.update');
-    Route::delete('/home/{id}', [ProjectController::class, 'delete'])->name('projects.delete');
-    Route::get('/newproject', [ProjectController::class, 'newProject']);
-    Route::post('/newproject', [ProjectController::class, 'projectPost']);
+    Route::resource('projects', ProjectController::class);
+    Route::resource('projects.tasks', TaskController::class);
 });
-
-Route::get('/home/{id}/newtask', [TaskController::class, 'newTask'])->middleware('auth');
-
-Route::post('/home/{id}/newtask', [TaskController::class, 'taskPost'])->middleware('auth')->name('task.post');
 
 //_________________________________________
 //
