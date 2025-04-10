@@ -18,6 +18,8 @@ export default {
             colors: {
                 'dark-secondary': '#1E1F24',
                 'dark-primary': '#0E0F14',
+                'gray-icon': '#64646C',
+                'white-icon': '#E8E8EA',
             }
         },
     },
