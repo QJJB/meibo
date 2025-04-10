@@ -87,7 +87,7 @@
         <h1>Project Details</h1>
     </header>
     <div class="container">
-        <a href="/home" class="btn">Back to Home</a>
+        <a href="/projects" class="btn">Back to Home</a>
         <a href="{{ route('projects.tasks.index', $projects['id']) }}" class="btn">Show tasks</a>
         <h2 class="font-bold text-lg">{{ $projects['name'] }}</h2>
 
