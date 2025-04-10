@@ -35,11 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects.tasks', TaskController::class);
 });
 
-//_________________________________________
-//
+
 // Test route création de lien d'ajout user
-
-
 Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
     ->name('project.invite')
     ->middleware('signed');
@@ -53,6 +50,13 @@ Route::post('showProjectNumber/{id}', function ($id) {
 
     return $url;
 });
+
+// Route gestion des roles d'un projet
+Route::get('/projects/{project}/roles/edit', [ProjectController::class, 'editRole'])->name('projects.roles.edit');
+Route::put('/projects/{project}/roles/update', [ProjectController::class, 'updateRole'])->name('projects.roles.update');
+Route::put('/projects/{project}/update-roles-name', [ProjectController::class, 'updateRolesName'])->name('projects.updateRolesName');
+
+
 
 
 require __DIR__.'/auth.php';

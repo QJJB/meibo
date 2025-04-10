@@ -116,7 +116,28 @@
 
         @foreach($users as $user)
             <p>{{ $user['name'] }} ({{ $user['email'] }}) - Rôles : {{ $user['roles']->join(', ') }}</p>
+
         @endforeach
+
+        <a href="{{ route('projects.roles.edit', $projects['id']) }}" class="btn">Modify Roles</a>
+
+        @foreach($roles as $role)
+            <p>{{$role['name']}}</p>
+        @endforeach
+
+        <form action="{{ route('projects.updateRolesName', $projects->id) }}" method="POST" style="margin-top: 20px;">
+            @csrf
+            @method('PUT')
+
+            @foreach($roles as $role)
+                <div class="form-group">
+                    <label for="role_{{ $role->id }}">Nom du rôle :</label>
+                    <input type="text" class="form-control" id="role_{{ $role->id }}" name="roles[{{ $role->id }}]" value="{{ $role->name }}">
+                </div>
+            @endforeach
+
+            <button type="submit" class="btn btn-primary">Modifier les noms</button>
+        </form>
 
     </div>
 </body>

@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
 use App\Models\ProjectUser;
 use App\Models\ProjectRole;
+use App\Models\ProjectMember;
+use App\Models\User;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
 
 
 
@@ -58,10 +61,14 @@ class ProjectController extends Controller
             ];
         });
 
+        //Récupérer les roles présents dans notre projet
+        $roles = Role::where('project_id', $project->id)->get();
+
 
         return view('projects/show', [
             'projects' => $project,
             'users' => $users,
+            'roles' => $roles
         ]);
     }
 
@@ -213,5 +220,96 @@ class ProjectController extends Controller
             'project_id' => $project->id
         ]);
     }
+
+    // Fonction gestion role d'un projet
+    public function editRole($id)
+    {
+        $project = Project::findOrFail($id);
+
+        // Optionnel : vérifie que l'utilisateur peut accéder
+        if (!$project->users->contains(Auth::user())) {
+            abort(403, 'Unauthorized');
+        }
+
+        $membersWithRoles = $project->members()
+            ->with(['user', 'roles'])
+            ->get();
+
+        $allRoles = Role::where('project_id', $project->id)
+            ->get();
+
+        return view('projects.editRole', [
+            'project' => $project,
+            'members' => $membersWithRoles,
+            'allRoles' => $allRoles
+        ]);
+    }
+
+    public function updateRole(Request $request, Project $project)
+    {
+        $user = Auth::user();
+        if (!$project->users()->where('users.id', $user->id)->exists()) {
+            abort(403, 'Unauthorized');
+        }
+
+
+        $rolesInput = $request->input('roles', []);
+        //Récupère l'id du role admin
+        $adminRoleId = Role::where('name', 'admin')->first()?->id;
+
+        if (!$adminRoleId) {
+            return back()->withErrors(['error' => 'Le rôle admin est introuvable.']);
+        }
+
+        // Vérifie s'il y a au moins un user avec le rôle admin
+        $hasAdmin = false;
+        foreach ($rolesInput as $userId => $roleIds) {
+            if (in_array($adminRoleId, $roleIds)) {
+                $hasAdmin = true;
+                break;
+            }
+        }
+
+        if (!$hasAdmin) {
+            return back()->withErrors(['error' => 'Il doit y avoir au moins un membre avec le rôle admin.']);
+        }
+
+        foreach ($request->input('roles', []) as $userId => $roleIds) {
+            // On récupère le membre du projet
+            $member = ProjectMember::where('project_id', $project->id)
+                ->where('user_id', $userId)
+                ->first();
+
+            if ($member) {
+                // On détache tous les rôles existants pour ce membre
+                $member->roles()->sync($roleIds); // Met à jour les rôles via la relation many-to-many
+            }
+        }
+
+        return redirect()->route('projects.show', $project->id)->with('success', 'Roles updated successfully!');
+    }
+
+    public function updateRolesName(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+
+        if (!$project->users->contains(Auth::user())) {
+            abort(403, 'Unauthorized');
+        }
+
+        $rolesInput = $request->input('roles', []);
+
+        foreach ($rolesInput as $roleId => $newName) {
+            $role = Role::where('id', $roleId)->where('project_id', $project->id)->first();
+
+            if ($role && $newName !== $role->name) {
+                $role->name = $newName;
+                $role->save();
+            }
+        }
+
+        return redirect()->route('projects.show', $project->id)->with('success', 'Les noms des rôles ont été mis à jour.');
+    }
+
 
 }
