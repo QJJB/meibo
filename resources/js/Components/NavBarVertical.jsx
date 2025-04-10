@@ -47,7 +47,13 @@ const NavBarVertical = () => {
                 </NavLink>
 
                 <NavLink href="/profile">
-                    <img src="/storage/avatars/mushu-avatar.png" className="w-7 h-7 rounded-full object-cover" />
+                    <div className="w-7 h-7 rounded-full overflow-hidden">
+                        <img
+                            src="/storage/avatars/mushu-avatar.png"
+                            alt="Avatar"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
                 </NavLink>
             </div>
         </div>
