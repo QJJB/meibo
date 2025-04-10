@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\ProjectMember;
 use App\Models\ProjectRole;
 use App\Models\ProjectUser;
 use App\Models\Role;
@@ -24,6 +25,18 @@ class InvitationController extends Controller
         if (Auth::check()) {
             // Si l'utilisateur est connecté, on l'ajoute au projet
             $user = Auth::user();
+
+            // Vérifier que le user n'est pas déjà dans le projet
+            $checkIfAllreadyInProject = ProjectMember::where('project_id', $project->id)
+                ->where('user_id', $user->id)
+                ->exists();
+
+            if($checkIfAllreadyInProject != null){
+                // Si il est déjà dans le projet on doit arreter le process
+                return redirect('/projects');
+            }
+
+
             if (!$project->users->contains($user->id)) {
                 $project->users()->attach($user->id);
             }
@@ -45,7 +58,7 @@ class InvitationController extends Controller
                 'role_id' => $guestRole->id
             ]);
 
-            return redirect()->route('home')->with('success', 'Tu as rejoint le projet !');
+            return redirect('/projects')->with('success', 'Tu as rejoint le projet !');
         } else {
             // Sauvegarde temporaire en session l'ID du projet à rejoindre
             Session::put('invited_project_id', $projectId);
