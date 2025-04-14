@@ -1,9 +1,9 @@
-import Checkbox from "@/Components/Checkbox";
-import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/WelcomeCopy/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
+import PrimaryButton from "@/Components/WelcomeCopy/PrimaryButton";
 import TextInput from "@/Components/WelcomeCopy/TextInput";
 import GuestLayout from "@/Components/WelcomeCopy/GuestLayout";
+import InputError from "@/Components/InputError";
+import Checkbox from "@/Components/Checkbox";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login({ status, canResetPassword }) {
@@ -91,7 +91,7 @@ export default function Login({ status, canResetPassword }) {
                     )}
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        Log in
+                        login
                     </PrimaryButton>
                 </div>
             </form>
