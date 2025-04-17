@@ -11,10 +11,15 @@
     Inter, ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-  --color-dark-secondary: #1e1f24;
+  --color-dark-tertiary: #171c22;
+  --color-dark-secondary: #121318;
   --color-dark-primary: #0e0f14;
   --color-gray-icon: #64646c;
   --color-white-icon: #e8e8ea;
+  --color-white-title: #b5b5b8;
+  --color-header-separation: #1A1D26;
+  --color-gray-title-secondary: #868688;
+  
 }
 
 /*
