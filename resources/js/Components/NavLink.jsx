@@ -10,7 +10,7 @@ export default function NavLink({
         <Link
             {...props}
             className={
-                'inline-flex items-center text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none no-underline hover: stroke-black' +
+                'inline-flex items-center text-sm font-medium leading-5 transition duration-150 ease-in-out focus:outline-none no-underline' +
                 (props.href === window.location.pathname 
                     ? 'text-white' 
                     : 'text-white') + className
