@@ -311,5 +311,86 @@ class ProjectController extends Controller
         return redirect()->route('projects.show', $project->id)->with('success', 'Les noms des rôles ont été mis à jour.');
     }
 
+    public function addNewRoles(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        //dd($project->id);
 
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $validatedData['project_id'] = $project->id;
+
+        // Création du projet
+        Role::create($validatedData);
+
+
+        return redirect()->route('projects.show', $project->id)->with('success', 'Les rôles ont été mis à jour.');
+    }
+
+    /*public function addNewRolesForAUser(Request $request, $id)
+    {
+        $project = Project::findOrFail($id);
+        //dd($project->id);
+
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255'
+        ]);
+
+        $validatedData['project_id'] = $project->id;
+
+        // Création du projet
+        Role::create($validatedData);
+
+
+        return redirect()->route('projects.show', $project->id)->with('success', 'Les rôles ont été mis à jour.');
+    }*/
+
+    public function addNewRolesForAUser(Request $request, $id, $user_id)
+    {
+        $project = Project::findOrFail($id);
+
+        $user = User::findOrFail($user_id);
+
+        // Optionnel : vérifie que l'utilisateur peut accéder
+        if (!$project->users->contains(Auth::user())) {
+            abort(403, 'Unauthorized');
+        }
+
+        $allRoles = Role::where('project_id', $project->id)
+            ->get();
+
+        return view('projects.linkMultipleRole', [
+            'project' => $project,
+            'allRoles' => $allRoles,
+            'user' => $user
+        ]);
+    }
+
+    public function storeAddNewRolesForAUser($project, $user, Request $request){
+
+        $roleID = $request->roles[$user][0];
+
+        // Vérifier que le user n'a pas déjà ce role
+        $checkIfAllreadyInProject = ProjectRole::where('project_members_id', $project)
+            ->where('role_id', $roleID)
+            ->exists();
+
+        // Si l'user à déjà le role, empêche son ajout
+        if($checkIfAllreadyInProject != null){
+            return redirect()->route('projects.show', $project);
+        }
+
+        // récupère l'user dans la table project_member un projet
+        $projectUser = ProjectUser::where('project_id', $project)
+            ->where('user_id', $user)
+            ->first();
+
+        //Associe le dernier user créer à l'id de role
+        $projectUser->project_roles()->create([
+            'role_id' => $roleID
+        ]);
+
+    }
 }

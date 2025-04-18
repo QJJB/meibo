@@ -94,32 +94,23 @@
 </header>
 <div class="container">
     <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
-    <form action="{{ route('projects.roles.update', $project->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+    <form action="{{ route('projects.addNewRolesForAUser', ['project' => $project->id, 'user' => $user->id]) }}" method="POST">
+    @csrf
+        @method('POST')
 
-        @foreach($members as $member)
-            <div class="mb-4">
-                <label>{{ $member->user->name }} ({{ $member->user->email }})</label>
-                <select name="roles[{{ $member->id }}][]" multiple class="form-control">
+                <label>Coucou</label>
+
+                <select name="roles[{{$user->id}}][]" multiple class="form-control">
                     @foreach($allRoles as $role)
-                        <option value="{{ $role->id }}"
-                                @if($member->roles->contains($role)) selected @endif>
+                        <option value="{{ $role->id }}">
                             {{ $role->name }}
                         </option>
                     @endforeach
                 </select>
 
-                <a href="{{ route('projects.addNewRolesForAUser', ['project' => $project->id, 'user' => $member->user->id]) }}" class="btn">Add Roles</a>
-            </div>
-        @endforeach
-
-        <button type="submit">Mettre à jour les rôles</button>
-
+        <button type="submit">Add Roles</button>
 
     </form>
-
-
 </div>
 </body>
 </html>

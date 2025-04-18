@@ -138,6 +138,17 @@
 
             <button type="submit" class="btn btn-primary">Modifier les noms</button>
         </form>
+        <form action="{{ route('projects.addNewRoles', $projects->id) }}" method="POST" style="margin-top: 20px;">
+            @csrf
+
+            <p>Ajouter un nouveau rôle:</p>
+            <div class="form-group">
+                <label for="name">Nom du rôle :</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
 
     </div>
 </body>

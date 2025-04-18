@@ -55,7 +55,9 @@ Route::post('showProjectNumber/{id}', function ($id) {
 Route::get('/projects/{project}/roles/edit', [ProjectController::class, 'editRole'])->name('projects.roles.edit');
 Route::put('/projects/{project}/roles/update', [ProjectController::class, 'updateRole'])->name('projects.roles.update');
 Route::put('/projects/{project}/update-roles-name', [ProjectController::class, 'updateRolesName'])->name('projects.updateRolesName');
-
+Route::post('/projects/{project}/addNewRoles', [ProjectController::class, 'addNewRoles'])->name('projects.addNewRoles');
+Route::get('/projects/{project}/addNewRolesForAUser/{user}', [ProjectController::class, 'addNewRolesForAUser'])->name('projects.addNewRolesForAUser');
+Route::post('/projects/{project}/addNewRolesForAUser/{user}', [ProjectController::class, 'storeAddNewRolesForAUser'])->name('projects.addNewRolesForAUser');
 
 
 
