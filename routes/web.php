@@ -58,6 +58,9 @@ Route::put('/projects/{project}/update-roles-name', [ProjectController::class, '
 Route::post('/projects/{project}/addNewRoles', [ProjectController::class, 'addNewRoles'])->name('projects.addNewRoles');
 Route::get('/projects/{project}/addNewRolesForAUser/{user}', [ProjectController::class, 'addNewRolesForAUser'])->name('projects.addNewRolesForAUser');
 Route::post('/projects/{project}/addNewRolesForAUser/{user}', [ProjectController::class, 'storeAddNewRolesForAUser'])->name('projects.addNewRolesForAUser');
+//Suppression de role pour un user
+Route::delete('/projects/{project}/roles/{role}/delete/{user}', [ProjectController::class, 'destroyRoleForUser'])->name('roles.delete');
+
 
 
 

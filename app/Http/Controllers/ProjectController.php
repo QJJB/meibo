@@ -55,11 +55,20 @@ class ProjectController extends Controller
         // On transforme ça pour avoir une liste de users avec leurs rôles
         $users = $membersWithRoles->map(function ($member) {
             return [
+                'id' => $member->user->id,
                 'name' => $member->user->name,
                 'email' => $member->user->email,
-                'roles' => $member->roles->pluck('name'), // on prend juste les noms des rôles
+                'roles' => $member->roles->map(function ($role) {
+                    return [
+                        'id' => $role->id,
+                        'name' => $role->name
+                    ];
+                }),
             ];
         });
+
+
+        //dd($users);
 
         //Récupérer les roles présents dans notre projet
         $roles = Role::where('project_id', $project->id)->get();
@@ -393,4 +402,25 @@ class ProjectController extends Controller
         ]);
 
     }
+
+    // Suppression d'un role pour un user
+    public function destroyRoleForUser($projectId, $roleId, $userId)
+    {
+
+        // récupère l'id dans la table project_members
+        $project_roles_id = ProjectMember::where('user_id', $userId)->where('project_id', $projectId)->first();
+
+        // Code empêchant la suppression du role admin et guest pour les projets
+        $role = Role::findOrFail($roleId);
+        if($role->name == "admin" || $role->name == "guest"){
+            return redirect()->back();
+        }
+
+        // Je supprime le lien entre la table project_members et project_roles
+        $project_roles_fordel = ProjectRole::where('project_members_id', $project_roles_id->id)->where('role_id', $roleId)->first();
+        $project_roles_fordel->delete();
+
+        return redirect()->back()->with('success', 'Rôle supprimé avec succès.');
+    }
+
 }

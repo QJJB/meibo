@@ -115,9 +115,38 @@
         </div>
 
         @foreach($users as $user)
-            <p>{{ $user['name'] }} ({{ $user['email'] }}) - Rôles : {{ $user['roles']->join(', ') }}</p>
+            <p>{{ $user['name'] }} ({{ $user['email'] }})</p>
+            <p>Rôles : {{ $user['roles']->join(', ') }}</p>
 
         @endforeach
+
+        @foreach($users as $user)
+            <p><strong>{{ $user['name'] }}</strong> ({{ $user['email'] }})</p>
+
+            @if(count($user['roles']) > 0)
+                <ul>
+                    @foreach($user['roles'] as $role)
+
+                        <li>
+                            {{ $role['name'] }}
+                            <form action="{{ route('roles.delete', ['project' => $projects->id, 'role' => $role['id'], 'user' => $user['id']]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="user_id" value="{{ $user['id'] }}">
+                                <input type="hidden" name="role" value="{{ $role['id'] }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </li>
+                    @endforeach
+
+                </ul>
+            @else
+                <p>Aucun rôle attribué.</p>
+            @endif
+
+        @endforeach
+
+
 
         <a href="{{ route('projects.roles.edit', $projects['id']) }}" class="btn">Modify Roles</a>
 
