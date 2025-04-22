@@ -7,6 +7,7 @@ use Inertia\Inertia;
 use \App\Http\Controllers\ProjectController;
 use \App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\URL;
+use App\Http\Controllers\RoleController;
 
 use App\Http\Controllers\InvitationController;
 
@@ -35,7 +36,6 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects.tasks', TaskController::class);
 });
 
-
 // Test route création de lien d'ajout user
 Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
     ->name('project.invite')
@@ -52,16 +52,17 @@ Route::post('showProjectNumber/{id}', function ($id) {
 });
 
 // Route gestion des roles d'un projet
-Route::get('/projects/{project}/roles/edit', [ProjectController::class, 'editRole'])->name('projects.roles.edit');
-Route::put('/projects/{project}/roles/update', [ProjectController::class, 'updateRole'])->name('projects.roles.update');
-Route::put('/projects/{project}/update-roles-name', [ProjectController::class, 'updateRolesName'])->name('projects.updateRolesName');
-Route::post('/projects/{project}/addNewRoles', [ProjectController::class, 'addNewRoles'])->name('projects.addNewRoles');
-Route::get('/projects/{project}/addNewRolesForAUser/{user}', [ProjectController::class, 'addNewRolesForAUser'])->name('projects.addNewRolesForAUser');
-Route::post('/projects/{project}/addNewRolesForAUser/{user}', [ProjectController::class, 'storeAddNewRolesForAUser'])->name('projects.addNewRolesForAUser');
+Route::get('/projects/{project}/roles/edit', [RoleController::class, 'editRole'])->name('projects.roles.edit');
+Route::put('/projects/{project}/roles/update', [RoleController::class, 'updateRole'])->name('projects.roles.update');
+Route::put('/projects/{project}/update-roles-name', [RoleController::class, 'updateRolesName'])->name('projects.roles.update-name');
+Route::post('/projects/{project}/addNewRoles', [RoleController::class, 'addNewRoles'])->name('projects.roles.store');
+
+Route::get('/projects/{project}/addNewRolesForAUser/{user}', [RoleController::class, 'addNewRolesForAUser'])->name('projects.roles.user');
+Route::post('/projects/{project}/addNewRolesForAUser/{user}', [RoleController::class, 'storeAddNewRolesForAUser'])->name('projects.roles.user');
 //Suppression de role pour un user
-Route::delete('/projects/{project}/roles/{role}/delete/{user}', [ProjectController::class, 'destroyRoleForUser'])->name('roles.delete');
-
-
+Route::delete('/projects/{project}/roles/{role}/delete/{user}', [RoleController::class, 'destroyRoleForUser'])->name('projects.roles.user.destroy');
+//Suppression d'un role pour un projet
+Route::delete('/projects/{project}/roles/{role}/delete_for_project', [RoleController::class, 'destroyRoleForProject'])->name('projects.roles.destroy');
 
 
 require __DIR__.'/auth.php';

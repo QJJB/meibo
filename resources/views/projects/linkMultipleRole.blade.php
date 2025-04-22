@@ -94,7 +94,7 @@
 </header>
 <div class="container">
     <a href="{{ url()->previous() }}" class="btn btn-secondary">Back</a>
-    <form action="{{ route('projects.addNewRolesForAUser', ['project' => $project->id, 'user' => $user->id]) }}" method="POST">
+    <form action="{{ route('projects.roles.user', ['project' => $project->id, 'user' => $user->id]) }}" method="POST">
     @csrf
         @method('POST')
 

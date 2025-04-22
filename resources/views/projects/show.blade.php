@@ -129,7 +129,7 @@
 
                         <li>
                             {{ $role['name'] }}
-                            <form action="{{ route('roles.delete', ['project' => $projects->id, 'role' => $role['id'], 'user' => $user['id']]) }}" method="POST" style="display:inline;">
+                            <form action="{{ route('projects.roles.user.destroy', ['project' => $projects->id, 'role' => $role['id'], 'user' => $user['id']]) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="user_id" value="{{ $user['id'] }}">
@@ -150,11 +150,21 @@
 
         <a href="{{ route('projects.roles.edit', $projects['id']) }}" class="btn">Modify Roles</a>
 
+        <p><strong>Role du projet:</strong></p>
         @foreach($roles as $role)
-            <p>{{$role['name']}}</p>
+            <ul>
+                <li>
+                    <form action="{{ route('projects.roles.destroy', ['project' => $projects->id, 'role' => $role['id']]) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <p>{{$role['name']}}</p>
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            </ul>
         @endforeach
 
-        <form action="{{ route('projects.updateRolesName', $projects->id) }}" method="POST" style="margin-top: 20px;">
+        <form action="{{ route('projects.roles.update-name', $projects->id) }}" method="POST" style="margin-top: 20px;">
             @csrf
             @method('PUT')
 
@@ -167,7 +177,7 @@
 
             <button type="submit" class="btn btn-primary">Modifier les noms</button>
         </form>
-        <form action="{{ route('projects.addNewRoles', $projects->id) }}" method="POST" style="margin-top: 20px;">
+        <form action="{{ route('projects.roles.store', $projects->id) }}" method="POST" style="margin-top: 20px;">
             @csrf
 
             <p>Ajouter un nouveau rôle:</p>

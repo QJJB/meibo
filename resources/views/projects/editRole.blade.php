@@ -110,7 +110,7 @@
                     @endforeach
                 </select>
 
-                <a href="{{ route('projects.addNewRolesForAUser', ['project' => $project->id, 'user' => $member->user->id]) }}" class="btn">Add Roles</a>
+                <a href="{{ route('projects.roles.user', ['project' => $project->id, 'user' => $member->user->id]) }}" class="btn">Add Roles</a>
             </div>
         @endforeach
 
