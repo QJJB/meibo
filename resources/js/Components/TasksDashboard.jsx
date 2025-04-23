@@ -3,9 +3,9 @@ import TaskCard from './TaskCard';
 
 function TasksDashboard() {
   return (
-    <div className="bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide max-h-[600px] relative">
+    <div className="bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide relative">
       {/* Sticky header that sticks at its original position */}
-      <div className="h-[100px] bg-dark-secondary z-0 sticky top-0">
+      <div className="h-[70px] bg-dark-secondary z-0 sticky top-0">
         <div className="header-tasks-dashboard sticky top-[30px] z-10 bg-dark-secondary flex justify-between items-center ml-[30px] w-[256px] pb-[10px]">
           <h2 className='text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]'>
           Tasks
