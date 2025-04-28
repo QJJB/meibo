@@ -37,6 +37,11 @@
     font-family: var(--font-sans);
   }
 
+  html, body {
+    background-color: var(--color-dark-primary);
+    color: var(--color-white-title);
+  }
+
   ::after,
   ::before,
   ::backdrop,

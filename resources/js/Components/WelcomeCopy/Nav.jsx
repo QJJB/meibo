@@ -1,6 +1,6 @@
 import { Head, Link } from "@inertiajs/react";
 
-const Nav = ({ toggleAuthModal, handleNavButton }) => {
+const Nav = ({ toggleAuthModal, handleNavButton, auth }) => {
   return (
     <nav className="flex justify-between py-10 font-medium text-xl tracking-tight">
       <div className="nav-left flex items-center">
@@ -8,7 +8,14 @@ const Nav = ({ toggleAuthModal, handleNavButton }) => {
         <div className="separator bg-white h-1.5 w-1.5 mx-4 mt-0.5 rounded-full"></div>
         <div className="catchphrase">powered by obvious prime</div>
       </div>
-      <div className="nav-right flex">
+      {auth.user ? (
+      <Link
+        href={route('dashboard')}
+      >
+        Dashboard
+      </Link>
+      ) : (
+        <div className="nav-right flex">
         <div
           className="register cursor-pointer"
           onClick={(e) => {
@@ -28,6 +35,7 @@ const Nav = ({ toggleAuthModal, handleNavButton }) => {
           login
         </div>
       </div>
+      )}
     </nav>
   );
 };
