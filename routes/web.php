@@ -21,13 +21,6 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/copy', function () {
-    return Inertia::render('WelcomeCopy', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-    ]);
-});
-
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

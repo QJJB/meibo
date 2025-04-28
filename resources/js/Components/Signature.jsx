@@ -1,4 +1,4 @@
-import meiboSVG from "../../../assets/meibo.svg";
+import meiboSVG from "../../assets/meibo.svg";
 
 function Signature() {
   return (

@@ -10,7 +10,7 @@ const AuthModal = ({ toggleAuthModal, navButton, handleNavButton }) => {
             ></div>
             {navButton === "register" ? (
                 <>
-                    <Register handleNavButton={handleNavButton}/>
+                    <Register handleNavButton={handleNavButton} />
                     {/* <div className="modal-login z-20 w-xl p-5 rounded-2xl bg-[#15181E] mb-3">
                         <button className="text-3xl font-medium mb-3  mr-1.5">
                             register
@@ -91,7 +91,7 @@ const AuthModal = ({ toggleAuthModal, navButton, handleNavButton }) => {
                 </>
             ) : navButton === "login" ? (
                 <>
-                <Login handleNavButton={handleNavButton}/>
+                    <Login handleNavButton={handleNavButton} />
                     {/* <div className="modal-login z-20 w-xl p-5 rounded-2xl bg-[#15181E] mb-3">
                         <button className="text-3xl font-medium mr-1.5">
                             login
