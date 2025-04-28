@@ -93,6 +93,10 @@ class PermissionController extends Controller
         // Récupération du rôle
         $role = Role::findOrFail($rolesId);
 
+        if($role->name == "admin" || $role->name == "guest"){
+            return redirect()->back();
+        }
+
         $permissionId = request('permission_id');
 
         // Vérifier que le user n'a pas déjà cette permission
