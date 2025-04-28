@@ -6,7 +6,7 @@ import InputError from "@/Components/InputError";
 import Checkbox from "@/Components/Checkbox";
 import { Head, Link, useForm } from "@inertiajs/react";
 
-export default function Login({ status, canResetPassword }) {
+export default function Login({ status, canResetPassword, handleNavButton }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         email: "",
         password: "",
@@ -23,13 +23,17 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in"/>
+            <Head title="Log in" />
 
-            {status && (
-                <div className="mb-4 text-sm font-medium text-green-600">
-                    {status}
-                </div>
-            )}
+            <button className="text-3xl font-medium mr-1.5">login</button>
+            <button
+                className="text-3xl font-medium text-[#46484C] mb-3 cursor-pointer"
+                onClick={(e) => {
+                    handleNavButton("register");
+                }}
+            >
+                register
+            </button>
 
             <form onSubmit={submit}>
                 <div>
@@ -79,6 +83,14 @@ export default function Login({ status, canResetPassword }) {
                         </span>
                     </label>
                 </div>
+
+                {/* Deplacer en dehors de la modal */}
+                <a
+                    href="#"
+                    className="text-sm mb-3 font-semibold tracking-tight text-[#868688] hover:text-white cursor-pointer"
+                >
+                    forgot my password
+                </a>
 
                 <div className="mt-4 flex items-center justify-end">
                     {canResetPassword && (

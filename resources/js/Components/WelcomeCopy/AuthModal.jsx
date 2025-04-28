@@ -1,4 +1,6 @@
 import Login from "./Login";
+import Register from "./Register";
+
 const AuthModal = ({ toggleAuthModal, navButton, handleNavButton }) => {
     return (
         <div className="modal fixed inset-0 z-50 w-full h-screen flex flex-col justify-center items-center">
@@ -8,7 +10,8 @@ const AuthModal = ({ toggleAuthModal, navButton, handleNavButton }) => {
             ></div>
             {navButton === "register" ? (
                 <>
-                    <div className="modal-login z-20 w-xl p-5 rounded-2xl bg-[#15181E] mb-3">
+                    <Register handleNavButton={handleNavButton}/>
+                    {/* <div className="modal-login z-20 w-xl p-5 rounded-2xl bg-[#15181E] mb-3">
                         <button className="text-3xl font-medium mb-3  mr-1.5">
                             register
                         </button>
@@ -84,11 +87,11 @@ const AuthModal = ({ toggleAuthModal, navButton, handleNavButton }) => {
                         className="z-20 text-sm mb-3 font-semibold tracking-tight text-[#868688] hover:text-white cursor-pointer"
                     >
                         already registered
-                    </a>
+                    </a> */}
                 </>
             ) : navButton === "login" ? (
                 <>
-                <Login />
+                <Login handleNavButton={handleNavButton}/>
                     {/* <div className="modal-login z-20 w-xl p-5 rounded-2xl bg-[#15181E] mb-3">
                         <button className="text-3xl font-medium mr-1.5">
                             login
