@@ -115,8 +115,79 @@
         </div>
 
         @foreach($users as $user)
-            <p>{{ $user['name'] }} ({{ $user['email'] }}) - Rôles : {{ $user['roles']->join(', ') }}</p>
+            <p>{{ $user['name'] }} ({{ $user['email'] }})</p>
+            <p>Rôles : {{ $user['roles']->join(', ') }}</p>
+
         @endforeach
+
+        @foreach($users as $user)
+            <p><strong>{{ $user['name'] }}</strong> ({{ $user['email'] }})</p>
+
+            @if(count($user['roles']) > 0)
+                <ul>
+                    @foreach($user['roles'] as $role)
+
+                        <li>
+                            {{ $role['name'] }}
+                            <form action="{{ route('projects.roles.user.destroy', ['project' => $projects->id, 'role' => $role['id'], 'user' => $user['id']]) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <input type="hidden" name="user_id" value="{{ $user['id'] }}">
+                                <input type="hidden" name="role" value="{{ $role['id'] }}">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </li>
+                    @endforeach
+
+                </ul>
+            @else
+                <p>Aucun rôle attribué.</p>
+            @endif
+
+        @endforeach
+
+
+
+        <a href="{{ route('projects.roles.edit', $projects['id']) }}" class="btn">Modify Roles</a>
+
+        <p><strong>Role du projet:</strong></p>
+        @foreach($roles as $role)
+            <ul>
+                <li>
+                    <form action="{{ route('projects.roles.destroy', ['project' => $projects->id, 'role' => $role['id']]) }}" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <p>{{$role['name']}}</p>
+                        <button type="submit">Delete</button>
+                    </form>
+                </li>
+            </ul>
+        @endforeach
+
+        <form action="{{ route('projects.roles.update-name', $projects->id) }}" method="POST" style="margin-top: 20px;">
+            @csrf
+            @method('PUT')
+
+            @foreach($roles as $role)
+                <div class="form-group">
+                    <label for="role_{{ $role->id }}">Nom du rôle :</label>
+                    <input type="text" class="form-control" id="role_{{ $role->id }}" name="roles[{{ $role->id }}]" value="{{ $role->name }}">
+                </div>
+            @endforeach
+
+            <button type="submit" class="btn btn-primary">Modifier les noms</button>
+        </form>
+        <form action="{{ route('projects.roles.store', $projects->id) }}" method="POST" style="margin-top: 20px;">
+            @csrf
+
+            <p>Ajouter un nouveau rôle:</p>
+            <div class="form-group">
+                <label for="name">Nom du rôle :</label>
+                <input type="text" class="form-control" id="name" name="name">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add</button>
+        </form>
 
     </div>
 </body>

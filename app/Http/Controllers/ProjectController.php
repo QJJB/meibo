@@ -9,7 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Role;
 use App\Models\ProjectUser;
 use App\Models\ProjectRole;
+use App\Models\ProjectMember;
+use App\Models\User;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Http\Request;
 
 
 
@@ -52,16 +55,29 @@ class ProjectController extends Controller
         // On transforme ça pour avoir une liste de users avec leurs rôles
         $users = $membersWithRoles->map(function ($member) {
             return [
+                'id' => $member->user->id,
                 'name' => $member->user->name,
                 'email' => $member->user->email,
-                'roles' => $member->roles->pluck('name'), // on prend juste les noms des rôles
+                'roles' => $member->roles->map(function ($role) {
+                    return [
+                        'id' => $role->id,
+                        'name' => $role->name
+                    ];
+                }),
             ];
         });
+
+
+        //dd($users);
+
+        //Récupérer les roles présents dans notre projet
+        $roles = Role::where('project_id', $project->id)->get();
 
 
         return view('projects/show', [
             'projects' => $project,
             'users' => $users,
+            'roles' => $roles
         ]);
     }
 
@@ -213,5 +229,6 @@ class ProjectController extends Controller
             'project_id' => $project->id
         ]);
     }
+
 
 }
