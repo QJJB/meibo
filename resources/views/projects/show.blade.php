@@ -116,12 +116,6 @@
         </div>
 
         @foreach($users as $user)
-            <p>{{ $user['name'] }} ({{ $user['email'] }})</p>
-            <p>Rôles : {{ $user['roles']->join(', ') }}</p>
-
-        @endforeach
-
-        @foreach($users as $user)
             <p><strong>{{ $user['name'] }}</strong> ({{ $user['email'] }})</p>
 
             @if(count($user['roles']) > 0)
