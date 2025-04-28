@@ -24,12 +24,12 @@ function TaskCard() {
         </div>
       </div>
 
-      <div className="task-card-container flex bg-yellow-meibo [width:calc(100%-30px)] h-[55%] mx-[15px] rounded-[20px] mb-[15px] mt-[15px]">
-        <div className="task-card-description flex flex-col w-[224px] space-y-[8px] ml-[15px] mt-[15px]">
+      <div className="task-card-container flex items-center justify-between bg-yellow-meibo [width:calc(100%-30px)] h-[55%] mx-[15px] rounded-[20px] mb-[15px] mt-[15px]">
+        <div className="task-card-description flex flex-col w-[224px] space-y-[8px] ml-[24px] mb-[60px]]">
           <p className='text-dark-primary text-[15px] font-medium [letter-spacing:-0.05em]'>Important!</p>
           <p className='text-dark-primary text-[17px] font-medium [letter-spacing:-0.05em] leading-[21px]'>Study sun exposure and wind conditions</p>
         </div>
-        <img src="" alt="" />
+        <img src="/storage/task-icons/check.svg" alt="" className='w-[50px] h-[50px] mr-[24px]'/>
       </div>
 
     </div>
