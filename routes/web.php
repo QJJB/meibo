@@ -8,8 +8,8 @@ use \App\Http\Controllers\ProjectController;
 use \App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\RoleController;
-
 use App\Http\Controllers\InvitationController;
+use App\Http\Controllers\PermissionController;
 
 
 Route::get('/', function () {
@@ -56,13 +56,18 @@ Route::get('/projects/{project}/roles/edit', [RoleController::class, 'editRole']
 Route::put('/projects/{project}/roles/update', [RoleController::class, 'updateRole'])->name('projects.roles.update');
 Route::put('/projects/{project}/update-roles-name', [RoleController::class, 'updateRolesName'])->name('projects.roles.update-name');
 Route::post('/projects/{project}/addNewRoles', [RoleController::class, 'addNewRoles'])->name('projects.roles.store');
-
 Route::get('/projects/{project}/addNewRolesForAUser/{user}', [RoleController::class, 'addNewRolesForAUser'])->name('projects.roles.user');
 Route::post('/projects/{project}/addNewRolesForAUser/{user}', [RoleController::class, 'storeAddNewRolesForAUser'])->name('projects.roles.user');
 //Suppression de role pour un user
 Route::delete('/projects/{project}/roles/{role}/delete/{user}', [RoleController::class, 'destroyRoleForUser'])->name('projects.roles.user.destroy');
 //Suppression d'un role pour un projet
 Route::delete('/projects/{project}/roles/{role}/delete_for_project', [RoleController::class, 'destroyRoleForProject'])->name('projects.roles.destroy');
+
+
+// Gestion des permissions
+Route::get('/projects/{project}/permissions', [PermissionController::class, 'showPermissions'])->name('projects.permissions');
+Route::post('/projects/{project}/permissions/post/{roles}', [PermissionController::class, 'storePermission'])->name('projects.permissions');
+Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [PermissionController::class, 'deletePermissions'])->name('projects.permissions.destroy');
 
 
 require __DIR__.'/auth.php';

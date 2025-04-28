@@ -67,12 +67,10 @@ class ProjectController extends Controller
             ];
         });
 
-
         //dd($users);
 
         //Récupérer les roles présents dans notre projet
         $roles = Role::where('project_id', $project->id)->get();
-
 
         return view('projects/show', [
             'projects' => $project,
@@ -114,7 +112,6 @@ class ProjectController extends Controller
             ->where('user_id', $user->id)
             ->first();
 
-
         // Récupère la dernière insertion dans la table project_members
         //dd($lastInsertedId);
 
@@ -122,6 +119,10 @@ class ProjectController extends Controller
         $adminRole = Role::create(['name' => 'admin', 'project_id' => $project->id]);
         $guestRole = Role::create(['name' => 'guest', 'project_id' => $project->id]);
         //dd($adminRole->id);
+
+        // Lier les id créer aux permissions
+        $adminRole->permissions()->attach([1,2,3,4,5,6,7]);
+        $guestRole->permissions()->attach([1]);
 
         //Associer id recuperer et le lier au role admin
         $projectUser->project_roles()->create([
