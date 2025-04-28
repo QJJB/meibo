@@ -112,7 +112,7 @@
         <br>
 
 
-        <form action="{{ route('projects.permissions', ['project' => $projects, 'roles' => $role->id]) }}" method="POST" style="display:inline;">
+        <form action="{{ route('projects.permissions.store', ['project' => $projects, 'roles' => $role->id]) }}" method="POST" style="display:inline;">
             @csrf
             @method('POST')
             <label for="pet-select">Choose a permission</label>
