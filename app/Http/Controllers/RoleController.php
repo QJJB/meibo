@@ -13,9 +13,42 @@ use Illuminate\Support\Facades\Auth;
 
 class RoleController extends Controller
 {
+    // Vérification des autorisations
+    public function hasPermission($projectId)
+    {
+        $user = Auth::user();
+
+        $project = Project::findOrFail($projectId);
+
+        // Vérifie que l'utilisateur est bien associé au projet
+        if (!$project->users->contains($user)) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Récupère le membre du projet pour cet utilisateur avec ses rôles et permissions
+        $member = $project->members()
+            ->where('user_id', $user->id)
+            ->with('roles.permissions')
+            ->first();
+
+        if (!$member) {
+            return collect(); // Retourne une collection vide si pas de rôle
+        }
+
+        // Extrait les noms des permissions sans doublons
+        $permissions = $member->roles
+            ->flatMap(fn($role) => $role->permissions)
+            ->pluck('name')
+            ->unique()
+            ->values(); // Réindexe proprement
+
+        return $permissions;
+    }
+
     // Fonction gestion role d'un projet
     public function editRole($id)
     {
+
         $project = Project::findOrFail($id);
 
         // Optionnel : vérifie que l'utilisateur peut accéder
@@ -39,6 +72,7 @@ class RoleController extends Controller
 
     public function updateRole(Request $request, Project $project)
     {
+
         $user = Auth::user();
         if (!$project->users()->where('users.id', $user->id)->exists()) {
             abort(403, 'Unauthorized');
@@ -83,6 +117,12 @@ class RoleController extends Controller
 
     public function updateRolesName(Request $request, $id)
     {
+        $permissions = $this->hasPermission($id);
+
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $project = Project::findOrFail($id);
 
         if (!$project->users->contains(Auth::user())) {
@@ -92,9 +132,16 @@ class RoleController extends Controller
         $rolesInput = $request->input('roles', []);
 
         foreach ($rolesInput as $roleId => $newName) {
-            $role = Role::where('id', $roleId)->where('project_id', $project->id)->first();
+            $role = Role::where('id', $roleId)
+                ->where('project_id', $project->id)
+                ->first();
 
-            if ($role && $newName !== $role->name) {
+            //  Empêche la modification des rôles "admin" et "guest"
+            if (!$role || in_array($role->name, ['admin', 'guest'])) {
+                continue; // ignore cette itération
+            }
+
+            if ($newName !== $role->name) {
                 $role->name = $newName;
                 $role->save();
             }
@@ -103,8 +150,16 @@ class RoleController extends Controller
         return redirect()->route('projects.show', $project->id)->with('success', 'Les noms des rôles ont été mis à jour.');
     }
 
+
     public function addNewRoles(Request $request, $id)
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $project = Project::findOrFail($id);
         //dd($project->id);
 
@@ -141,6 +196,13 @@ class RoleController extends Controller
 
     public function addNewRolesForAUser(Request $request, $id, $user_id)
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $project = Project::findOrFail($id);
 
         $user = User::findOrFail($user_id);
@@ -161,6 +223,13 @@ class RoleController extends Controller
     }
 
     public function storeAddNewRolesForAUser($project, $user, Request $request){
+
+        $permissions = $this->hasPermission($project);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
 
         $roleID = $request->roles[$user][0];
 
@@ -191,6 +260,13 @@ class RoleController extends Controller
     // Suppression d'un role pour un user
     public function destroyRoleForUser($projectId, $roleId, $userId)
     {
+
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
 
         // récupère l'id dans la table project_members
         $project_roles_id = ProjectMember::where('user_id', $userId)->where('project_id', $projectId)->first();
@@ -230,6 +306,13 @@ class RoleController extends Controller
 
     // Suppression d'un role dans un projet
     public function destroyRoleForProject($projectId, $roleId){
+
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
         //dd($projectId, $roleId);
         // Faire attention aux liens avec les tâches dans table 'task_roles'
         // Dois empêcher la suppression des rôles guest et admin

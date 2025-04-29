@@ -12,10 +12,47 @@ use Illuminate\Support\Facades\DB;
 
 class PermissionController extends Controller
 {
+    public function hasPermission($projectId)
+    {
+        $user = Auth::user();
+
+        $project = Project::findOrFail($projectId);
+
+        // Vérifie que l'utilisateur est bien associé au projet
+        if (!$project->users->contains($user)) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Récupère le membre du projet pour cet utilisateur avec ses rôles et permissions
+        $member = $project->members()
+            ->where('user_id', $user->id)
+            ->with('roles.permissions')
+            ->first();
+
+        if (!$member) {
+            return collect(); // Retourne une collection vide si pas de rôle
+        }
+
+        // Extrait les noms des permissions sans doublons
+        $permissions = $member->roles
+            ->flatMap(fn($role) => $role->permissions)
+            ->pluck('name')
+            ->unique()
+            ->values(); // Réindexe proprement
+
+        return $permissions;
+    }
+
     // Affiche tous les projets associés à l'utilisateur connecté.
     public function showPermissions($projectId)
     {
         //dd($projectId);
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_read')) {
+            abort(403, 'Permission denied');
+        }
 
         $roles = Role::where('project_id', $projectId)->get();
         $rolesId = $roles->pluck('id');
@@ -74,6 +111,13 @@ class PermissionController extends Controller
     }
     public function deletePermissions($projectId, $permissionId, $rolesId)
     {
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         // Récupérer le rôle
         $role = Role::findOrFail($rolesId);
 
@@ -90,8 +134,18 @@ class PermissionController extends Controller
 
     public function storePermission($projectId, $rolesId)
     {
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
         // Récupération du rôle
         $role = Role::findOrFail($rolesId);
+
+        if($role->name == "admin" || $role->name == "guest"){
+            return redirect()->back();
+        }
 
         $permissionId = request('permission_id');
 
