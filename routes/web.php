@@ -41,7 +41,10 @@ Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
     ->name('project.invite')
     ->middleware('signed');
 
-Route::post('showProjectNumber/{id}', function ($id) {
+Route::post('/showProjectNumber/{id}', [ProjectController::class, 'generateInviteLink']);
+Route::get('/projects/link/{project}', [ProjectController::class, 'link'])->name('project.link');
+
+/*Route::post('/showProjectNumber/{id}', function ($id) {
     $url = URL::temporarySignedRoute(
         'project.invite',
         now()->addMinutes(60),
@@ -49,7 +52,7 @@ Route::post('showProjectNumber/{id}', function ($id) {
     );
 
     return $url;
-});
+});*/
 
 // Route gestion des roles d'un projet
 Route::get('/projects/{project}/roles/edit', [RoleController::class, 'editRole'])->name('projects.roles.edit');

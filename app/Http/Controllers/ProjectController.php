@@ -24,6 +24,41 @@ use Illuminate\Http\Request;
  */
 class ProjectController extends Controller
 {
+    // Vérification des autorisations
+    public function hasPermission($projectId)
+    {
+        $user = Auth::user();
+
+        $project = Project::findOrFail($projectId);
+
+        // Vérifie que l'utilisateur est bien associé au projet
+        if (!$project->users->contains($user)) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Récupère le membre du projet pour cet utilisateur avec ses rôles et permissions
+        $member = $project->members()
+            ->where('user_id', $user->id)
+            ->with('roles.permissions')
+            ->first();
+
+        if (!$member) {
+            return collect(); // Retourne une collection vide si pas de rôle
+        }
+
+        // Extrait les noms des permissions sans doublons
+        $permissions = $member->roles
+            ->flatMap(fn($role) => $role->permissions)
+            ->pluck('name')
+            ->unique()
+            ->values(); // Réindexe proprement
+
+        return $permissions;
+    }
+
+
+
+
     // Affiche tous les projets associés à l'utilisateur connecté.
     public function index() : View
     {
@@ -38,6 +73,13 @@ class ProjectController extends Controller
     // Affiche un projet spécifique.
     public function show($id) : View
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_read')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
         $project = Project::findOrFail($id); // Récupère le projet ou renvoie une erreur 404
 
@@ -121,7 +163,7 @@ class ProjectController extends Controller
         //dd($adminRole->id);
 
         // Lier les id créer aux permissions
-        $adminRole->permissions()->attach([1,2,3,4,5,6,7]);
+        $adminRole->permissions()->attach([1,2,3,4,5]);
         $guestRole->permissions()->attach([1]);
 
         //Associer id recuperer et le lier au role admin
@@ -137,6 +179,13 @@ class ProjectController extends Controller
     // Afficher le formulaire d'édition d'un projet
     public function edit($id)
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
         $project = Project::findOrFail($id);
 
@@ -150,6 +199,13 @@ class ProjectController extends Controller
     // Met à jour un projet existant.
     public function update($id)
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
         $project = Project::findOrFail($id);
 
@@ -188,6 +244,13 @@ class ProjectController extends Controller
     // Supprime un projet
     public function destroy($id)
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('project_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
         $project = Project::findOrFail($id);
 
@@ -208,14 +271,36 @@ class ProjectController extends Controller
     //________________________________________________
     public function generateInviteLink($projectId)
     {
+        $permissions = $this->hasPermission($projectId);
+
+        //dd($permissions);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('user_add')) {
+            abort(403, 'Permission denied');
+        }
+
         $url = URL::temporarySignedRoute(
-            'share-link',
-            now()->addMinutes(30),
-            ['project' => $projectId]
+            'project.invite',
+            now()->addMinutes(60),
+            ['projectId' => $projectId]
         );
 
-        return redirect()->back()->with('invite_url', $url);
+        return redirect()->route('project.link', $projectId)->with('invite_url', $url);
     }
+
+    public function link($projectId)
+    {
+        // Récupère le projet (facultatif, si tu veux afficher des détails du projet dans la vue)
+        $project = Project::findOrFail($projectId);
+
+        // Récupère l'URL d'invitation depuis la session
+        $inviteUrl = session('invite_url');
+
+        // Retourne la vue avec les données du projet et de l'URL
+        return view('projects.link', compact('project', 'inviteUrl'));
+    }
+
 
     public function linkUsertoProject($projectId){
         $user = Auth::user(); // Récupère l'utilisateur connecté
