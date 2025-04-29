@@ -2,8 +2,12 @@ import React from 'react'
 
 const AgendaDashboard = () => {
   return (
-    <div className='bg-dark-secondary rounded-[20px]'>
-      <h1 className='text-white-title mt-[25px] ml-[30px] text-[30px] leading-[30px] font-semibold'>Agenda</h1>
+    <div className="agenda bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
+      <div className="head">
+        <h2 className="">Agenda</h2>
+        <div className="separator"></div>
+        <p className="">Sep 25, 2025</p> 
+      </div>
     </div>
   )
 }
