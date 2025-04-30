@@ -222,40 +222,40 @@ class RoleController extends Controller
         ]);
     }
 
-    public function storeAddNewRolesForAUser($project, $user, Request $request){
-
+    public function storeAddNewRolesForAUser($project, $user, Request $request)
+    {
         $permissions = $this->hasPermission($project);
 
-        // Vérifie que l'utilisateur est autoriser à accéder au projet
         if (!$permissions->contains('project_manage')) {
             abort(403, 'Permission denied');
         }
 
+        // Récupère le membre du projet
+        $projectMember = ProjectUser::where('project_id', $project)
+            ->where('user_id', $user)
+            ->firstOrFail();
+
+        // Récupère le rôle sélectionné (si un seul envoyé)
         $roleID = $request->roles[$user][0];
 
-        // Vérifier que le user n'a pas déjà ce role
-        $checkIfAllreadyInProject = ProjectRole::where('project_members_id', $project)
+        // Vérifie si le rôle est déjà attribué à ce membre
+        $alreadyHasRole = ProjectRole::where('project_members_id', $projectMember->id)
             ->where('role_id', $roleID)
             ->exists();
 
-        // Si l'user à déjà le role, empêche son ajout
-        if($checkIfAllreadyInProject != null){
-            return redirect()->route('projects.show', $project);
+        if ($alreadyHasRole) {
+            return redirect()->route('projects.show', $project)
+                ->with('error', 'Ce rôle est déjà attribué à cet utilisateur.');
         }
 
-        // récupère l'user dans la table project_member un projet
-        $projectUser = ProjectUser::where('project_id', $project)
-            ->where('user_id', $user)
-            ->first();
-
-        //Associe le dernier user créer à l'id de role
-        $projectUser->project_roles()->create([
+        // Sinon, ajoute le rôle
+        $projectMember->project_roles()->create([
             'role_id' => $roleID
         ]);
 
-        return redirect()->back();
-
+        return redirect()->back()->with('success', 'Rôle ajouté avec succès.');
     }
+
 
     // Suppression d'un role pour un user
     public function destroyRoleForUser($projectId, $roleId, $userId)
