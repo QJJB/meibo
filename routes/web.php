@@ -21,9 +21,11 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
+/*Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');*/
+
+Route::get('/dashboard', [TaskController::class, 'testReactTask']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -72,5 +74,8 @@ Route::get('/projects/{project}/permissions', [PermissionController::class, 'sho
 Route::post('/projects/{project}/permissions/post/{roles}', [PermissionController::class, 'storePermission'])->name('projects.permissions.store');
 Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [PermissionController::class, 'deletePermissions'])->name('projects.permissions.destroy');
 
+// Test React
+//Route::get('/testReact', [ProjectController::class, 'testReact']);
+Route::get('/testReact', [TaskController::class, 'testReactTask']);
 
 require __DIR__.'/auth.php';

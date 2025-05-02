@@ -238,4 +238,27 @@ class TaskController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Task deleted successfully.');
     }
+
+    public function testReactTask(){
+
+        $user = Auth::user();   // Récupère l'utilisateur connecté
+        $projects = Project::findOrFail(31); // Récupère le projet ou renvoie une erreur 404
+
+        // Vérifie si l'utilisateur connecté est associé au projet
+        if (!$projects->users->contains($user)) {
+            abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
+        }
+
+        $tasks = $projects->tasks; // Récupère les tâches associées à ce projet
+
+        /*return Inertia::render('Tasks/Index', [
+            'tasks' => $tasks,
+            'projects' => $projects
+        ]);*/
+
+        return response()->json([
+            'tasks' => $tasks,
+            'projects' => $projects
+        ]);
+    }
 }

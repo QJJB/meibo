@@ -13,6 +13,7 @@ use App\Models\ProjectMember;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 
 
@@ -60,11 +61,17 @@ class ProjectController extends Controller
 
 
     // Affiche tous les projets associés à l'utilisateur connecté.
-    public function index() : View
+    public function index(Request $request)
     {
-        $user = Auth::user(); // Récupère l'utilisateur connecté
-        $projects = $user->projects; // Récupère les projets associés à cet utilisateur
+        $user = Auth::user();
+        $projects = $user->projects;
 
+        // Si l'appel est une requête AJAX/API
+        if ($request->wantsJson()) {
+            return response()->json($projects);
+        }
+
+        // Sinon, retourne la vue Blade
         return view('projects/index', [
             'projects' => $projects
         ]);
@@ -313,6 +320,15 @@ class ProjectController extends Controller
         return response()->json([
             'message' => 'Utilisateur ajouté au projet avec succès.',
             'project_id' => $project->id
+        ]);
+    }
+
+// ProjectController.php
+// Test React
+    public function testReact() {
+        return response()->json([
+            'tasks' => Task::where('project_id', 18)->get(),
+            'projects' => Project::all(),
         ]);
     }
 
