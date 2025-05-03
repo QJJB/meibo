@@ -256,7 +256,7 @@ class TaskController extends Controller
             'projects' => $projects
         ]);*/
 
-        return response()->json([
+        return Inertia::render('TaskCard', [
             'tasks' => $tasks,
             'projects' => $projects
         ]);

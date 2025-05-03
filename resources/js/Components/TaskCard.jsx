@@ -1,26 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
-import axios from 'axios';
+import { usePage } from '@inertiajs/react';
 
 function TaskCard() {
-    const [tasks, setTasks] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-
-    useEffect(() => {
-        axios.get('/testReact') // appelle ta route Laravel
-            .then(response => {
-                setTasks(response.data.tasks); // attention ici
-                setLoading(false);
-            })
-            .catch(error => {
-                setError("Erreur lors du chargement des tâches");
-                setLoading(false);
-            });
-    }, []);
-
-    if (loading) return <p>Chargement des tâches...</p>;
-    if (error) return <p>{error}</p>;
+    const { tasks, projects } = usePage().props;
 
     return (
         <div>
@@ -62,10 +43,4 @@ function TaskCard() {
             )}
         </div>
     );
-}
-
-export default TaskCard;
-
-if (document.getElementById('task-card')) {
-    ReactDOM.render(<TaskCard />, document.getElementById('task-card'));
 }
