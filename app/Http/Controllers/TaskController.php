@@ -5,6 +5,7 @@ use Illuminate\View\View;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 
 class TaskController extends Controller
@@ -239,26 +240,22 @@ class TaskController extends Controller
         return redirect()->route('projects.index')->with('success', 'Task deleted successfully.');
     }
 
-    public function testReactTask(){
 
-        $user = Auth::user();   // Récupère l'utilisateur connecté
-        $projects = Project::findOrFail(31); // Récupère le projet ou renvoie une erreur 404
+    public function testReactTask()
+    {
+        $user = Auth::user();
+        $project = Project::findOrFail(30);
 
-        // Vérifie si l'utilisateur connecté est associé au projet
-        if (!$projects->users->contains($user)) {
-            abort(403, 'Unauthorized'); // Renvoie une erreur 403 si non autorisé
+        if (!$project->users->contains($user)) {
+            abort(403, 'Unauthorized');
         }
 
-        $tasks = $projects->tasks; // Récupère les tâches associées à ce projet
+        $tasks = $project->tasks;
 
-        /*return Inertia::render('Tasks/Index', [
-            'tasks' => $tasks,
-            'projects' => $projects
-        ]);*/
-
-        return Inertia::render('TaskCard', [
-            'tasks' => $tasks,
-            'projects' => $projects
+        return Inertia::render('TestReact', [
+            'tasks' => $tasks
         ]);
     }
+
+
 }
