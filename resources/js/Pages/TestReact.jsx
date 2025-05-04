@@ -1,6 +1,7 @@
 // resources/js/Pages/TestReact.jsx
 import React from 'react';
 import { usePage } from '@inertiajs/react';
+import TaskCard from "@/Components/TaskCard.jsx";
 
 export default function TestReact() {
     const { tasks } = usePage().props;
@@ -21,6 +22,10 @@ export default function TestReact() {
                     ))}
                 </ul>
             )}
+
+            <TaskCard tasks={tasks} />
+
         </div>
+
     );
 }

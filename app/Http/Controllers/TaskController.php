@@ -252,7 +252,7 @@ class TaskController extends Controller
 
         $tasks = $project->tasks;
 
-        return Inertia::render('TestReact', [
+        return Inertia::render('Dashboard', [
             'tasks' => $tasks
         ]);
     }

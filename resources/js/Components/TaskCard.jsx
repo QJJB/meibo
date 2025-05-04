@@ -2,10 +2,8 @@
 import React from 'react';
 import { usePage } from '@inertiajs/react';
 
-function TaskCard() {
-    const { tasks } = usePage().props;
-
-    if (tasks.length === 0) {
+function TaskCard({ tasks }) {
+    if (!tasks || tasks.length === 0) {
         return <p className="text-center text-white mt-4">Aucune tâche trouvée.</p>;
     }
 
