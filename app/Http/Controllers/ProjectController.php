@@ -14,8 +14,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 
-
-
 /**
  * Class ProjectController
  *
@@ -56,17 +54,14 @@ class ProjectController extends Controller
         return $permissions;
     }
 
-
-
-
     // Affiche tous les projets associés à l'utilisateur connecté.
-    public function index() : Inertia
+    public function index() : View
     {
         $user = Auth::user(); // Récupère l'utilisateur connecté
         $projects = $user->projects; // Récupère les projets associés à cet utilisateur
 
-        return Inertia::render('Dashboard', [
-            'projects' => $projects,
+        return view('projects/index', [
+            'projects' => $projects
         ]);
     }
 

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\PermissionController;
-
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -21,9 +21,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Dashboard
+Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Page projet et tâche
 Route::middleware('auth')->group(function () {
     Route::resource('projects', ProjectController::class);
     Route::resource('projects.tasks', TaskController::class);
@@ -60,5 +60,6 @@ Route::delete('/projects/{project}/roles/{role}/delete_for_project', [RoleContro
 Route::get('/projects/{project}/permissions', [PermissionController::class, 'showPermissions'])->name('projects.permissions');
 Route::post('/projects/{project}/permissions/post/{roles}', [PermissionController::class, 'storePermission'])->name('projects.permissions.store');
 Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [PermissionController::class, 'deletePermissions'])->name('projects.permissions.destroy');
+
 
 require __DIR__.'/auth.php';
