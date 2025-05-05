@@ -8,7 +8,7 @@ import TasksDashboard from '@/Components/TasksDashboard';
 export default function Dashboard() {
     return (
         <AuthenticatedLayout>
-            <div className="grid grid-cols-[1.6fr_1fr] grid-rows-[0.4fr_0.7fr] gap-[15px] mt-[15px] mb-[15px] w-[calc(100%-15px)] h-[calc(100vh-30px)]">
+            <div className="grid grid-cols-[1.6fr_1fr]  gap-[15px] mt-[15px] mb-[15px] w-[calc(100%-15px)] h-[calc(100vh-30px)]">
                 <AgendaDashboard></AgendaDashboard>
                 <NewsDashboard></NewsDashboard>
                 <ProjectsDashboard></ProjectsDashboard>

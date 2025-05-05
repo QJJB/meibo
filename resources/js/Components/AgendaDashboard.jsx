@@ -17,10 +17,10 @@ const AgendaDashboard = () => {
       <div className="body flex justify-between h-full py-[30px]">
         <div className="separator w-[3px] self-stretch bg-header-separation rounded-[3px]"></div>
 
-        <div className="day w-full px-[10px] flex flex-col gap-[10px]">
-          <h3 className="prev text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px]">22</h3>
+        <div className="day prev w-full px-[10px] flex flex-col gap-[10px]">
+          <h3 className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px]">22</h3>
 
-          <div className="task bg-yellow-meibo rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
+          <div className="task bg-yellow-meibo border border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
             <div className="left flex items-center">
             <div className='w-7 h-7 rounded-full overflow-hidden mr-[10px]'>
               <img
@@ -37,7 +37,7 @@ const AgendaDashboard = () => {
             </div>
           </div>
 
-          <div className="task bg-yellow-meibo rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
+          <div className="task bg-yellow-meibo border border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
             <div className="left flex items-center">
             <div className='w-7 h-7 rounded-full overflow-hidden mr-[10px]'>
               <img
@@ -59,14 +59,14 @@ const AgendaDashboard = () => {
 
         <div className="separator w-[3px] self-stretch bg-header-separation rounded-[3px]"></div>
 
-        <div className="day w-full px-[15px]">
-          <h3 className="active text-white-title text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px]">23</h3>
+        <div className="day active w-full px-[15px]">
+          <h3 className="text-white-title text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px]">23</h3>
         </div>
 
         <div className="separator w-[3px] self-stretch bg-header-separation rounded-[3px]"></div>
 
-        <div className="day w-full px-[15px]">
-          <h3 className="next text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px]">24</h3>
+        <div className="day next w-full px-[15px]">
+          <h3 className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px]">24</h3>
         </div>
 
         <div className="sepaseparator w-[3px] self-stretch bg-header-separation rounded-[3px]rator"></div>
