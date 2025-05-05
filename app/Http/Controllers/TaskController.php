@@ -241,21 +241,15 @@ class TaskController extends Controller
     }
 
 
-    public function testReactTask()
+    public function getAssignedTasks()
     {
         $user = Auth::user();
-        $project = Project::findOrFail(30);
 
-        if (!$project->users->contains($user)) {
-            abort(403, 'Unauthorized');
-        }
-
-        $tasks = $project->tasks;
+        // Récupère toutes les tâches auxquelles l'utilisateur est lié via la table pivot task_assignees
+        $tasks = $user->tasks;
 
         return Inertia::render('Dashboard', [
             'tasks' => $tasks
         ]);
     }
-
-
 }
