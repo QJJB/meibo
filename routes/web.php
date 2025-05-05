@@ -44,16 +44,6 @@ Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
 Route::post('/showProjectNumber/{id}', [ProjectController::class, 'generateInviteLink']);
 Route::get('/projects/link/{project}', [ProjectController::class, 'link'])->name('project.link');
 
-/*Route::post('/showProjectNumber/{id}', function ($id) {
-    $url = URL::temporarySignedRoute(
-        'project.invite',
-        now()->addMinutes(60),
-        ['projectId' => $id]
-    );
-
-    return $url;
-});*/
-
 // Route gestion des roles d'un projet
 Route::get('/projects/{project}/roles/edit', [RoleController::class, 'editRole'])->name('projects.roles.edit');
 Route::put('/projects/{project}/roles/update', [RoleController::class, 'updateRole'])->name('projects.roles.update');
@@ -66,11 +56,9 @@ Route::delete('/projects/{project}/roles/{role}/delete/{user}', [RoleController:
 //Suppression d'un role pour un projet
 Route::delete('/projects/{project}/roles/{role}/delete_for_project', [RoleController::class, 'destroyRoleForProject'])->name('projects.roles.destroy');
 
-
 // Gestion des permissions
 Route::get('/projects/{project}/permissions', [PermissionController::class, 'showPermissions'])->name('projects.permissions');
 Route::post('/projects/{project}/permissions/post/{roles}', [PermissionController::class, 'storePermission'])->name('projects.permissions.store');
 Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [PermissionController::class, 'deletePermissions'])->name('projects.permissions.destroy');
-
 
 require __DIR__.'/auth.php';

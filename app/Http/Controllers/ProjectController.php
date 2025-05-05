@@ -60,13 +60,13 @@ class ProjectController extends Controller
 
 
     // Affiche tous les projets associés à l'utilisateur connecté.
-    public function index() : View
+    public function index() : Inertia
     {
         $user = Auth::user(); // Récupère l'utilisateur connecté
         $projects = $user->projects; // Récupère les projets associés à cet utilisateur
 
-        return view('projects/index', [
-            'projects' => $projects
+        return Inertia::render('Dashboard', [
+            'projects' => $projects,
         ]);
     }
 
