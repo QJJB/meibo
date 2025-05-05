@@ -2,6 +2,7 @@ import React from "react";
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "./NavLink";
 import disconnectSVG from "../../assets/disconnect.svg";
+import ppKirby from '../../assets/pp/kirby.jpg'
 
 const NavBarVertical = () => {
     const { url } = usePage();
@@ -147,7 +148,7 @@ const NavBarVertical = () => {
                         className={`w-7 h-7 rounded-full overflow-hidden hover:scale-110 transition-all duration-200`}
                     >
                         <img
-                            src="/storage/avatars/mushu-avatar.png"
+                            src={ppKirby}
                             alt="Avatar"
                             className="w-full h-full object-cover"
                         />

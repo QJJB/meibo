@@ -1,4 +1,5 @@
 import React from 'react'
+import ppKirby from '../../assets/pp/kirby.jpg'
 
 function TaskCard() {
   return (
@@ -8,7 +9,7 @@ function TaskCard() {
         <div className="task-card-title flex flex-row space-x-[14px] items-center justify-between">
           <div className='w-7 h-7 rounded-full overflow-hidden'>
             <img
-              src="/storage/avatars/mushu-avatar.png"
+              src={ppKirby}
               alt="Avatar"
               className="w-full h-full object-cover"
             />
