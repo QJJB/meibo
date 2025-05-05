@@ -1,7 +1,17 @@
 import React from "react";
+import { usePage } from '@inertiajs/react';
 
-export default function TaskItemCard() {
+export default function TaskItemCard({ projects }) {
+    console.log("Projects reçus :", projects);
+
+    if (!projects || projects.length === 0) {
+        return <p className="text-center text-white mt-4">Aucun projet trouvé.</p>;
+    }
+
     return (
+        <>
+            {projects.map((project) => (
+
         <div className="bg-[#1c1c24] rounded-2xl p-5 w-full max-w-sm text-white relative shadow-md">
             {/* Bookmark icon */}
             <div className="absolute top-4 right-4">
@@ -11,10 +21,10 @@ export default function TaskItemCard() {
             </div>
 
             {/* Category / Tag */}
-            <p className="text-xs text-blue-400">Poison Ivy</p>
+            <p className="text-xs text-blue-400">{project.creator_name}</p>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold mb-2">Garden Plants</h3>
+            <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
 
             {/* Gray tag */}
             <div className="bg-gray-600 rounded-full w-24 h-4 mb-4"></div>
@@ -44,5 +54,7 @@ export default function TaskItemCard() {
                 <span className="ml-2 text-xs text-white">3/8</span>
             </div>
         </div>
+            ))}
+            </>
     );
 }

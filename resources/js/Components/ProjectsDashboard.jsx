@@ -1,10 +1,10 @@
 import React from 'react'
 import ProjectCard from './ProjectCard'
 
-function ProjectsDashboard() {
+function ProjectsDashboard({projects}) {
   return (
     <div className='bg-dark-secondary rounded-[20px]'>
-        <ProjectCard></ProjectCard>
+        <ProjectCard projects={projects}></ProjectCard>
     </div>
   )
 }
