@@ -38,7 +38,6 @@ function TaskCard({ tasks }) {
                             <p className='text-dark-primary text-[15px] font-medium [letter-spacing:-0.05em]'>{task.priority}</p>
                             <p className='text-dark-primary text-[17px] font-medium [letter-spacing:-0.05em] leading-[21px]'>{task.description}</p>
                         </div>
-                        <img src="/storage/task-icons/check.svg" alt="" className='w-[50px] h-[50px] mr-[24px]'/>
                     </div>
         </div>
                 ))}
