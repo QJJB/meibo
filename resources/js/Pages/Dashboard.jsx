@@ -4,8 +4,14 @@ import { Head } from '@inertiajs/react';
 import NewsDashboard from '@/Components/NewsDashboard';
 import ProjectsDashboard from '@/Components/ProjectsDashboard';
 import TasksDashboard from '@/Components/TasksDashboard';
+import TaskCard from "@/Components/TaskCard.jsx";
+import React from "react";
+import { usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
+
+    const { tasks } = usePage().props;
+
     return (
 
         <AuthenticatedLayout>
@@ -16,7 +22,8 @@ export default function Dashboard() {
 
                 {/* Ligne 2 */}
                 <ProjectsDashboard className="h-full" />    {/* 3/4 = 3fr */}
-                <TasksDashboard className="h-[80%]" />      {/* 4/5 = 80% */}
+                <TasksDashboard tasks={tasks} className="h-[80%]" />      {/* 4/5 = 80% */}
+
             </div>
         </AuthenticatedLayout>
 

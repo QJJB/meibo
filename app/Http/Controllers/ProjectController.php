@@ -14,8 +14,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 
-
-
 /**
  * Class ProjectController
  *
@@ -55,9 +53,6 @@ class ProjectController extends Controller
 
         return $permissions;
     }
-
-
-
 
     // Affiche tous les projets associés à l'utilisateur connecté.
     public function index() : View
