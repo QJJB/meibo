@@ -22,7 +22,8 @@ function TaskCard({ tasks }) {
     return (
         <>
         {tasks.map((task) => (
-        <div className='task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto h-[192px] rounded-[20px]'>
+
+            <div className='task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto h-[192px] rounded-[20px]'>
 
 
                     <div className="task-card-header flex flex-row items-center justify-between mt-[22px] mx-[15px] w-[calc(100%-30px)]">
