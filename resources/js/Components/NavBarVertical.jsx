@@ -40,7 +40,7 @@ const NavBarVertical = () => {
                 </div>
 
 
-                <div className={`${hoverBg}`}>
+                {/* <div className={`${hoverBg}`}>
                     <NavLink href="/calendar">
                         <svg
                             className={`w-[18px] h-[18px] ${isActive("/calendar")
@@ -61,7 +61,7 @@ const NavBarVertical = () => {
                             />
                         </svg>
                     </NavLink>
-                </div>
+                </div> */}
 
                 <div className={`${hoverBg}`}>
                     <NavLink href="/projects">
@@ -90,7 +90,7 @@ const NavBarVertical = () => {
 
             {/* ICONES DU BAS PARAMS, NOTIFS, PROFILE */}
             <div className="flex flex-col items-center space-y-6">
-                <div className={`${hoverBg}`}>
+                {/* <div className={`${hoverBg}`}>
                     <NavLink href="/settings">
                         <svg
                             className={`w-6 h-6 ${isActive("/settings")
@@ -117,9 +117,9 @@ const NavBarVertical = () => {
                             />
                         </svg>
                     </NavLink>
-                </div>
+                </div> */}
 
-                <div className={`${hoverBg}`}>
+                {/* <div className={`${hoverBg}`}>
                     <NavLink href="/notifications">
                         <svg
                             className={`w-6 h-6 ${isActive("/notifications")
@@ -140,7 +140,7 @@ const NavBarVertical = () => {
                             />
                         </svg>
                     </NavLink>
-                </div>
+                </div> */}
 
 
                 <NavLink href="/profile">
