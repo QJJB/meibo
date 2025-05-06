@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use App\Models\Project;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,12 @@ class DashboardController extends Controller
         foreach ($projects as $project) {
             $creator = User::find($project->pivot->user_id);
             $project->creator_name = $creator ? $creator->name : 'Inconnu';
+
+            $tasks = $project->tasks;
+            $totalTasks = $tasks->count();
+            $doneTasks = $tasks->where('status', 'done')->count();
+
+            $project->task_ratio = $doneTasks . '/' . $totalTasks;
         }
 
 

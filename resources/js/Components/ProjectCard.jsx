@@ -12,7 +12,9 @@ export default function TaskItemCard({ projects }) {
         <>
             {projects.map((project) => (
 
-        <div className="bg-[#1c1c24] rounded-2xl p-5 w-full max-w-sm text-white relative shadow-md">
+
+
+        <div className="flex flex-col task-cards mt-[35px] mx-[15px] space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md">
             {/* Bookmark icon */}
             <div className="absolute top-4 right-4">
                 <svg className="w-5 h-5 text-white opacity-70" fill="currentColor" viewBox="0 0 20 20">
@@ -50,8 +52,26 @@ export default function TaskItemCard({ projects }) {
             <div className="flex items-center justify-between">
                 <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
                     <div className="h-full bg-white w-3/8 rounded-full"></div>
+                </div>{/* Progress bar + Done Ratio */}
+                <div className="flex items-center justify-between">
+                    <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
+                        {/* Tu peux ajuster dynamiquement la largeur ici si tu veux */}
+                        <div
+                            className="h-full bg-white rounded-full"
+                            style={{
+                                width: `${
+                                    project.task_ratio
+                                        ? (parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100
+                                        : 0
+                                }%`,
+                            }}
+                        ></div>
+                    </div>
+                    <span className="ml-2 text-xs text-white">
+                        {project.task_ratio ?? '0/0'}
+                    </span>
                 </div>
-                <span className="ml-2 text-xs text-white">3/8</span>
+
             </div>
         </div>
             ))}
