@@ -6,6 +6,7 @@ import AuthModal from "../Components/AuthModal";
 
 export default function Welcome({ auth }) {
     const canvasRef = useRef(null);
+    const mouse = useRef({ x: null, y: null }); // Position de la souris
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -20,8 +21,15 @@ export default function Welcome({ auth }) {
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
-        // Crée des particules (moins nombreuses)
-        for (let i = 0; i < 50; i++) {
+        // Gestionnaire de mouvement de la souris
+        const handleMouseMove = (e) => {
+            mouse.current.x = e.clientX;
+            mouse.current.y = e.clientY;
+        };
+        window.addEventListener("mousemove", handleMouseMove);
+
+        // Crée des particules
+        for (let i = 0; i < 70; i++) {
             particles.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
@@ -48,6 +56,23 @@ export default function Welcome({ auth }) {
                 // Rebondir sur les bords
                 if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
                 if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
+
+                // Interaction avec la souris
+                const distance = Math.sqrt(
+                    (p.x - mouse.current.x) ** 2 + (p.y - mouse.current.y) ** 2
+                );
+                if (distance < 100) {
+                    const angle = Math.atan2(p.y - mouse.current.y, p.x - mouse.current.x);
+                    const force = (100 - distance) / 100; // Force inversement proportionnelle à la distance
+                    p.dx += Math.cos(angle) * force * 0.02; // Réduction de la force appliquée
+                    p.dy += Math.sin(angle) * force * 0.02; // Réduction de la force appliquée
+                }
+                const maxSpeed = 0.5; // Vitesse maximale
+                const speed = Math.sqrt(p.dx ** 2 + p.dy ** 2);
+                if (speed > maxSpeed) {
+                    p.dx = (p.dx / speed) * maxSpeed;
+                    p.dy = (p.dy / speed) * maxSpeed;
+                }
             });
         };
 
@@ -62,6 +87,7 @@ export default function Welcome({ auth }) {
         // Nettoyage
         return () => {
             window.removeEventListener("resize", resizeCanvas);
+            window.removeEventListener("mousemove", handleMouseMove);
             cancelAnimationFrame(animate);
         };
     }, []);
