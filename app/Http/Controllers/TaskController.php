@@ -5,8 +5,6 @@ use Illuminate\View\View;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
-
 
 class TaskController extends Controller
 {// Vérification des autorisations
