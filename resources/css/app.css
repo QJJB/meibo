@@ -20,7 +20,7 @@
   --color-header-separation: #1A1D26;
   --color-gray-title-secondary: #868688;
   --color-yellow-meibo: #F7D539;
-  
+
 }
 
 /*
@@ -61,3 +61,4 @@
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
 }
+

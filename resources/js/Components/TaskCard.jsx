@@ -1,6 +1,5 @@
 // resources/js/Pages/TaskCard.jsx
 import React from 'react';
-import { usePage } from '@inertiajs/react';
 
 function TaskCard({ tasks }) {
     if (!tasks || tasks.length === 0) {
