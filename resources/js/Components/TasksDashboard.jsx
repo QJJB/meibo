@@ -1,7 +1,7 @@
 import React from 'react';
 import TaskCard from './TaskCard';
 
-function TasksDashboard() {
+function TasksDashboard({ tasks }) {
   return (
     <div className="bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide relative">
       {/* Sticky header that sticks at its original position */}
@@ -10,21 +10,17 @@ function TasksDashboard() {
           <h2 className='text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]'>
           Tasks
           </h2>
-        <div className="header-separation-tasks w-[3px] h-[33px] bg-header-separation rounded-[20px]"></div>
+          <div className="header-separation-tasks w-[3px] h-[33px] bg-header-separation rounded-[20px]"></div>
           <p className='text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]'>
           Go to Archives
-          </p>  
+          </p>
         </div>
       </div>
-      
+
 
       {/* Scrollable content starts after header */}
       <div className="flex flex-col task-cards mt-[35px] space-y-[20px] overflow-hidden pb-[30px]">
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
-        <TaskCard />
+        <TaskCard tasks={tasks}/>
       </div>
     </div>
   );

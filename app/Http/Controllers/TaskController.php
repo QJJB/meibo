@@ -5,12 +5,43 @@ use Illuminate\View\View;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
-use Inertia\Inertia;
 
 class TaskController extends Controller
-{
+{// Vérification des autorisations
+    public function hasPermission($projectId)
+    {
+        $user = Auth::user();
+
+        $project = Project::findOrFail($projectId);
+
+        // Vérifie que l'utilisateur est bien associé au projet
+        if (!$project->users->contains($user)) {
+            abort(403, 'Unauthorized');
+        }
+
+        // Récupère le membre du projet pour cet utilisateur avec ses rôles et permissions
+        $member = $project->members()
+            ->where('user_id', $user->id)
+            ->with('roles.permissions')
+            ->first();
+
+        if (!$member) {
+            return collect(); // Retourne une collection vide si pas de rôle
+        }
+
+        // Extrait les noms des permissions sans doublons
+        $permissions = $member->roles
+            ->flatMap(fn($role) => $role->permissions)
+            ->pluck('name')
+            ->unique()
+            ->values(); // Réindexe proprement
+
+        return $permissions;
+    }
+
     public function index($id)
     {
+
         $user = Auth::user();   // Récupère l'utilisateur connecté
         $projects = Project::findOrFail($id); // Récupère le projet ou renvoie une erreur 404
 
@@ -49,6 +80,13 @@ class TaskController extends Controller
 
     public function create($id) : View
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('task_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $project = Project::findOrFail($id);
         $users = $project->users;
 
@@ -60,6 +98,13 @@ class TaskController extends Controller
 
     public function store($id)
     {
+        $permissions = $this->hasPermission($id);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('task_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         // Vérifie si le projet existe
         $project = Project::findOrFail($id);
 
@@ -91,6 +136,13 @@ class TaskController extends Controller
 
     public function edit($projectId, $taskId)
     {
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('task_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
         $project = Project::findOrFail($projectId);
         $users = $project->users;
@@ -115,6 +167,13 @@ class TaskController extends Controller
 
     public function update($projectId, $taskId)
     {
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('task_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
         $project = Project::findOrFail($projectId);
         $task = Task::findOrFail($taskId);
@@ -152,6 +211,13 @@ class TaskController extends Controller
 
     public function destroy($projectId, $taskId)
     {
+        $permissions = $this->hasPermission($projectId);
+
+        // Vérifie que l'utilisateur est autoriser à accéder au projet
+        if (!$permissions->contains('task_manage')) {
+            abort(403, 'Permission denied');
+        }
+
         $user = Auth::user();
 
         // Vérifie si le projet existe et si l'utilisateur y est associé
@@ -171,4 +237,5 @@ class TaskController extends Controller
 
         return redirect()->route('projects.index')->with('success', 'Task deleted successfully.');
     }
+
 }

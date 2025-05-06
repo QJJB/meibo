@@ -89,6 +89,7 @@
     <div class="container">
         <a href="/projects" class="btn">Back to Home</a>
         <a href="{{ route('projects.tasks.index', $projects['id']) }}" class="btn">Show tasks</a>
+        <a href="{{ route('projects.permissions', $projects['id']) }}" class="btn">Permissions Management</a>
         <h2 class="font-bold text-lg">{{ $projects['name'] }}</h2>
 
         <div class="project-details">
@@ -113,12 +114,6 @@
             </form>
 
         </div>
-
-        @foreach($users as $user)
-            <p>{{ $user['name'] }} ({{ $user['email'] }})</p>
-            <p>Rôles : {{ $user['roles']->join(', ') }}</p>
-
-        @endforeach
 
         @foreach($users as $user)
             <p><strong>{{ $user['name'] }}</strong> ({{ $user['email'] }})</p>

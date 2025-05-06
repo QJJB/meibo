@@ -1,7 +1,7 @@
-import InputLabel from "@/Components/WelcomeCopy/InputLabel";
-import PrimaryButton from "@/Components/WelcomeCopy/PrimaryButton";
-import TextInput from "@/Components/WelcomeCopy/TextInput";
-import GuestLayout from "@/Components/WelcomeCopy/GuestLayout";
+import InputLabel from "@/Components/InputLabel";
+import PrimaryButton from "@/Components/PrimaryButton";
+import TextInput from "@/Components/TextInput";
+import GuestLayout from "@/Components/GuestLayout";
 import InputError from "@/Components/InputError";
 import Checkbox from "@/Components/Checkbox";
 import { Head, Link, useForm } from "@inertiajs/react";
