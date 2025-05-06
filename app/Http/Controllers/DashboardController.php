@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Project;
+use App\Models\Role;
 
 class DashboardController extends Controller
 {
@@ -25,11 +26,21 @@ class DashboardController extends Controller
             $doneTasks = $tasks->where('status', 'done')->count();
 
             $project->task_ratio = $doneTasks . '/' . $totalTasks;
-        }
 
+            $project->roles = Role::where('project_id', $project->id)
+                ->whereNotIn('name', ['admin', 'guest'])
+                ->get();
+
+            // Récupérer les users du projects
+            $users = User::find($project->pivot->user_id);
+            $project->users = $users;
+
+        }
 
         // Récupère les tâches auxquelles l'utilisateur est assigné
         $tasks = $user->tasks;
+
+
 
         return Inertia::render('Dashboard', [
             'projects' => $projects,

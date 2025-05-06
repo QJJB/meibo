@@ -28,8 +28,16 @@ export default function TaskItemCard({ projects }) {
             {/* Title */}
             <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
 
-            {/* Gray tag */}
-            <div className="bg-gray-600 rounded-full w-24 h-4 mb-4"></div>
+            {/* Roles */}
+            <div className="flex">
+                {project.roles && project.roles.map(role => (
+                    <div className="bg-gray-600 rounded-full w-24 h-4 mb-4 flex items-center justify-center text-xs  mr-2" key={role.id}>
+                        {role.name}
+                    </div>
+                ))}
+
+            </div>
+
 
             {/* Avatars + count */}
             <div className="flex items-center space-x-2 mb-4">
@@ -51,7 +59,18 @@ export default function TaskItemCard({ projects }) {
             {/* Progress bar */}
             <div className="flex items-center justify-between">
                 <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
-                    <div className="h-full bg-white w-3/8 rounded-full"></div>
+                    <div
+                        className="h-full bg-white rounded-full"
+                        style={{
+                            width:
+                                project.task_ratio &&
+                                parseInt(project.task_ratio.split('/')[0]) > 0
+                                    ? `${(parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100}%`
+                                    : '0%',
+                        }}
+                    ></div>
+
+
                 </div>{/* Progress bar + Done Ratio */}
                 <div className="flex items-center justify-between">
                     <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
