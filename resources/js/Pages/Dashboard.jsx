@@ -10,7 +10,7 @@ import { usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
 
-    const { tasks } = usePage().props;
+    const { tasks, projects } = usePage().props;
 
     return (
 
@@ -21,7 +21,7 @@ export default function Dashboard() {
                 <NewsDashboard className="h-[20%]" />       {/* 1/5 = 20% de 100vh */}
 
                 {/* Ligne 2 */}
-                <ProjectsDashboard className="h-full" />    {/* 3/4 = 3fr */}
+                <ProjectsDashboard projects={projects} className="h-full" />    {/* 3/4 = 3fr */}
                 <TasksDashboard tasks={tasks} className="h-[80%]" />      {/* 4/5 = 80% */}
 
             </div>

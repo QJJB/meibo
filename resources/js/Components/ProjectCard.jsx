@@ -1,8 +1,20 @@
 import React from "react";
+import { usePage } from '@inertiajs/react';
 
-export default function TaskItemCard() {
+export default function TaskItemCard({ projects }) {
+    console.log("Projects reçus :", projects);
+
+    if (!projects || projects.length === 0) {
+        return <p className="text-center text-white mt-4">Aucun projet trouvé.</p>;
+    }
+
     return (
-        <div className="bg-[#1c1c24] rounded-2xl p-5 w-full max-w-sm text-white relative shadow-md">
+        <>
+            {projects.map((project) => (
+
+
+
+        <div className="flex flex-col task-cards mt-[35px] mx-[15px] space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md">
             {/* Bookmark icon */}
             <div className="absolute top-4 right-4">
                 <svg className="w-5 h-5 text-white opacity-70" fill="currentColor" viewBox="0 0 20 20">
@@ -11,13 +23,21 @@ export default function TaskItemCard() {
             </div>
 
             {/* Category / Tag */}
-            <p className="text-xs text-blue-400">Poison Ivy</p>
+            <p className="text-xs text-blue-400">{project.creator_name}</p>
 
             {/* Title */}
-            <h3 className="text-xl font-semibold mb-2">Garden Plants</h3>
+            <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
 
-            {/* Gray tag */}
-            <div className="bg-gray-600 rounded-full w-24 h-4 mb-4"></div>
+            {/* Roles */}
+            <div className="flex">
+                {project.roles && project.roles.map(role => (
+                    <div className="bg-gray-600 rounded-full w-24 h-4 mb-4 flex items-center justify-center text-xs  mr-2" key={role.id}>
+                        {role.name}
+                    </div>
+                ))}
+
+            </div>
+
 
             {/* Avatars + count */}
             <div className="flex items-center space-x-2 mb-4">
@@ -39,10 +59,41 @@ export default function TaskItemCard() {
             {/* Progress bar */}
             <div className="flex items-center justify-between">
                 <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
-                    <div className="h-full bg-white w-3/8 rounded-full"></div>
+                    <div
+                        className="h-full bg-white rounded-full"
+                        style={{
+                            width:
+                                project.task_ratio &&
+                                parseInt(project.task_ratio.split('/')[0]) > 0
+                                    ? `${(parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100}%`
+                                    : '0%',
+                        }}
+                    ></div>
+
+
+                </div>{/* Progress bar + Done Ratio */}
+                <div className="flex items-center justify-between">
+                    <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
+                        {/* Tu peux ajuster dynamiquement la largeur ici si tu veux */}
+                        <div
+                            className="h-full bg-white rounded-full"
+                            style={{
+                                width: `${
+                                    project.task_ratio
+                                        ? (parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100
+                                        : 0
+                                }%`,
+                            }}
+                        ></div>
+                    </div>
+                    <span className="ml-2 text-xs text-white">
+                        {project.task_ratio ?? '0/0'}
+                    </span>
                 </div>
-                <span className="ml-2 text-xs text-white">3/8</span>
+
             </div>
         </div>
+            ))}
+            </>
     );
 }
