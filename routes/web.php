@@ -62,4 +62,7 @@ Route::post('/projects/{project}/permissions/post/{roles}', [PermissionControlle
 Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [PermissionController::class, 'deletePermissions'])->name('projects.permissions.destroy');
 
 
+// Front
+Route::middleware(['auth', 'verified'])->get('/project', [DashboardProjectController::class, 'index'])->name('project');
+
 require __DIR__.'/auth.php';
