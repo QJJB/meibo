@@ -19,7 +19,7 @@ function CreateProjectButton() {
         onClick={openModal}
         className="bg-yellow-meibo text-dark-primary font-semibold text-[20px] rounded-[20px] px-6 py-3 hover:cursor-pointer"
       >
-        Créer un projet
+        New Project
       </button>
 
       {isModalOpen && (
@@ -28,7 +28,7 @@ function CreateProjectButton() {
           onClick={handleBackgroundClick}
         >
           <div className="bg-[#172227] rounded-lg p-6 w-[90%] max-w-lg">
-            <h2 className="text-xl font-bold mb-4 text-white">Créer un projet</h2>
+            <h2 className="text-xl font-bold mb-4 text-white">Create a new project</h2>
             <CreateProjectForm />
           </div>
         </div>

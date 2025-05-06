@@ -25,7 +25,7 @@ function CreateProjectForm() {
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-                <InputLabel htmlFor="name" value="Nom du projet" />
+                <InputLabel htmlFor="name" value="Project name" />
 
                 <TextInput
                     id="name"
@@ -57,7 +57,7 @@ function CreateProjectForm() {
             </div>
 
             <div className="mt-4">
-                <InputLabel htmlFor="start_date" value="Date de début" />
+                <InputLabel htmlFor="start_date" value="Starting date" />
 
                 <TextInput
                     id="start_date"
@@ -73,7 +73,7 @@ function CreateProjectForm() {
             </div>
 
             <div className="mt-4">
-                <InputLabel htmlFor="end_date" value="Date de fin" />
+                <InputLabel htmlFor="end_date" value="End date" />
 
                 <TextInput
                     id="end_date"
@@ -90,7 +90,7 @@ function CreateProjectForm() {
 
             <div className="mt-4 flex items-center justify-end">
                 <PrimaryButton className="ms-4 bg-[#FFFF] text-black" disabled={processing}>
-                    {processing ? "Création en cours..." : "Créer"}
+                    {processing ? "Creation in progress..." : "Create"}
                 </PrimaryButton>
             </div>
         </form>
