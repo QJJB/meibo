@@ -31,7 +31,7 @@ function CreateProjectForm() {
                     id="name"
                     name="name"
                     value={data.name}
-                    className="bg-[#172227] h-15 w-full rounded-xl"
+                    className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                     autoComplete="name"
                     isFocused={true}
                     onChange={(e) => setData("name", e.target.value)}
@@ -48,7 +48,7 @@ function CreateProjectForm() {
                     id="description"
                     name="description"
                     value={data.description}
-                    className="bg-[#172227] h-15 w-full rounded-xl p-3 text-white"
+                    className="bg-[#172227] h-15 w-full rounded-xl p-3 text-white focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                     onChange={(e) => setData("description", e.target.value)}
                     required
                 />
@@ -64,7 +64,7 @@ function CreateProjectForm() {
                     type="date"
                     name="start_date"
                     value={data.start_date}
-                    className="bg-[#172227] h-15 w-full rounded-xl"
+                    className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                     onChange={(e) => setData("start_date", e.target.value)}
                     required
                 />
@@ -80,7 +80,7 @@ function CreateProjectForm() {
                     type="date"
                     name="end_date"
                     value={data.end_date}
-                    className="bg-[#172227] h-15 w-full rounded-xl"
+                    className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                     onChange={(e) => setData("end_date", e.target.value)}
                     required
                 />
@@ -89,7 +89,7 @@ function CreateProjectForm() {
             </div>
 
             <div className="mt-4 flex items-center justify-end">
-                <PrimaryButton className="ms-4 bg-[#FFFF] text-black" disabled={processing}>
+                <PrimaryButton className="ms-4 bg-[#FFFF] text-black  hover:bg-[#172227]  hover:text-white transition duration-300" disabled={processing}>
                     {processing ? "Creation in progress..." : "Create"}
                 </PrimaryButton>
             </div>

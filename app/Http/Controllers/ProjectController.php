@@ -115,7 +115,7 @@ class ProjectController extends Controller
             'roles' => $roles
         ]);
     }
-
+    
     // Afficher le formulaire de création d'un projet
     public function create() : View
      {

@@ -103,7 +103,7 @@ export default function Login({ status, canResetPassword, handleNavButton }) {
                         </Link>
                     )}
 
-                    <PrimaryButton className="ms-4 font-medium text-[#46484C] mb-3 cursor-pointer hover:text-black hover:bg-[#B5B5B8] transition duration-300" disabled={processing}>
+                    <PrimaryButton className=" bg-white ms-4 font-medium text-black mb-3 cursor-pointer hover:text-white hover:bg-[#15181E] transition duration-300" disabled={processing}>
                         Login
                     </PrimaryButton>
                 </div>

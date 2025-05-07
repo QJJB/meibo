@@ -66,12 +66,12 @@ export default function Welcome({ auth }) {
                 if (distance < 100) {
                     const angle = Math.atan2(p.y - mouse.current.y, p.x - mouse.current.x);
                     const force = (200 - distance) / 200; // Force inversement proportionnelle à la distance
-                    p.dx += Math.cos(angle) * force * 0.05; // Force légèrement augmentée
-                    p.dy += Math.sin(angle) * force * 0.05; // Force légèrement augmentée
+                    p.dx += Math.cos(angle) * force * 0.10; // Force légèrement augmentée
+                    p.dy += Math.sin(angle) * force * 0.10; // Force légèrement augmentée
                 }
 
                 // Limiter la vitesse des particules
-                const maxSpeed = 0.030; // Vitesse maximale légèrement augmentée
+                const maxSpeed = 0.10; // Vitesse maximale légèrement augmentée
                 const speed = Math.sqrt(p.dx ** 2 + p.dy ** 2);
                 if (speed > maxSpeed) {
                     p.dx = (p.dx / speed) * maxSpeed;

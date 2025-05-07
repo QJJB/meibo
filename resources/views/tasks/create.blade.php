@@ -159,17 +159,6 @@
                     <option value="viewer">Viewer</option>
                 </select>
             </div>
-
-            <div class="form-group">
-                <label for="notification">Notification:</label>
-                <input type="checkbox" id="notification" name="notification">
-            </div>
-
-            <div class="form-group">
-                <label for="message">Notification Message:</label>
-                <textarea class="form-control" id="message" name="message"></textarea>
-            </div>
-
             <button type="submit" class="btn">Add Task</button>
         </form>
     </div>

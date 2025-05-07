@@ -1,9 +1,10 @@
 import React from 'react';
 import TaskCard from './TaskCard';
+import CreateTaskButton from './CreateTaskButton';
 
 function TasksDashboard({ tasks}) {
   return (
-    <div className="bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide relative row-span-2">
+    <div className="z-50 bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide relative row-span-2">
       {/* Sticky header that sticks at its original position */}
       <div className="h-[70px] bg-dark-secondary z-0 sticky top-0">
         <div className="header-tasks-dashboard sticky top-[30px] z-10 bg-dark-secondary flex justify-between items-center ml-[30px] w-[256px] pb-[10px]">
@@ -14,6 +15,7 @@ function TasksDashboard({ tasks}) {
           <p className='text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]'>
           Go to Archives
           </p>
+          <CreateTaskButton/>
         </div>
       </div>
 

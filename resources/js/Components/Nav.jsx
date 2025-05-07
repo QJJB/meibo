@@ -12,7 +12,9 @@ const Nav = ({ toggleAuthModal, handleNavButton, auth }) => {
       <Link
         href={route('dashboard')}
       >
-        Dashboard
+        <div className="hover:text-white">
+          Dashboard
+        </div>
       </Link>
       ) : (
         <div className="nav-right flex">
