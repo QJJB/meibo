@@ -12,7 +12,7 @@ use App\Models\Role;
 
 class DashboardProjectController extends Controller
 {
-    public function index()
+    public function index($project_id)
     {
         $user = Auth::user();
 
