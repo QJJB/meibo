@@ -15,7 +15,7 @@ export default function Dashboard() {
     return (
 
         <AuthenticatedLayout>
-            <div className="grid grid-cols-[1.6fr_1fr] grid-rows-[1fr_3fr] gap-[15px] h-[calc(100vh-30px)] p-[15px] box-border">
+            <div className="grid grid-cols-[1.6fr_1fr] grid-rows-[1fr_3fr] gap-[15px] h-[100vh] p-[15px] box-border">
                 {/* Ligne 1 */}
                 <AgendaDashboard />     {/* 1/4 de la hauteur = 1fr dans une grille 1fr/3fr */}
                 {/* <NewsDashboard className="h-[20%]" />       1/5 = 20% de 100vh */}

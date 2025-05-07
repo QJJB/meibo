@@ -10,11 +10,12 @@ export default function ProjectCard({ projects }) {
 
     return (
         <>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[35px]">
             {projects.map((project) => (
 
 
 
-                <div className="flex flex-col task-cards mt-[35px] space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md">
+                <div className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md">
                     {/* Bookmark icon */}
                     <div className="absolute top-4 right-4">
                         <svg className="w-5 h-5 text-white opacity-70" fill="currentColor" viewBox="0 0 20 20">
@@ -93,6 +94,7 @@ export default function ProjectCard({ projects }) {
                     </div>
                 </div>
             ))}
+            </div>
         </>
     );
 }
