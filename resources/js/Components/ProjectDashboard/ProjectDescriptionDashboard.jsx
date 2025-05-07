@@ -1,0 +1,71 @@
+import ppKirby from '../../../assets/pp/kirby.jpg';
+import arrowSVG from '../../../assets/arrow.svg';
+
+const ProjectDescriptionDashboard = () => {
+    return (
+        <div className="agenda bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
+            <div className="head flex justify-between pb-4">
+                <div className="left flex gap-5 items-center">
+                    <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">Project</h2>
+                    <div className="separator w-[3px] h-[33px] bg-header-separation rounded-[3px]"></div>
+                    <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">Meibo - Enhanced task manager</p>
+                </div>
+                <div className="right ">
+                    <button className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px]">Edit</button>
+                </div>
+            </div>
+            <div className="head flex justify-between mb-6">
+                <div className="left flex gap-6">
+                    <div>
+
+                        <h2 className="text-[#46484C] text-[35px] leading-[30px] font-semibold [letter-spacing:-0.05em]">SEP <span className="text-[#F7D539]">23</span> / 2025</h2>
+                        <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em]">start date</p>
+                    </div>
+                    <div className="arrow h-[30px] w-[30px]">
+                        <img src={arrowSVG} alt="arrow" className="h-full w-full"/>
+                    </div>
+                    <div>
+                        <h2 className="text-[#46484C] text-[35px] leading-[30px] font-semibold [letter-spacing:-0.05em]">SEP <span className="text-[#F7D539]">25</span> / 2025</h2>
+                        <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em]">end date</p>
+                    </div>
+                </div>
+            </div>
+            <div className="head flex justify-between">
+                <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em] w-sm">
+                    A collaborative task manager designed to help users assign tasks, share responsibilities, and manage deadlines efficiently
+                </p>
+                <div className="owner flex">
+                    <p className="flex text-gray-title-secondary text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em] mr-2">owner: </p>
+                    <div>
+                        <div className="flex align-center mb-2">
+                            <div className='w-5 h-5 rounded-full overflow-hidden mr-[10px]'>
+                                <img
+                                    src={ppKirby}
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">Bastien</p>
+
+                            
+                        </div>
+                        <div className="flex align-center">
+                                <div className='w-5 h-5 rounded-full overflow-hidden mr-[10px]'>
+                                    <img
+                                        src={ppKirby}
+                                        alt="Avatar"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">Bastien</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    )
+}
+
+export default ProjectDescriptionDashboard

@@ -43,7 +43,7 @@ class DashboardProjectController extends Controller
         $tasks = $user->tasks;
 
 
-        return Inertia::render('Dashboard', [
+        return Inertia::render('Project', [
             'projects' => $projects,
             'tasks' => $tasks,
         ]);
