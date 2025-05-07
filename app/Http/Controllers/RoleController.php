@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Auth;
 class RoleController extends Controller
 {
     // Vérification des autorisations
-    public function hasPermission($projectId)
+    public function hasPermission()
     {
         $user = Auth::user();
 
