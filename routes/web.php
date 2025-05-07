@@ -11,6 +11,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\InvitationController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DashboardProjectController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -21,8 +22,6 @@ Route::get('/', function () {
     ]);
 });
 
-// Dashboard
-Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -61,5 +60,11 @@ Route::get('/projects/{project}/permissions', [PermissionController::class, 'sho
 Route::post('/projects/{project}/permissions/post/{roles}', [PermissionController::class, 'storePermission'])->name('projects.permissions.store');
 Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [PermissionController::class, 'deletePermissions'])->name('projects.permissions.destroy');
 
+
+// Dashboard
+Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Front
+Route::middleware(['auth', 'verified'])->get('/project', [DashboardProjectController::class, 'index'])->name('project');
 
 require __DIR__.'/auth.php';
