@@ -10,20 +10,20 @@ import { usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
 
-    const { tasks, projects } = usePage().props;
+    const { tasks, projects, className } = usePage().props;
 
     return (
 
         <AuthenticatedLayout>
             <div className="grid grid-cols-[1.6fr_1fr] grid-rows-[1fr_3fr] gap-[15px] h-[calc(100vh-30px)] p-[15px] box-border">
                 {/* Ligne 1 */}
-                <AgendaDashboard className="h-full" />     {/* 1/4 de la hauteur = 1fr dans une grille 1fr/3fr */}
-                <NewsDashboard className="h-[20%]" />       {/* 1/5 = 20% de 100vh */}
+                <AgendaDashboard />     {/* 1/4 de la hauteur = 1fr dans une grille 1fr/3fr */}
+                {/* <NewsDashboard className="h-[20%]" />       1/5 = 20% de 100vh */}
 
                 {/* Ligne 2 */}
-                <ProjectsDashboard projects={projects} className="h-full" />    {/* 3/4 = 3fr */}
-                <TasksDashboard tasks={tasks} className="h-[80%]" />      {/* 4/5 = 80% */}
-
+                <TasksDashboard tasks={tasks} />      {/* 4/5 = 80% */}
+                <ProjectsDashboard projects={projects} />    {/* 3/4 = 3fr */}
+                
             </div>
         </AuthenticatedLayout>
 

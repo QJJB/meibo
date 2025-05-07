@@ -123,7 +123,7 @@ export default function Register({ handleNavButton }) {
                 </a>
 
                 <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                    <PrimaryButton className="ms-4 font-medium text-[#46484C] mb-3 cursor-pointer hover:text-black hover:bg-[#B5B5B8] transition duration-300" disabled={processing}>
                         Register
                     </PrimaryButton>
                 </div>

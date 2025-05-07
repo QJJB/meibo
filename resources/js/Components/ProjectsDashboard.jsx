@@ -1,5 +1,6 @@
 import React from 'react'
 import ProjectCard from './ProjectCard'
+import CreateProjectButton from './CreateProjectButton'
 
 function ProjectsDashboard({ projects }) {
     return (

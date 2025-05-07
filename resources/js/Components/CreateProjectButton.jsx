@@ -14,10 +14,10 @@ function CreateProjectButton() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-full">
+    <div className="flex flex-col items-center justify-center w-[200px] h-full">
       <button
         onClick={openModal}
-        className="bg-yellow-meibo text-dark-primary font-semibold text-[20px] rounded-[20px] px-6 py-3 hover:cursor-pointer"
+        className="text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px] hover:bg-yellow-meibo hover:text-dark-primary hover:cursor-pointer"
       >
         New Project
       </button>

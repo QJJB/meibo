@@ -162,7 +162,6 @@ const NavBarVertical = () => {
                     </svg>
                     </NavLink>
                 </div>
-
             </div>
         </div>
     );
