@@ -123,7 +123,7 @@ class ProjectController extends Controller
      }
 
     // Enregistre un nouveau projet dans la base de données.
-    public function store() : RedirectResponse
+    public function store()
     {
         // Validation des données
         $validatedData = request()->validate([
@@ -167,8 +167,6 @@ class ProjectController extends Controller
         ]);
 
         // Création des permissions pour l'Admin
-
-        return redirect()->route('projects.index')->with('success', 'Project created successfully.');
     }
 
     // Afficher le formulaire d'édition d'un projet

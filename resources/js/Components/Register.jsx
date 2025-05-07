@@ -25,11 +25,12 @@ export default function Register({ handleNavButton }) {
         <GuestLayout>
             <Head title="Register" />
 
-            <button className="text-3xl font-medium mb-3 mr-1.5">
-                register
+            <button className="text-3xl text-white font-medium mb-3 mr-1.5 ">
+               register
             </button>
+            <span className="text-3xl font-medium text-[#46484C]">| </span>
             <button
-                className="text-3xl font-medium text-[#46484C] cursor-pointer"
+                className="text-3xl font-medium text-[#46484C] cursor-pointer hover:text-white transition duration-300"
                 onClick={(e) => {
                     handleNavButton("login");
                 }}
@@ -45,7 +46,7 @@ export default function Register({ handleNavButton }) {
                         id="name"
                         name="name"
                         value={data.name}
-                        className="bg-[#172227] h-15 w-full rounded-xl"
+                        className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                         autoComplete="name"
                         isFocused={true}
                         onChange={(e) => setData("name", e.target.value)}
@@ -63,7 +64,7 @@ export default function Register({ handleNavButton }) {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="bg-[#172227] h-15 w-full rounded-xl"
+                        className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                         autoComplete="username"
                         onChange={(e) => setData("email", e.target.value)}
                         required
@@ -80,7 +81,7 @@ export default function Register({ handleNavButton }) {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="bg-[#172227] h-15 w-full rounded-xl"
+                        className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                         autoComplete="new-password"
                         onChange={(e) => setData("password", e.target.value)}
                         required
@@ -100,7 +101,7 @@ export default function Register({ handleNavButton }) {
                         type="password"
                         name="password_confirmation"
                         value={data.password_confirmation}
-                        className="bg-[#172227] h-15 w-full rounded-xl"
+                        className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                         autoComplete="new-password"
                         onChange={(e) =>
                             setData("password_confirmation", e.target.value)
@@ -118,7 +119,7 @@ export default function Register({ handleNavButton }) {
                     href="#"
                     className="z-20 text-sm mb-3 font-semibold tracking-tight text-[#868688] hover:text-white cursor-pointer"
                 >
-                    already registered
+                    already registered?
                 </a>
 
                 <div className="mt-4 flex items-center justify-end">

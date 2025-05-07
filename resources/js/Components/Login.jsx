@@ -25,9 +25,10 @@ export default function Login({ status, canResetPassword, handleNavButton }) {
         <GuestLayout>
             <Head title="Log in" />
 
-            <button className="text-3xl font-medium mr-1.5">login</button>
+            <button className="text-3xl text-white font-medium mr-1.5">login</button>
+            <span className="text-3xl font-medium text-[#46484C]">| </span>
             <button
-                className="text-3xl font-medium text-[#46484C] mb-3 cursor-pointer"
+                className="text-3xl font-medium text-[#46484C] mb-3 cursor-pointer hover:text-white transition duration-300"
                 onClick={(e) => {
                     handleNavButton("register");
                 }}
@@ -44,7 +45,7 @@ export default function Login({ status, canResetPassword, handleNavButton }) {
                         type="email"
                         name="email"
                         value={data.email}
-                        className="bg-[#172227] h-15 w-full rounded-xl"
+                        className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                         autoComplete="username"
                         isFocused={true}
                         onChange={(e) => setData("email", e.target.value)}
@@ -61,7 +62,7 @@ export default function Login({ status, canResetPassword, handleNavButton }) {
                         type="password"
                         name="password"
                         value={data.password}
-                        className="bg-[#172227] h-15 w-full rounded-xl"
+                        className="bg-[#172227] h-15 w-full rounded-xl focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                         autoComplete="current-password"
                         onChange={(e) => setData("password", e.target.value)}
                     />
@@ -89,7 +90,7 @@ export default function Login({ status, canResetPassword, handleNavButton }) {
                     href="#"
                     className="text-sm mb-3 font-semibold tracking-tight text-[#868688] hover:text-white cursor-pointer"
                 >
-                    forgot my password
+                    forgot my password?
                 </a>
 
                 <div className="mt-4 flex items-center justify-end">
@@ -103,7 +104,7 @@ export default function Login({ status, canResetPassword, handleNavButton }) {
                     )}
 
                     <PrimaryButton className="ms-4" disabled={processing}>
-                        login
+                        Login
                     </PrimaryButton>
                 </div>
             </form>

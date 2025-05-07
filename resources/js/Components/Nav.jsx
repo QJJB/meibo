@@ -17,7 +17,7 @@ const Nav = ({ toggleAuthModal, handleNavButton, auth }) => {
       ) : (
         <div className="nav-right flex">
         <div
-          className="register cursor-pointer"
+          className="register cursor-pointer hover:text-white transition duration-300"
           onClick={(e) => {
             toggleAuthModal();
             handleNavButton("register");
@@ -26,7 +26,7 @@ const Nav = ({ toggleAuthModal, handleNavButton, auth }) => {
           register
         </div>
         <div
-          className="login cursor-pointer ml-4"
+          className="login cursor-pointer ml-4 hover:text-white transition duration-300"
           onClick={(e) => {
             toggleAuthModal();
             handleNavButton("login");
