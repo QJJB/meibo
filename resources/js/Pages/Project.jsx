@@ -23,7 +23,8 @@ export default function Project() {
                 <RoleDashboard users={users}/>       {/* 1/5 = 20% de 100vh */}
 
                 {/* Ligne 2 */}
-                <ProjectsDashboard className="h-full" />    {/* 3/4 = 3fr */}
+                
+                <div className='bg-red-500 w-full h-full'></div>
                 <TasksDashboard className="h-[80%]" />      {/* 4/5 = 80% */}
 
             </div>
