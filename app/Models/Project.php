@@ -11,7 +11,7 @@ class Project extends Model
 
     protected $table = 'projects';
 
-    protected $fillable = ['name', 'description', 'start_date', 'end_date'];
+    protected $fillable = ['name', 'description', 'start_date', 'end_date', 'is_favorite'];
 
     public function tasks() {
         return $this->hasMany(Task::class);

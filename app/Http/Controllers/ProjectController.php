@@ -257,6 +257,18 @@ class ProjectController extends Controller
         return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
     }
 
+    // Mettre le projet en favori
+    public function toggleFavorite($id)
+    {
+        $project = Project::findOrFail($id);
+
+        // Inverse la valeur de is_favorite
+        $project->is_favorite = !$project->is_favorite;
+        $project->save();
+
+        return back()->with('is_favorite', $project->is_favorite);
+    }
+
     //________________________________________________
     //
     // Création d'un lien d'invitation temporaire

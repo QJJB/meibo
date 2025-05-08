@@ -40,6 +40,11 @@ Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
     ->name('project.invite')
     ->middleware('signed');
 
+
+Route::post('/projects/{id}/favorite', [ProjectController::class, 'toggleFavorite'])->name('projects.toggleFavorite');
+
+Route::post('/profile/update-photo', [ProfileController::class, 'updatePhoto'])->name('profile.updatePhoto');
+
 Route::post('/showProjectNumber/{id}', [ProjectController::class, 'generateInviteLink']);
 Route::get('/projects/link/{project}', [ProjectController::class, 'link'])->name('project.link');
 
