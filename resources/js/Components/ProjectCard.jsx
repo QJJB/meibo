@@ -1,8 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
 import { usePage } from '@inertiajs/react';
+import { Inertia } from "@inertiajs/inertia";
 
 export default function ProjectCard({ projects }) {
-    console.log("Projects reçus :", projects);
+    const [projectList, setProjectList] = useState(projects);
+
+    const toggleFavorite = (projectId) => {
+        // Met à jour l'état local immédiatement
+        const updatedProjects = projectList.map((project) =>
+            project.id === projectId
+                ? { ...project, is_favorite: !project.is_favorite }
+                : project
+        );
+        setProjectList(updatedProjects);
+    
+        // Envoie la requête au backend
+        Inertia.post(route("projects.toggleFavorite", projectId), {}, {
+            onSuccess: (response) => {
+                // Met à jour l'état local avec les données du backend
+                const updatedProject = response.props.project;
+                const finalProjects = projectList.map((project) =>
+                    project.id === updatedProject.id ? updatedProject : project
+                );
+                setProjectList(finalProjects);
+            },
+            onError: () => {
+                // Si une erreur survient, restaure l'état précédent
+                setProjectList(projectList);
+            },
+        });
+    };
+
+    const sortedProjects = [...projectList].sort((a, b) => b.is_favorite - a.is_favorite);
 
     if (!projects || projects.length === 0) {
         return <p className="text-center text-white mt-4">Aucun projet trouvé.</p>;
@@ -11,14 +40,23 @@ export default function ProjectCard({ projects }) {
     return (
         <>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[35px]">
-            {projects.map((project) => (
-
-
-
-                <div className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md">
+            {sortedProjects.map((project) => (
+                <div
+                    key={project.id}
+                    className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md"
+                >
                     {/* Bookmark icon */}
-                    <div className="absolute top-4 right-4">
-                        <svg className="w-5 h-5 text-white opacity-70" fill="currentColor" viewBox="0 0 20 20">
+                    <div
+                        className="absolute top-4 right-4 cursor-pointer"
+                        onClick={() => toggleFavorite(project.id)}
+                    >
+                        <svg
+                            className={`w-5 h-5 ${
+                                project.is_favorite ? "text-white" : "text-gray-400"
+                            }`}
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                        >
                             <path d="M5 3a2 2 0 00-2 2v12l7-3 7 3V5a2 2 0 00-2-2H5z" />
                         </svg>
                     </div>

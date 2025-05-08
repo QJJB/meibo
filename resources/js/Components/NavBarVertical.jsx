@@ -5,6 +5,10 @@ import disconnectSVG from "../../assets/disconnect.svg";
 import ppKirby from '../../assets/pp/kirby.jpg'
 
 const NavBarVertical = () => {
+    const { auth } = usePage().props; // Récupère les données utilisateur
+    const profilePhoto = auth.user?.profile_photo || '/default-avatar.png'; // Utilise une image par défaut si aucune photo n'est définie
+
+    console.log(auth.user?.profile_photo);
     const { url } = usePage();
     const currentPath = url ? new URL(url, window.location.href).pathname : "/";
 
@@ -148,7 +152,7 @@ const NavBarVertical = () => {
                         className={`w-7 h-7 rounded-full overflow-hidden hover:scale-110 transition-all duration-200`}
                     >
                         <img
-                            src={ppKirby}
+                            src={profilePhoto}
                             alt="Avatar"
                             className="w-full h-full object-cover"
                         />
