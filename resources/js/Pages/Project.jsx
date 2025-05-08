@@ -12,19 +12,19 @@ import React from "react";
 
 export default function Project() {
 
-    const { tasks, projects } = usePage().props;
+    const { projects, users, tasks, roles } = usePage().props;
 
     return (
 
         <AuthenticatedLayout>
             <div className="grid grid-cols-[1.6fr_1fr] grid-rows-[1fr_3fr] gap-[15px] h-[calc(100vh-30px)] p-[15px] box-border">
                 {/* Ligne 1 */}
-                <ProjectDescriptionDashboard/>     {/* 1/4 de la hauteur = 1fr dans une grille 1fr/3fr */}
+                <ProjectDescriptionDashboard projects={projects} roles={roles} users={users}/>     {/* 1/4 de la hauteur = 1fr dans une grille 1fr/3fr */}
                 <RoleDashboard />       {/* 1/5 = 20% de 100vh */}
 
                 {/* Ligne 2 */}
-                <ProjectsDashboard projects={projects} className="h-full" />    {/* 3/4 = 3fr */}
-                <TasksDashboard tasks={tasks} className="h-[80%]" />      {/* 4/5 = 80% */}
+                <ProjectsDashboard className="h-full" />    {/* 3/4 = 3fr */}
+                <TasksDashboard className="h-[80%]" />      {/* 4/5 = 80% */}
 
             </div>
         </AuthenticatedLayout>
