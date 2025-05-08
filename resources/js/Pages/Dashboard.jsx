@@ -21,7 +21,7 @@ export default function Dashboard() {
                 {/* <NewsDashboard className="h-[20%]" />       1/5 = 20% de 100vh */}
 
                 {/* Ligne 2 */}
-                <TasksDashboard tasks={tasks} />      {/* 4/5 = 80% */}
+                <TasksDashboard tasks={tasks} projects={projects}/>      {/* 4/5 = 80% */}
                 <ProjectsDashboard projects={projects} />    {/* 3/4 = 3fr */}
                 
             </div>
