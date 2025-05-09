@@ -2,7 +2,7 @@ import React from 'react';
 import TaskCard from './TaskCard';
 import CreateTaskButton from './CreateTaskButton';
 
-function TasksDashboard({ tasks}) {
+function TasksDashboard({ tasks }) {
   return (
     <div className="z-0 bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide relative row-span-2">
       {/* Sticky header that sticks at its original position */}
