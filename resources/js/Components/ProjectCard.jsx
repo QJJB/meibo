@@ -45,6 +45,9 @@ export default function ProjectCard({ projects }) {
                     key={project.id}
                     className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md"
                 >
+                    
+                    <a href={`/project/${project.id}`}>
+
                     {/* Bookmark icon */}
                     <div
                         className="absolute top-4 right-4 cursor-pointer"
@@ -129,7 +132,7 @@ export default function ProjectCard({ projects }) {
                             </span>
                         </div>
 
-                    </div>
+                    </div></a>
                 </div>
             ))}
             </div>
