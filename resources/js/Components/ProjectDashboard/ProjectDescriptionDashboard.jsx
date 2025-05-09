@@ -67,11 +67,12 @@ const ProjectDescriptionDashboard = ({projects, roles, users}) => {
                 <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em] w-sm">
                     {projects.description}
                 </p>
-                <div className="owner flex">
+                <div className="owner flex  overflow-auto scrollbar-hide">
                     <p className="flex text-gray-title-secondary text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em] mr-2">owner: </p>
-                    <div>
+                    <div className='h-[80px] bg-red-500'>
 
-                    {showAdmin()}
+                        {showAdmin()}
+                        {showAdmin()}
                     </div>
 
                 </div>
