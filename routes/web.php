@@ -70,6 +70,6 @@ Route::delete('/projects/{project}/permissions/delete/{permission}/{roles}', [Pe
 Route::middleware(['auth', 'verified'])->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // Front
-Route::middleware(['auth', 'verified'])->get('/project', [DashboardProjectController::class, 'index'])->name('project');
+Route::middleware(['auth', 'verified'])->get('/project/{id}', [DashboardProjectController::class, 'index'])->name('project');
 
 require __DIR__.'/auth.php';

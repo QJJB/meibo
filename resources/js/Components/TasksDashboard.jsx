@@ -2,9 +2,9 @@ import React from 'react';
 import TaskCard from './TaskCard';
 import CreateTaskButton from './CreateTaskButton';
 
-function TasksDashboard({ tasks }) {
+function TasksDashboard({tasks, projects}) {
   return (
-    <div className="z-0 bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide relative row-span-2">
+    <div className="z-0 bg-dark-secondary rounded-[20px] overflow-auto scrollbar-custom relative row-span-2">
       {/* Sticky header that sticks at its original position */}
       <div className="h-[70px] bg-dark-secondary z-0 sticky top-0">
         <div className="header-tasks-dashboard sticky top-[30px] z-10 bg-dark-secondary flex justify-between items-center ml-[30px] w-[256px] pb-[10px]">
@@ -22,7 +22,7 @@ function TasksDashboard({ tasks }) {
 
       {/* Scrollable content starts after header */}
       <div className="flex flex-col task-cards mt-[35px] space-y-[20px] overflow-hidden pb-[30px]">
-        <TaskCard tasks={tasks}/>
+        <TaskCard tasks={tasks} projects={projects}/>
       </div>
     </div>
   );

@@ -20,6 +20,7 @@ class DashboardController extends Controller
         foreach ($projects as $project) {
             $creator = User::find($project->pivot->user_id);
             $project->creator_name = $creator ? $creator->name : 'Inconnu';
+            $project->creator_id = $creator->id;
 
             $tasks = $project->tasks;
             $totalTasks = $tasks->count();
@@ -45,6 +46,7 @@ class DashboardController extends Controller
         return Inertia::render('Dashboard', [
             'projects' => $projects,
             'tasks' => $tasks,
+            'creator' => $creator
         ]);
     }
 }

@@ -9,7 +9,13 @@ import NewsDashboard from '@/Components/NewsDashboard';
 import TaskCard from "@/Components/TaskCard.jsx";
 
 export default function Dashboard() {
-    const { tasks, projects } = usePage().props;
+
+    const { tasks, projects, creator, className } = usePage().props;
+
+    console.log("tasks", tasks);
+    console.log("creator", creator);
+    console.log("project", projects);
+
     return (
         <AuthenticatedLayout>
             <div className="grid grid-cols-[1.6fr_1fr] grid-rows-[1fr_3fr] gap-[15px] h-[100vh] p-[15px] box-border">

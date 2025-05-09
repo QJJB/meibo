@@ -1,9 +1,9 @@
 import React from 'react'
 import ProjectRoleDashboard from './ProjectDashboard/ProjectRoleDashboard'
 
-const RoleDashboard = () => {
+const RoleDashboard = ({users}) => {
   return (
-    <div className='bg-dark-secondary rounded-[20px]'><ProjectRoleDashboard></ProjectRoleDashboard></div>
+    <div className='bg-dark-secondary rounded-[20px]'><ProjectRoleDashboard users={users}></ProjectRoleDashboard></div>
   )
 }
 
