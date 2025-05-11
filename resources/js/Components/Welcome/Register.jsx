@@ -1,8 +1,8 @@
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
-import GuestLayout from "@/Components/GuestLayout";
+import InputError from "@/Components/Form/InputError";
+import InputLabel from "@/Components/Form/InputLabel";
+import PrimaryButton from "@/Components/Form/PrimaryButton";
+import TextInput from "@/Components/Form/TextInput";
+import GuestLayout from "@/Components/Layouts/GuestLayout";
 import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Register({ handleNavButton }) {
@@ -26,7 +26,7 @@ export default function Register({ handleNavButton }) {
             <Head title="Register" />
 
             <button className="text-3xl text-white font-medium mb-3 mr-1.5 ">
-               register
+                register
             </button>
             <span className="text-3xl font-medium text-[#46484C]">| </span>
             <button
@@ -123,7 +123,10 @@ export default function Register({ handleNavButton }) {
                 </a>
 
                 <div className="mt-4 flex items-center justify-end">
-                    <PrimaryButton className="bg-white ms-4 font-medium text-black mb-3 cursor-pointer hover:text-white hover:bg-[#15181E] transition duration-300" disabled={processing}>
+                    <PrimaryButton
+                        className="bg-white ms-4 font-medium text-black mb-3 cursor-pointer hover:text-white hover:bg-[#15181E] transition duration-300"
+                        disabled={processing}
+                    >
                         Register
                     </PrimaryButton>
                 </div>

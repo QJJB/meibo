@@ -1,7 +1,6 @@
 // resources/js/Pages/TaskCard.jsx
-import React from 'react';
 
-function TaskCard({ tasks, projects }) {
+function Card({ tasks, projects }) {
     if (!tasks || tasks.length === 0) {
         return <p className="text-center text-white mt-4">Aucune tâche trouvée.</p>;
     }
@@ -82,4 +81,4 @@ function TaskCard({ tasks, projects }) {
     );
 }
 
-export default TaskCard;
+export default Card;

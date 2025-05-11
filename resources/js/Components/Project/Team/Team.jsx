@@ -1,7 +1,6 @@
-import ppKirby from '../../../assets/pp/kirby.jpg';
+import ppKirby from '../../../../assets/pp/kirby.jpg';
 
-const ProjectRoleDashboard = ({users}) => {
-    console.log("Affichage user: ", users);
+const Team = ({users}) => {
     return (
         <div className="relative agenda bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide">
             <div className="bg-dark-secondary sticky top-0 head flex justify-between pb-4 px-[30px] py-[30px]">
@@ -47,4 +46,4 @@ const ProjectRoleDashboard = ({users}) => {
     )
 }
 
-export default ProjectRoleDashboard
+export default Team

@@ -1,17 +1,17 @@
 import { useState } from "react";
 
-import ppKirby from "../../assets/pp/kirby.jpg";
+import ppKirby from "../../../../assets/pp/kirby.jpg";
 
-import sunSVG from "../../assets/sun.svg";
-import moreSVG from "../../assets/more.svg";
+import sunSVG from "../../../../assets/sun.svg";
+import moreSVG from "../../../../assets/more.svg";
 
-import leftSVG from "../../assets/left.svg";
-import rightSVG from "../../assets/right.svg";
+import leftSVG from "../../../../assets/left.svg";
+import rightSVG from "../../../../assets/right.svg";
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
-const AgendaDashboard = ({ projects, auth }) => {
+const Agenda = ({ projects, auth }) => {
     const [activeDay, setActiveDay] = useState(dayjs());
     const previousDay = dayjs(activeDay).subtract(1, "day");
     const nextDay = dayjs(activeDay).add(1, "day");
@@ -266,4 +266,4 @@ const AgendaDashboard = ({ projects, auth }) => {
     );
 };
 
-export default AgendaDashboard;
+export default Agenda;

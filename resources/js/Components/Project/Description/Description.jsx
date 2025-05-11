@@ -1,7 +1,7 @@
-import ppKirby from '../../../assets/pp/kirby.jpg';
-import arrowSVG from '../../../assets/arrow.svg';
+import ppKirby from '../../../../assets/pp/kirby.jpg';
+import arrowSVG from '../../../../assets/arrow.svg';
 
-const ProjectDescriptionDashboard = ({projects, roles, users}) => {
+const Description = ({projects, roles, users}) => {
 
 
     function showAdmin() {
@@ -82,4 +82,4 @@ const ProjectDescriptionDashboard = ({projects, roles, users}) => {
     );
 }
 
-export default ProjectDescriptionDashboard
+export default Description

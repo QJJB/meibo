@@ -1,8 +1,8 @@
 import { Head } from "@inertiajs/react";
 import { useEffect, useState, useRef } from "react";
-import Nav from "../Components/Nav";
-import Signature from "../Components/Signature";
-import AuthModal from "../Components/AuthModal";
+import Nav from "../Components/Welcome/Nav";
+import Signature from "../Components/Welcome/Signature";
+import AuthModal from "../Components/Welcome/AuthModal";
 
 export default function Welcome({ auth }) {
     const canvasRef = useRef(null);
