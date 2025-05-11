@@ -10,6 +10,7 @@ import rightSVG from "../../../../assets/right.svg";
 
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+dayjs.extend(customParseFormat);
 
 const Agenda = ({ projects, auth }) => {
     const [activeDay, setActiveDay] = useState(dayjs());
@@ -23,8 +24,6 @@ const Agenda = ({ projects, auth }) => {
     function goRight() {
         setActiveDay((prev) => prev.add(1, "day"));
     }
-
-    dayjs.extend(customParseFormat);
 
     const todayFormatted = activeDay.format("MMM, YYYY");
 
