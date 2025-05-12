@@ -1,6 +1,8 @@
 // resources/js/Pages/TaskCard.jsx
 
 function Card({ tasks, projects }) {
+    console.log("Tasks:", tasks);
+    console.log("Projects:", projects);
     if (!tasks || tasks.length === 0) {
         return <p className="text-center text-white mt-4">Aucune tâche trouvée.</p>;
     }
