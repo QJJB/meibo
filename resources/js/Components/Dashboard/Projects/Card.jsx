@@ -44,7 +44,8 @@ export default function Card({ projects }) {
                 <div
                     key={project.id}
                     className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md cursor-pointer hover:bg-gray-900 transition duration-300 ease-in-out"
-                    onClick={() => Inertia.visit(`/project/${project.id}`)}
+                    onClick={() => { window.location.href = `/project/${project.id}`;
+                }}
                 >
                     {/* Bookmark icon */}
                     <div
