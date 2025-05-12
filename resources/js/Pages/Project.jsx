@@ -3,6 +3,7 @@ import { Head, usePage } from "@inertiajs/react"; // <-- ajoute usePage ici
 import TasksDashboard from "@/Components/Dashboard/Tasks/Tasks";
 import Description from "@/Components/Project/Description/Description";
 import Team from "@/Components/Project/Team/Team";
+import CreateTaskButton from "@/Components/Dashboard/Tasks/CreateTaskButton";
 
 export default function Project() {
     const { projects, users, tasks, roles } = usePage().props;
@@ -18,7 +19,8 @@ export default function Project() {
                 <Team users={users} />
                 {/* Ligne 2 */}
                 <div className="bg-red-500 w-full h-full"></div>
-                <TasksDashboard projectId={projects.id} users={users} className="h-[80%]" />
+                 <CreateTaskButton projectId={projects.id} users={users} />
+                 <TasksDashboard projectId={projects.id} users={users} className="h-[80%]" />
             </div>
         </AuthenticatedLayout>
     );
