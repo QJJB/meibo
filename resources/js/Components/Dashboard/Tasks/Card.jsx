@@ -29,7 +29,7 @@ function Card({ tasks, projects }) {
                 return (
                     <div
                         key={task.id}
-                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:w-full"
+                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:bg-black"
                     >
                         {/* Header de la tâche */}
                         <div className="task-card-header flex flex-row items-center justify-between mt-[22px] mx-[15px] w-[calc(100%-30px)]">
