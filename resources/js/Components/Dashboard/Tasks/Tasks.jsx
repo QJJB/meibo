@@ -14,7 +14,6 @@ function Tasks({ tasks, projects, users, projectId}) {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">
                         Go to Archives
                     </p>
-                    <CreateTaskButton projectId={projectId} users={users} />
                 </div>
             </div>
 
