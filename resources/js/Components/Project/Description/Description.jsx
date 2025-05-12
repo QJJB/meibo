@@ -36,7 +36,7 @@ const Description = ({projects, roles, users}) => {
     console.log("type: ", typeof(projects));
     return (
         <>
-        <div className="agenda bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
+        <div className="project bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
                 <div className="head flex justify-between pb-4">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">Project</h2>
