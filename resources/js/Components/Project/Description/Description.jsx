@@ -2,6 +2,8 @@ import ppKirby from '../../../../assets/pp/kirby.jpg';
 import arrowSVG from '../../../../assets/arrow.svg';
 
 const Description = ({projects, roles, users}) => {
+
+
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'short', day: '2-digit' };
         const date = new Date(dateString);
