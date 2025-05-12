@@ -1,6 +1,5 @@
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, usePage } from "@inertiajs/react"; // <-- ajoute usePage ici
-import EnAttendant from "@/Components/Dashboard/Tasks/Tasks";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import Description from "@/Components/Project/Description/Description";
 import Team from "@/Components/Project/Team/Team";
 import Tasks from "@/Components/Project/Tasks/Tasks";
@@ -18,7 +17,6 @@ export default function Project() {
                 />
                 <Team users={users} />
                 <Tasks />
-                {/* <EnAttendant /> */}
             </div>
         </AuthenticatedLayout>
     );
