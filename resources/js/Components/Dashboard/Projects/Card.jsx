@@ -13,7 +13,7 @@ export default function Card({ projects }) {
                 : project
         );
         setProjectList(updatedProjects);
-    
+
         // Envoie la requête au backend
         Inertia.post(route("projects.toggleFavorite", projectId), {}, {
             onSuccess: (response) => {
@@ -43,12 +43,16 @@ export default function Card({ projects }) {
             {sortedProjects.map((project) => (
                 <div
                     key={project.id}
-                    className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md"
+                    className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md cursor-pointer hover:bg-gray-900 transition duration-300 ease-in-out"
+                    onClick={() => Inertia.visit(`/project/${project.id}`)}
                 >
                     {/* Bookmark icon */}
                     <div
                         className="absolute top-4 right-4 cursor-pointer"
-                        onClick={() => toggleFavorite(project.id)}
+                        onClick={(event) => {
+                        event.stopPropagation(); // Empêche la propagation de l'événement
+                        toggleFavorite(project.id);
+                    }}
                     >
                         <svg
                             className={`w-5 h-5 ${

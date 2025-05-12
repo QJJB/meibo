@@ -7,7 +7,6 @@ const NavBarVertical = () => {
     const { auth } = usePage().props; // Récupère les données utilisateur
     const profilePhoto = auth.user?.profile_photo || '/default-avatar.png'; // Utilise une image par défaut si aucune photo n'est définie
 
-    console.log(auth.user?.profile_photo);
     const { url } = usePage();
     const currentPath = url ? new URL(url, window.location.href).pathname : "/";
 
