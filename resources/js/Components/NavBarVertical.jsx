@@ -68,9 +68,9 @@ const NavBarVertical = () => {
                 </div> */}
 
                 <div className={`${hoverBg}`}>
-                    <NavLink href="/projects">
+                    <NavLink href="/project">
                         <svg
-                            className={`w-6 h-6 ${isActive("/projects")
+                            className={`w-6 h-6 ${isActive("/project")
                                 ? "stroke-white-icon"
                                 : "stroke-gray-icon"
                                 }`}

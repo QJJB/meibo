@@ -15,6 +15,8 @@ function TaskCard({ tasks, projects }) {
         }
     };
 
+    console.log(projects)
+
     // Création d'une map pour accéder rapidement aux projets par ID
     const projectMap = Object.fromEntries(projects.map(p => [p.id, p]));
 
