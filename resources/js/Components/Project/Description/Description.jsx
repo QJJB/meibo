@@ -1,14 +1,47 @@
-import ppKirby from '../../../assets/pp/kirby.jpg';
-import arrowSVG from '../../../assets/arrow.svg';
+import ppKirby from '../../../../assets/pp/kirby.jpg';
+import arrowSVG from '../../../../assets/arrow.svg';
 
-const ProjectDescriptionDashboard = () => {
+const Description = ({projects, roles, users}) => {
+
+
+    function showAdmin() {
+        // Filtrer les utilisateurs qui ont le rôle "admin"
+        const admins = users.filter(user =>
+            user.roles.some(role => role.name === "admin")
+        );
+
+        // S'il y en a, retourner leur(s) info(s), sinon un message
+        if (admins.length > 0) {
+            return admins.map(admin => (
+                <div key={admin.id} className="flex align-center mb-2">
+                    <div className="w-5 h-5 rounded-full overflow-hidden mr-[10px]">
+                        <img
+                            src={ppKirby}
+                            alt="Avatar"
+                            className="w-full h-full object-cover"
+                        />
+                    </div>
+                    <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">
+                        {admin.name.toLowerCase()}
+                    </p>
+                </div>
+            ));
+        } else {
+            return <p>No admin found</p>;
+        }
+    }
+
+
+    console.log("Coucou reçus :", users);
+    console.log("type: ", typeof(projects));
     return (
+        <>
         <div className="agenda bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
-            <div className="head flex justify-between pb-4">
+                <div className="head flex justify-between pb-4">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">Project</h2>
                     <div className="separator w-[3px] h-[33px] bg-header-separation rounded-[3px]"></div>
-                    <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">Meibo - Enhanced task manager</p>
+                    <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">{projects.name}</p>
                 </div>
                 <div className="right ">
                     <button className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px]">Edit</button>
@@ -32,40 +65,21 @@ const ProjectDescriptionDashboard = () => {
             </div>
             <div className="head flex justify-between">
                 <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em] w-sm">
-                    A collaborative task manager designed to help users assign tasks, share responsibilities, and manage deadlines efficiently
+                    {projects.description}
                 </p>
-                <div className="owner flex">
+                <div className="owner flex  overflow-auto scrollbar-hide">
                     <p className="flex text-gray-title-secondary text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em] mr-2">owner: </p>
-                    <div>
-                        <div className="flex align-center mb-2">
-                            <div className='w-5 h-5 rounded-full overflow-hidden mr-[10px]'>
-                                <img
-                                    src={ppKirby}
-                                    alt="Avatar"
-                                    className="w-full h-full object-cover"
-                                />
-                            </div>
-                            <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">Bastien</p>
+                    <div className='h-[80px] bg-red-500'>
 
-                            
-                        </div>
-                        <div className="flex align-center">
-                                <div className='w-5 h-5 rounded-full overflow-hidden mr-[10px]'>
-                                    <img
-                                        src={ppKirby}
-                                        alt="Avatar"
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                                <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">Bastien</p>
-                        </div>
+                        {showAdmin()}
+                        {showAdmin()}
                     </div>
-                    
+
                 </div>
             </div>
-
         </div>
-    )
+            </>
+    );
 }
 
-export default ProjectDescriptionDashboard
+export default Description

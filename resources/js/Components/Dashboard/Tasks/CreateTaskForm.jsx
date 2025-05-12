@@ -1,7 +1,7 @@
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/Form/InputError";
+import InputLabel from "@/Components/Form/InputLabel";
+import PrimaryButton from "@/Components/Form/PrimaryButton";
+import TextInput from "@/Components/Form/TextInput";
 import { useForm } from "@inertiajs/react";
 
 function CreateTaskForm({ users }) {
@@ -153,7 +153,10 @@ function CreateTaskForm({ users }) {
             </div>
 
             <div className="mt-4 flex items-center justify-end">
-                <PrimaryButton className="ms-4 bg-[#FFFF] text-black hover:bg-[#172227]  hover:text-white transition duration-300" disabled={processing}>
+                <PrimaryButton
+                    className="ms-4 bg-[#FFFF] text-black hover:bg-[#172227]  hover:text-white transition duration-300"
+                    disabled={processing}
+                >
                     {processing ? "Creation in progress..." : "Create Task"}
                 </PrimaryButton>
             </div>

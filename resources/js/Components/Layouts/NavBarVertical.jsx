@@ -1,8 +1,7 @@
-import React from "react";
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "./NavLink";
-import disconnectSVG from "../../assets/disconnect.svg";
-import ppKirby from '../../assets/pp/kirby.jpg'
+import disconnectSVG from "../../../assets/disconnect.svg";
+import ppKirby from '../../../assets/pp/kirby.jpg'
 
 const NavBarVertical = () => {
     const { auth } = usePage().props; // Récupère les données utilisateur

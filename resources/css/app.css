@@ -66,3 +66,22 @@
   display: none; /* Chrome, Safari, Opera */
 }
 
+/* Style de la scrollbar */
+.scrollbar-custom::-webkit-scrollbar {
+  width: 8px; /* Largeur de la scrollbar */
+  height: 8px; /* Hauteur de la scrollbar */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb {
+  background-color: #4A5568; /* Couleur de la barre */
+  border-radius: 10px; /* Coins arrondis */
+}
+
+.scrollbar-custom::-webkit-scrollbar-thumb:hover {
+  background-color: #2D3748; /* Couleur au survol */
+}
+
+.scrollbar-custom::-webkit-scrollbar-track {
+  background-color: #1A202C; /* Couleur de l'arrière-plan */
+  border-radius: 10px; /* Coins arrondis */
+}

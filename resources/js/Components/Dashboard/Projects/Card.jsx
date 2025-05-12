@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { usePage } from '@inertiajs/react';
 import { Inertia } from "@inertiajs/inertia";
 
-export default function ProjectCard({ projects }) {
+export default function Card({ projects }) {
     const [projectList, setProjectList] = useState(projects);
 
     const toggleFavorite = (projectId) => {
