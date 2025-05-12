@@ -5,7 +5,7 @@ import Team from "@/Components/Project/Team/Team";
 import Tasks from "@/Components/Project/Tasks/Tasks";
 
 export default function Project() {
-    const { projects, users, tasks, roles } = usePage().props;
+    const { projects, users, tasks, roles, tasksTodo, tasksInProgress, tasksDone } = usePage().props;
 
     return (
         <AuthenticatedLayout>

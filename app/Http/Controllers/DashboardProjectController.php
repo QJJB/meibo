@@ -61,10 +61,18 @@ class DashboardProjectController extends Controller
         //Récupérer les roles présents dans notre projet
         $roles = Role::where('project_id', $project->id)->get();
 
+        // Récupérer les tâches par statut
+        $tasksTodo = $project->tasks()->where('status', 'todo')->get();
+        $tasksInProgress = $project->tasks()->where('status', 'in_progress')->get();
+        $tasksDone = $project->tasks()->where('status', 'done')->get();
+
         return Inertia::render('Project', [
             'projects' => $project,
             'users' => $users,
-            'roles' => $roles
+            'roles' => $roles,
+            'tasksTodo' => $tasksTodo,
+            'tasksInProgress' => $tasksInProgress,
+            'tasksDone' => $tasksDone,
         ]);
     }
 }
