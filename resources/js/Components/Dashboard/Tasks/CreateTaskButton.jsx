@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Inertia } from "@inertiajs/inertia";
 import CreateTaskForm from "./CreateTaskForm";
 
-function CreateTaskButton() {
+function CreateTaskButton({ projectId, users }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -11,6 +12,21 @@ function CreateTaskButton() {
     if (e.target === e.currentTarget) {
       closeModal();
     }
+  };
+
+  const handleCreateTask = (taskData) => {
+    // Ajoutez l'ID du projet aux données de la tâche
+    const data = { ...taskData, project_id: projectId };
+
+    // Envoyez une requête au backend pour créer la tâche
+    Inertia.post(route("projects.tasks.store"), data, {
+      onSuccess: () => {
+        closeModal(); // Fermez la modal après la création
+      },
+      onError: (errors) => {
+        console.error(errors); // Gérez les erreurs si nécessaire
+      },
+    });
   };
 
   return (
@@ -29,7 +45,11 @@ function CreateTaskButton() {
         >
           <div className="bg-[#172227] rounded-lg p-6 w-[90%] max-w-lg max-h-[90vh] overflow-y-auto scrollbar-hide">
             <h2 className="text-xl font-bold mb-4 text-white">Create a new task</h2>
-            <CreateTaskForm />
+            <CreateTaskForm
+              projectId={projectId}
+              users={users}
+              onSuccess={closeModal} // Ferme la modal après succès
+            />
           </div>
         </div>
       )}

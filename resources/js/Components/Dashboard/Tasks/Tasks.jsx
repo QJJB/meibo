@@ -1,7 +1,7 @@
 import Card from "./Card";
 import CreateTaskButton from "./CreateTaskButton";
 
-function Tasks({ tasks, projects }) {
+function Tasks({ tasks, projects, users, projectId}) {
     return (
         <div className="z-0 bg-dark-secondary rounded-[20px] overflow-auto scrollbar-custom relative row-span-2">
             {/* Sticky header that sticks at its original position */}
@@ -14,7 +14,7 @@ function Tasks({ tasks, projects }) {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">
                         Go to Archives
                     </p>
-                    <CreateTaskButton />
+                    <CreateTaskButton projectId={projectId} users={users} />
                 </div>
             </div>
 
