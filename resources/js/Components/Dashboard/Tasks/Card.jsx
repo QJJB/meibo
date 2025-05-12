@@ -1,6 +1,8 @@
 // resources/js/Pages/TaskCard.jsx
 
 function Card({ tasks, projects }) {
+    console.log("Tasks:", tasks);
+    console.log("Projects:", projects);
     if (!tasks || tasks.length === 0) {
         return <p className="text-center text-white mt-4">Aucune tâche trouvée.</p>;
     }
@@ -14,6 +16,8 @@ function Card({ tasks, projects }) {
         }
     };
 
+    console.log(projects)
+
     // Création d'une map pour accéder rapidement aux projets par ID
     const projectMap = Object.fromEntries(projects.map(p => [p.id, p]));
 
@@ -25,7 +29,7 @@ function Card({ tasks, projects }) {
                 return (
                     <div
                         key={task.id}
-                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:w-full"
+                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:bg-black"
                     >
                         {/* Header de la tâche */}
                         <div className="task-card-header flex flex-row items-center justify-between mt-[22px] mx-[15px] w-[calc(100%-30px)]">
