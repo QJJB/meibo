@@ -1,5 +1,4 @@
 import Card from "./Card";
-import CreateTaskButton from "./CreateTaskButton";
 
 function Tasks({ tasks, projects, users, projectId}) {
     return (

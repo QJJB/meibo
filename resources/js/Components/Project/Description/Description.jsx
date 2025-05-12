@@ -1,8 +1,8 @@
 import ppKirby from '../../../../assets/pp/kirby.jpg';
 import arrowSVG from '../../../../assets/arrow.svg';
+import EditProjectButton from '../EditProjectButton';
 
 const Description = ({projects, roles, users}) => {
-
 
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'short', day: '2-digit' };
@@ -58,7 +58,7 @@ const Description = ({projects, roles, users}) => {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">{projects.name}</p>
                 </div>
                 <div className="right ">
-                    <button className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px]">Edit</button>
+                    <EditProjectButton project={projects} />
                 </div>
             </div>
             <div className="head flex justify-between mb-6">

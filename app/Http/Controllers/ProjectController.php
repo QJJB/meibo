@@ -115,7 +115,7 @@ class ProjectController extends Controller
             'roles' => $roles
         ]);
     }
-    
+
     // Afficher le formulaire de création d'un projet
     public function create() : View
      {
@@ -231,7 +231,6 @@ class ProjectController extends Controller
             'end_date' => $validatedData['end_date'] ?? $project->end_date,
         ]);
 
-        return redirect()->route('projects.index')->with('success', 'Project updated successfully.');
     }
 
     // Supprime un projet

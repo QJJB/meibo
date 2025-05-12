@@ -129,7 +129,6 @@ class TaskController extends Controller
         if (!empty($validatedData['user_id']) && $validatedData['user_id']!=='no user found') {
             $task->assignees()->attach($validatedData['user_id']);
         }
-
     }
 
     public function edit($projectId, $taskId)

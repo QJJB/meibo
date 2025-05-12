@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import CreateTaskButton from "../CreateTaskButton";
 dayjs.extend(customParseFormat);
 
-function Tasks() {
+function Tasks({users, projectId}) {
+
     const todayFormatted = dayjs().format("MMM, YYYY");
     return (
         <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
@@ -16,7 +18,9 @@ function Tasks() {
                         {todayFormatted}
                     </p>
                 </div>
+                <CreateTaskButton users={users} projectId={projectId} />
             </div>
+
             <div className="body flex justify-between h-full py-[30px]">
                 <div className="separator min-w-[3px] self-stretch bg-header-separation rounded-[3px] mt-[50px]"></div>
 
