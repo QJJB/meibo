@@ -16,7 +16,7 @@ export default function Project() {
                     users={users}
                 />
                 <Team users={users} />
-                <Tasks />
+                <Tasks tasksTodo={tasksTodo} tasksInProgress={tasksInProgress} tasksDone={tasksDone}/>
             </div>
         </AuthenticatedLayout>
     );
