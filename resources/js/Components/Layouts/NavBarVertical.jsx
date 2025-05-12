@@ -18,8 +18,8 @@ const NavBarVertical = () => {
         <div className="w-16 h-[calc(100vh-100px)] bg-dark-primary mt-[50px] mb-[50px] pl-9 pr-9 flex flex-col justify-between items-center">
             {/* ICONES DE NAVIGATION */}
             <div className="flex flex-col items-center space-y-6">
-                <div className={`${hoverBg}`}>
-                    <NavLink href="/dashboard">
+                <div className={`${hoverBg}`}
+                    onClick={() => { window.location.href = `/dashboard`; }}>
                         <svg
                             className={`w-5 h-5 ${isActive("/dashboard")
                                 ? "stroke-white-icon"
@@ -38,7 +38,6 @@ const NavBarVertical = () => {
                                 strokeLinejoin="round"
                             />
                         </svg>
-                    </NavLink>
                 </div>
 
 
