@@ -10,7 +10,6 @@ function Projects({ projects }) {
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
                         Projects
                     </h2>
-                    <div className="header-separation-tasks w-[3px] h-[33px] bg-header-separation rounded-[20px]"></div>
                 </div>
                 <CreateProjectButton />
             </div>

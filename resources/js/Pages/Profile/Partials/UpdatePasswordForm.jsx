@@ -123,7 +123,7 @@ export default function UpdatePasswordForm({ className = "" }) {
                 </div>
 
                 <div className="flex items-center gap-4">
-                    <ProfilSaveButton disabled={processing}>
+                    <ProfilSaveButton disabled={processing} className="hover: cursor-pointer">
                         Save
                     </ProfilSaveButton>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\URL;
 use App\Models\Project;
 use App\Models\ProjectMember;
 use App\Models\ProjectRole;
@@ -13,6 +14,21 @@ use Illuminate\Support\Facades\Session;
 
 class InvitationController extends Controller
 {
+
+    public function generateInviteLink($projectId)
+    {
+        $project = Project::findOrFail($projectId);
+
+        // Génère un lien signé valide pour 24 heures
+        $inviteUrl = URL::temporarySignedRoute(
+            'projects.invite.accept', // Nom de la route pour accepter l'invitation
+            now()->addHours(24), // Durée de validité
+            ['projectId' => $project->id] // Paramètres de la route
+        );
+
+        return response()->json(['invite_url' => $inviteUrl]);
+    }
+
     public function accept(Request $request, $projectId)
     {
         if (!$request->hasValidSignature()) {
