@@ -1,7 +1,6 @@
 import Card from './Card';
 
-function Column({title, tasks}) {
-
+function Column({title, tasks, projectId}) {
     return (
         <div className="w-full">
             <h3 className="text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] mb-[32px] px-[10px]">{title}</h3>
@@ -10,7 +9,7 @@ function Column({title, tasks}) {
 
                 {/* Map ici */}
                 {tasks.map(task => (
-                    <Card key={task.id} task={task}/>
+                    <Card key={task.id} task={task} projectId={projectId}/>
                 ))}
 
             </div>

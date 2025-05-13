@@ -55,7 +55,7 @@ const Team = ({users}) => {
                         <div className="gap-2 flex items-center flex-row-reverse pr-[30px]">
                             {user.roles.map(role=>(
                                 <p className="bg-accent rounded-lg px-3">{role.name}</p>
-                            ))}   
+                            ))}
                         </div>
 
                     </div>

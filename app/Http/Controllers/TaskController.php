@@ -239,7 +239,7 @@ class TaskController extends Controller
         // Supprime la tâche
         $task->delete();
 
-        return redirect()->route('projects.index')->with('success', 'Task deleted successfully.');
+        return redirect()->route('project', $projectId)->with('success', 'Task deleted successfully.');
     }
 
 }
