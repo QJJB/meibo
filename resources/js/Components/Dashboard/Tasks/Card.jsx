@@ -1,4 +1,6 @@
 // resources/js/Pages/TaskCard.jsx
+import React from "react";
+
 
 function Card({ tasks, projects }) {
     console.log("Tasks:", tasks);
@@ -29,7 +31,12 @@ function Card({ tasks, projects }) {
                 return (
                     <div
                         key={task.id}
-                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:bg-black"
+                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:bg-hover-to-project transition duration-300 ease-in-out"
+                        onClick={() => {
+                            if (project) {
+                                window.location.href = `/project/${project.id}`;
+                            }
+                        }}
                     >
                         {/* Header de la tâche */}
                         <div className="task-card-header flex flex-row items-center justify-between mt-[22px] mx-[15px] w-[calc(100%-30px)]">
