@@ -115,11 +115,11 @@ class TaskController extends Controller
             'due_date' => 'required|date',
             'priority' => 'required',
             'status' => 'required|string',
-            'user_id' => 'nullable'
+            'user_id' => 'nullable',
+            'project_id' => 'required|exists:projects,id',
         ]);
 
         // Ajoute les valeurs dynamiques qui ne sont pas dans la requête
-        $validatedData['project_id'] = $project->id;
         $validatedData['created_by'] = Auth::id();
 
         // Création de la tâche avec toutes les valeurs nécessaires
@@ -129,9 +129,6 @@ class TaskController extends Controller
         if (!empty($validatedData['user_id']) && $validatedData['user_id']!=='no user found') {
             $task->assignees()->attach($validatedData['user_id']);
         }
-
-        // Redirige vers la page du projet avec un message de succès
-        return redirect()->route('projects.index')->with('success', 'Task created successfully.');
     }
 
     public function edit($projectId, $taskId)

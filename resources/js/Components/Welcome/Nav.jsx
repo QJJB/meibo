@@ -9,13 +9,10 @@ const Nav = ({ toggleAuthModal, handleNavButton, auth }) => {
         <div className="catchphrase">powered by obvious prime</div>
       </div>
       {auth.user ? (
-      <Link
-        href={route('dashboard')}
-      >
-        <div className="hover:text-white">
+        <div className="hover:text-white cursor-pointer transition duration-300"
+        onClick={() => { window.location.href = `/dashboard`; }}>
           Dashboard
         </div>
-      </Link>
       ) : (
         <div className="nav-right flex">
         <div

@@ -1,23 +1,22 @@
-import InputError from "@/Components/InputError";
-import InputLabel from "@/Components/InputLabel";
-import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import InputError from "@/Components/Form/InputError";
+import InputLabel from "@/Components/Form/InputLabel";
+import PrimaryButton from "@/Components/Form/PrimaryButton";
+import TextInput from "@/Components/Form/TextInput";
 import { useForm } from "@inertiajs/react";
 
-function CreateProjectForm() {
-    const { data, setData, post, processing, errors } = useForm({
-        name: "",
-        description: "",
-        start_date: "",
-        end_date: "",
+function EditProjectForm({ project, onClose }) {
+    const { data, setData, put, processing, errors } = useForm({
+        name: project.name || "",
+        description: project.description || "",
+        start_date: project.start_date || "",
+        end_date: project.end_date || "",
     });
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        post(route("projects.store"), {
+        put(route("projects.update", { id: project.id }), {
             onSuccess: () => {
-                // Redirige vers le tableau de bord après la création
-                window.location.href = route("dashboard");
+                if (onClose) onClose(); // Ferme la modal après succès
             },
         });
     };
@@ -26,7 +25,6 @@ function CreateProjectForm() {
         <form onSubmit={handleSubmit} className="space-y-4">
             <div>
                 <InputLabel htmlFor="name" value="Project name" />
-
                 <TextInput
                     id="name"
                     name="name"
@@ -37,13 +35,11 @@ function CreateProjectForm() {
                     onChange={(e) => setData("name", e.target.value)}
                     required
                 />
-
                 <InputError message={errors.name} className="mt-2" />
             </div>
 
             <div className="mt-4">
                 <InputLabel htmlFor="description" value="Description" />
-
                 <textarea
                     id="description"
                     name="description"
@@ -52,13 +48,11 @@ function CreateProjectForm() {
                     onChange={(e) => setData("description", e.target.value)}
                     required
                 />
-
                 <InputError message={errors.description} className="mt-2" />
             </div>
 
             <div className="mt-4">
                 <InputLabel htmlFor="start_date" value="Starting date" />
-
                 <TextInput
                     id="start_date"
                     type="date"
@@ -68,13 +62,11 @@ function CreateProjectForm() {
                     onChange={(e) => setData("start_date", e.target.value)}
                     required
                 />
-
                 <InputError message={errors.start_date} className="mt-2" />
             </div>
 
             <div className="mt-4">
                 <InputLabel htmlFor="end_date" value="End date" />
-
                 <TextInput
                     id="end_date"
                     type="date"
@@ -84,17 +76,19 @@ function CreateProjectForm() {
                     onChange={(e) => setData("end_date", e.target.value)}
                     required
                 />
-
                 <InputError message={errors.end_date} className="mt-2" />
             </div>
 
             <div className="mt-4 flex items-center justify-end">
-                <PrimaryButton className="ms-4 bg-[#FFFF] text-black  hover:bg-[#172227]  hover:text-white transition duration-300" disabled={processing}>
-                    {processing ? "Creation in progress..." : "Create"}
+                <PrimaryButton
+                    className="ms-4 bg-[#FFFF] text-black hover:bg-[#172227] hover:text-white transition duration-300"
+                    disabled={processing}
+                >
+                    {processing ? "Updating..." : "Update"}
                 </PrimaryButton>
             </div>
         </form>
     );
 }
 
-export default CreateProjectForm;
+export default EditProjectForm;

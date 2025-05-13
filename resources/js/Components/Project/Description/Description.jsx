@@ -1,8 +1,22 @@
-import ppKirby from '../../../assets/pp/kirby.jpg';
-import arrowSVG from '../../../assets/arrow.svg';
+import ppKirby from '../../../../assets/pp/kirby.jpg';
+import arrowSVG from '../../../../assets/arrow.svg';
+import EditProjectButton from '../EditProjectButton';
 
-const ProjectDescriptionDashboard = ({projects, roles, users}) => {
+const Description = ({projects, roles, users}) => {
 
+    function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'short', day: '2-digit' };
+        const date = new Date(dateString);
+        const formattedDate = date.toLocaleDateString('en-US', options).toUpperCase();
+
+        // Séparer le jour du reste de la date
+        const [month, day, year] = formattedDate.split(' ');
+        return (
+            <>
+                {month} <span className="text-[#F7D539]">{day}</span> {year}
+            </>
+        );
+    }
 
     function showAdmin() {
         // Filtrer les utilisateurs qui ont le rôle "admin"
@@ -36,7 +50,7 @@ const ProjectDescriptionDashboard = ({projects, roles, users}) => {
     console.log("type: ", typeof(projects));
     return (
         <>
-        <div className="agenda bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
+        <div className="project bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
                 <div className="head flex justify-between pb-4">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">Project</h2>
@@ -44,21 +58,21 @@ const ProjectDescriptionDashboard = ({projects, roles, users}) => {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">{projects.name}</p>
                 </div>
                 <div className="right ">
-                    <button className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px]">Edit</button>
+                    <EditProjectButton project={projects} />
                 </div>
             </div>
             <div className="head flex justify-between mb-6">
                 <div className="left flex gap-6">
                     <div>
 
-                        <h2 className="text-[#46484C] text-[35px] leading-[30px] font-semibold [letter-spacing:-0.05em]">SEP <span className="text-[#F7D539]">23</span> / 2025</h2>
+                        <h2 className="text-[#46484C] text-[35px] leading-[30px] font-semibold [letter-spacing:-0.05em]">{formatDate(projects.start_date)}</h2>
                         <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em]">start date</p>
                     </div>
                     <div className="arrow h-[30px] w-[30px]">
                         <img src={arrowSVG} alt="arrow" className="h-full w-full"/>
                     </div>
                     <div>
-                        <h2 className="text-[#46484C] text-[35px] leading-[30px] font-semibold [letter-spacing:-0.05em]">SEP <span className="text-[#F7D539]">25</span> / 2025</h2>
+                        <h2 className="text-[#46484C] text-[35px] leading-[30px] font-semibold [letter-spacing:-0.05em]">{formatDate(projects.end_date)}</h2>
                         <p className="text-gray-title-secondary text-[18px] leading-[23px] font-semibold [letter-spacing:-0.05em]">end date</p>
                     </div>
                 </div>
@@ -69,17 +83,14 @@ const ProjectDescriptionDashboard = ({projects, roles, users}) => {
                 </p>
                 <div className="owner flex  overflow-auto scrollbar-hide">
                     <p className="flex text-gray-title-secondary text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em] mr-2">owner: </p>
-                    <div className='h-[80px] bg-red-500'>
-
-                        {showAdmin()}
+                    <div className='h-[80px]'>
                         {showAdmin()}
                     </div>
-
                 </div>
             </div>
         </div>
-            </>
+        </>
     );
 }
 
-export default ProjectDescriptionDashboard
+export default Description
