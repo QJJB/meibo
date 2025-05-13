@@ -39,96 +39,88 @@ export default function Card({ projects }) {
 
     return (
         <>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[35px]">
-            {sortedProjects.map((project) => (
-                <div
-                    key={project.id}
-                    className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md cursor-pointer hover:bg-hover-to-project transition duration-300 ease-in-out"
-                    onClick={() => { window.location.href = `/project/${project.id}`;
-                }}
-                >
-                    
-                    <a href={`/project/${project.id}`}>
-
-                    {/* Bookmark icon */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[35px]">
+                {sortedProjects.map((project) => (
                     <div
-                        className="absolute top-4 right-4 cursor-pointer"
-                        onClick={(event) => {
-                        event.stopPropagation(); // Empêche la propagation de l'événement
-                        toggleFavorite(project.id);
-                    }}
+                        key={project.id}
+                        className="flex flex-col task-cards space-y-[20px] overflow-hidden pb-[30px] bg-dark-tertiary rounded-2xl p-5 w-full max-w-md text-white relative shadow-md cursor-pointer hover:bg-hover-to-project transition duration-300 ease-in-out"
+                        onClick={(e) => {
+                            // Empêche le clic si la cible est dans le bouton favoris
+                            if (e.target.closest(".bookmark-button")) return;
+                            window.location.href = `/project/${project.id}`;
+                        }}
                     >
-                        <svg
-                            className={`w-5 h-5 ${
-                                project.is_favorite ? "text-white" : "text-gray-400"
-                            }`}
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
+                        {/* Bookmark icon */}
+                        <div
+                            className="absolute top-4 right-4 cursor-pointer z-10 bookmark-button"
+                            onClick={(event) => {
+                                event.stopPropagation(); // On garde ça par sécurité
+                                toggleFavorite(project.id);
+                            }}
                         >
-                            <path d="M5 3a2 2 0 00-2 2v12l7-3 7 3V5a2 2 0 00-2-2H5z" />
-                        </svg>
-                    </div>
-
-                    {/* Category / Tag */}
-                    <p className="text-xs text-gray-owner">{project.creator_name}</p>
-
-                    {/* Title */}
-                    <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
-
-                    {/* Roles */}
-                    <div className="flex">
-                        {project.roles && project.roles.map(role => (
-                            <div className="bg-gray-600 rounded-full w-24 h-4 mb-4 flex items-center justify-center text-xs  mr-2" key={role.id}>
-                                {role.name}
-                            </div>
-                        ))}
-
-                    </div>
-
-
-                    {/* Avatars + count */}
-                    <div className="flex items-center space-x-2 mb-4">
-                        <img
-                            src="https://i.pravatar.cc/24?img=12"
-                            alt="avatar"
-                            className="w-6 h-6 rounded-full"
-                        />
-                        <img
-                            src="https://i.pravatar.cc/24?img=18"
-                            alt="avatar"
-                            className="w-6 h-6 rounded-full"
-                        />
-                        <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center">
-                            3
+                            {project.is_favorite ? (
+                                <svg
+                                    className="w-5 h-5 text-white"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path d="M5 3a2 2 0 00-2 2v12l7-3 7 3V5a2 2 0 00-2-2H5z" />
+                                </svg>
+                            ) : (
+                                <svg
+                                    className="w-5 h-5 text-gray-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="1.5"
+                                    viewBox="0 0 20 20"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M5 3a2 2 0 00-2 2v12l7-3 7 3V5a2 2 0 00-2-2H5z"
+                                    />
+                                </svg>
+                            )}
                         </div>
-                    </div>
 
-                    {/* Progress bar */}
-                    <div className="flex items-center justify-between">
-                        <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
-                            <div
-                                className="h-full bg-white rounded-full"
-                                style={{
-                                    width:
-                                        project.task_ratio &&
-                                            parseInt(project.task_ratio.split('/')[0]) > 0
-                                            ? `${(parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100}%`
-                                            : '0%',
-                                }}
-                            ></div>
+                        {/* Le reste de la carte */}
+                        <p className="text-xs text-gray-owner">{project.creator_name}</p>
+                        <h3 className="text-xl font-semibold mb-2">{project.name}</h3>
 
+                        <div className="flex">
+                            {project.roles?.map((role) => (
+                                <div className="bg-gray-600 rounded-full w-24 h-4 mb-4 flex items-center justify-center text-xs mr-2" key={role.id}>
+                                    {role.name}
+                                </div>
+                            ))}
+                        </div>
 
-                        </div>{/* Progress bar + Done Ratio */}
+                        <div className="flex items-center space-x-2 mb-4">
+                            <img
+                                src="https://i.pravatar.cc/24?img=12"
+                                alt="avatar"
+                                className="w-6 h-6 rounded-full"
+                            />
+                            <img
+                                src="https://i.pravatar.cc/24?img=18"
+                                alt="avatar"
+                                className="w-6 h-6 rounded-full"
+                            />
+                            <div className="w-6 h-6 rounded-full bg-yellow-400 text-black text-sm font-bold flex items-center justify-center">
+                                3
+                            </div>
+                        </div>
+
                         <div className="flex items-center justify-between">
                             <div className="flex-1 h-1 bg-gray-700 rounded-full overflow-hidden">
-                                {/* Tu peux ajuster dynamiquement la largeur ici si tu veux */}
                                 <div
                                     className="h-full bg-white rounded-full"
                                     style={{
-                                        width: `${project.task_ratio
-                                                ? (parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100
-                                                : 0
-                                            }%`,
+                                        width:
+                                            project.task_ratio &&
+                                                parseInt(project.task_ratio.split('/')[0]) > 0
+                                                ? `${(parseInt(project.task_ratio.split('/')[0]) / parseInt(project.task_ratio.split('/')[1])) * 100}%`
+                                                : '0%',
                                     }}
                                 ></div>
                             </div>
@@ -136,10 +128,8 @@ export default function Card({ projects }) {
                                 {project.task_ratio ?? '0/0'}
                             </span>
                         </div>
-
-                    </div></a>
-                </div>
-            ))}
+                    </div>
+                ))}
             </div>
         </>
     );
