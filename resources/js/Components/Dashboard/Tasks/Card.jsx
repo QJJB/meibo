@@ -1,7 +1,7 @@
 // resources/js/Pages/TaskCard.jsx
 
 function Card({ tasks, projects }) {
-    console.log("Tasks:", tasks);
+    console.log("Tasks color:", tasks);
     console.log("Projects:", projects);
     if (!tasks || tasks.length === 0) {
         return <p className="text-center text-white mt-4">Aucune tâche trouvée.</p>;
@@ -41,16 +41,17 @@ function Card({ tasks, projects }) {
                                         className="w-full h-full object-cover"
                                     />
                                 </div>
-                                <h3 className="text-yellow-meibo font-semibold text-[20px] [letter-spacing:-0.05em]">
+                                <h3 className="font-semibold text-[20px] [letter-spacing:-0.05em]" style={{ color: task.color }}>
                                     {project ? project.name : 'Projet inconnu'}
                                 </h3>
                             </div>
                             <div className="task-card-date flex flex-row space-x-[10px] items-center">
-                                <p className="text-yellow-meibo font-light text-[17px] [letter-spacing:-0.05em]">
+                                <p className="font-light text-[17px] [letter-spacing:-0.05em]" style={{ color: task.color }}>
                                     {task.due_date ? task.due_date.slice(0, 10) : 'Pas de date'}
                                 </p>
                                 <svg
-                                    className="w-6 h-6 stroke-yellow-meibo transition-transform"
+                                    className="w-6 h-6 transition-transform"
+                                    style={{ stroke: task.color }}
                                     width="26"
                                     height="24"
                                     viewBox="0 0 26 24"
@@ -68,7 +69,7 @@ function Card({ tasks, projects }) {
                         </div>
 
                         {/* Contenu de la tâche */}
-                        <div className="task-card-container flex items-center justify-between bg-yellow-meibo [width:calc(100%-30px)] pl-[19px] pt-[19px] p-[19px] mx-[15px] rounded-[20px] mb-[15px] mt-[15px]">
+                        <div className="task-card-container flex items-center justify-between [width:calc(100%-30px)] pl-[19px] pt-[19px] p-[19px] mx-[15px] rounded-[20px] mb-[15px] mt-[15px]" style={{ backgroundColor: task.color }}>
                             <div className="task-card-description flex flex-col w-[224px] space-y-[8px]">
                                 <p className="text-dark-primary text-[17px] font-semibold [letter-spacing:-0.05em] leading-[21px]">
                                     {task.title}

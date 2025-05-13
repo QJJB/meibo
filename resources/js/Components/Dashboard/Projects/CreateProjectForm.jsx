@@ -10,6 +10,7 @@ function CreateProjectForm() {
         description: "",
         start_date: "",
         end_date: "",
+        colors: "#F7D539",
     });
 
     const handleSubmit = (e) => {
@@ -87,6 +88,51 @@ function CreateProjectForm() {
 
                 <InputError message={errors.end_date} className="mt-2" />
             </div>
+
+            <div className="mt-4">
+                <InputLabel value="Project color" />
+
+                <div className="flex gap-6 mt-2 text-white">
+                    <label className="flex items-center">
+                        <input
+                            type="radio"
+                            name="color"
+                            value="#F7D539"
+                            checked={data.color === "#F7D539"}
+                            onChange={(e) => setData("color", e.target.value)}
+                            className="mr-2"
+                        />
+                        Yellow
+                    </label>
+
+                    <label className="flex items-center">
+                        <input
+                            type="radio"
+                            name="color"
+                            value="#C099F2"
+                            checked={data.color === "#C099F2"}
+                            onChange={(e) => setData("color", e.target.value)}
+                            className="mr-2"
+                        />
+                        Purple
+                    </label>
+
+                    <label className="flex items-center">
+                        <input
+                            type="radio"
+                            name="color"
+                            value="#FF7DA9"
+                            checked={data.color === "#FF7DA9"}
+                            onChange={(e) => setData("color", e.target.value)}
+                            className="mr-2"
+                        />
+                        Pink
+                    </label>
+                </div>
+
+                <InputError message={errors.color} className="mt-2" />
+            </div>
+
 
             <div className="mt-4 flex items-center justify-end">
                 <PrimaryButton

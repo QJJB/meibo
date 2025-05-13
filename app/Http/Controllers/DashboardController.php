@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Project;
 use App\Models\Role;
+use function Symfony\Component\String\s;
 
 class DashboardController extends Controller
 {
@@ -21,6 +22,7 @@ class DashboardController extends Controller
             $creator = User::find($project->pivot->user_id);
             $project->creator_name = $creator ? $creator->name : 'Inconnu';
             $project->creator_id = $creator->id;
+            $project->color = $project->color;
 
             $tasks = $project->tasks;
             $totalTasks = $tasks->count();
@@ -36,11 +38,30 @@ class DashboardController extends Controller
             $users = User::find($project->pivot->user_id);
             $project->users = $users;
 
+
         }
 
         // Récupère les tâches auxquelles l'utilisateur est assigné
-        $tasks = $user->tasks;
+        //$tasks = $user->tasks();
+        //$tasks = $user->tasks()->with('projects')->get();
+        //dd($project);
 
+        //dd($tasks);
+
+        $tasks = $user->tasks()->with('project')->get();
+
+        foreach ($tasks as $task) {
+            $task->color = optional($task->project)->color;
+        }
+
+        //dd($task->color);
+
+        //dd($tasks);
+
+
+        /*foreach ($tasks as $task) {
+            $task->color = $task->projects?->color ?? null;
+        }*/
 
 
         return Inertia::render('Dashboard', [

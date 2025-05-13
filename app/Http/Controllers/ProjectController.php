@@ -131,6 +131,7 @@ class ProjectController extends Controller
             'description' => 'nullable|string|max:1000',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after_or_equal:start_date',
+            'color' => 'required|string|max:7'
         ]);
 
         // Nettoyage des données pour éviter les attaques XSS
