@@ -1,6 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "./NavLink";
-import disconnectSVG from "../../../assets/disconnect.svg";
 import ppStarfire from "../../../assets/pp/starfire.png";
 import ppBeastboy from "../../../assets/pp/beastboy.png";
 import ppCyborg from "../../../assets/pp/cyborg.png";

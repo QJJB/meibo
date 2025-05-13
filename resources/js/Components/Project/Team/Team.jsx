@@ -1,5 +1,3 @@
-import arrowSVG from '../../../../assets/arrow.svg';
-import EditProjectButton from '../EditProjectButton';
 import ppStarfire from "../../../../assets/pp/starfire.png";
 import ppBeastboy from "../../../../assets/pp/beastboy.png";
 import ppCyborg from "../../../../assets/pp/cyborg.png";

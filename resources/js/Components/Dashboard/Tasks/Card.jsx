@@ -1,10 +1,31 @@
 // resources/js/Pages/TaskCard.jsx
 import React from "react";
-
+import ppStarfire from "../../../../assets/pp/starfire.png";
+import ppBeastboy from "../../../../assets/pp/beastboy.png";
+import ppCyborg from "../../../../assets/pp/cyborg.png";
+import ppRaven from "../../../../assets/pp/raven.png";
+import ppKirby from "../../../../assets/pp/kirby.jpg";
+import ppRobin from "../../../../assets/pp/robin.png";
+import { usePage } from '@inertiajs/react';
 
 function Card({ tasks, projects }) {
-    console.log("Tasks:", tasks);
-    console.log("Projects:", projects);
+
+    const { auth } = usePage().props; // Récupère les données utilisateur
+    const profilePhotoName = auth.user?.profile_photo
+    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    : "default-avatar";
+
+    const photoMap = {
+        starfire: ppStarfire,
+        beastboy: ppBeastboy,
+        cyborg: ppCyborg,
+        raven: ppRaven,
+        kirby: ppKirby,
+        robin: ppRobin,
+    };
+
+    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
+
     if (!tasks || tasks.length === 0) {
         return <p className="text-center text-white mt-4">Aucune tâche trouvée.</p>;
     }
@@ -43,7 +64,7 @@ function Card({ tasks, projects }) {
                             <div className="task-card-title flex flex-row space-x-[14px] items-center">
                                 <div className="w-7 h-7 rounded-full overflow-hidden">
                                     <img
-                                        src="/storage/avatars/mushu-avatar.png"
+                                        src={profilePhotoPath}
                                         alt="Avatar"
                                         className="w-full h-full object-cover"
                                     />

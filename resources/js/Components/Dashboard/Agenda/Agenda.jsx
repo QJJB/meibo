@@ -1,6 +1,11 @@
 import { useState } from "react";
-
+import ppStarfire from "../../../../assets/pp/starfire.png";
+import ppBeastboy from "../../../../assets/pp/beastboy.png";
+import ppCyborg from "../../../../assets/pp/cyborg.png";
+import ppRaven from "../../../../assets/pp/raven.png";
 import ppKirby from "../../../../assets/pp/kirby.jpg";
+import ppRobin from "../../../../assets/pp/robin.png";
+import { usePage } from '@inertiajs/react';
 
 import sunSVG from "../../../../assets/sun.svg";
 import moreSVG from "../../../../assets/more.svg";
@@ -13,6 +18,21 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 dayjs.extend(customParseFormat);
 
 const Agenda = ({ projects, auth }) => {
+    const profilePhotoName = auth.user?.profile_photo
+    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    : "default-avatar";
+
+    const photoMap = {
+        starfire: ppStarfire,
+        beastboy: ppBeastboy,
+        cyborg: ppCyborg,
+        raven: ppRaven,
+        kirby: ppKirby,
+        robin: ppRobin,
+    };
+
+    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
+
     const [activeDay, setActiveDay] = useState(dayjs());
     const previousDay = dayjs(activeDay).subtract(1, "day");
     const nextDay = dayjs(activeDay).add(1, "day");
@@ -129,7 +149,7 @@ const Agenda = ({ projects, auth }) => {
                                     <div className="left flex items-center">
                                         <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
                                             <img
-                                                src={ppKirby}
+                                                src={profilePhotoPath}
                                                 alt="Avatar"
                                                 className="w-full h-full object-cover"
                                             />
@@ -180,7 +200,7 @@ const Agenda = ({ projects, auth }) => {
                                     <div className="left flex items-center">
                                         <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
                                             <img
-                                                src={ppKirby}
+                                                src={profilePhotoPath}
                                                 alt="Avatar"
                                                 className="w-full h-full object-cover"
                                             />
@@ -231,7 +251,7 @@ const Agenda = ({ projects, auth }) => {
                                     <div className="left flex items-center">
                                         <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
                                             <img
-                                                src={ppKirby}
+                                                src={profilePhotoPath}
                                                 alt="Avatar"
                                                 className="w-full h-full object-cover"
                                             />
