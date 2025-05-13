@@ -4,7 +4,7 @@ import PrimaryButton from "@/Components/Form/PrimaryButton";
 import TextInput from "@/Components/Form/TextInput";
 import { useForm } from "@inertiajs/react";
 
-function CreateTaskForm({ users, projectId, onSuccess }) {
+function CreateTaskForm({ users, projectId, onSuccess, roles }) {
   const { data, setData, post, processing, errors } = useForm({
     title: "",
     type: "task",
@@ -12,7 +12,8 @@ function CreateTaskForm({ users, projectId, onSuccess }) {
     due_date: "",
     priority: "1",
     status: "todo",
-    user_id: "",
+    user_ids: [],
+    role_ids: [],
     project_id: projectId, // Ajout de l'ID du projet
   });
 
@@ -68,23 +69,6 @@ function CreateTaskForm({ users, projectId, onSuccess }) {
         />
         <InputError message={errors.due_date} className="mt-2" />
       </div>
-
-      <div className="mt-4">
-        <InputLabel htmlFor="type" value="Type" />
-        <select
-          id="type"
-          name="type"
-          value={data.type}
-          className="bg-[#172227] h-15 w-full rounded-xl p-3 text-white focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
-          onChange={(e) => setData("type", e.target.value)}
-          required
-        >
-          <option value="task">Task</option>
-          <option value="event">Event</option>
-        </select>
-        <InputError message={errors.type} className="mt-2" />
-      </div>
-
       <div className="mt-4">
         <InputLabel htmlFor="priority" value="Priority" />
         <select
@@ -120,22 +104,61 @@ function CreateTaskForm({ users, projectId, onSuccess }) {
       </div>
 
       <div className="mt-4">
-        <InputLabel htmlFor="user_id" value="Assigned User" />
-        <select
-          id="user_id"
-          name="user_id"
-          value={data.user_id}
-          className="bg-[#172227] h-15 w-full rounded-xl p-3 text-white focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
-          onChange={(e) => setData("user_id", e.target.value)}
-        >
-          <option value="">No user</option>
-          {users.map((user) => (
-            <option key={user.id} value={user.id}>
-              {user.name}
-            </option>
-          ))}
-        </select>
-        <InputError message={errors.user_id} className="mt-2" />
+          <InputLabel htmlFor="user_ids" value="Assigned Users" />
+          <div className="bg-[#172227] p-3 rounded-xl">
+              {users.map((user) => (
+                  <div key={user.id} className="flex items-center space-x-2">
+                      <input
+                          type="checkbox"
+                          id={`user-${user.id}`}
+                          value={user.id}
+                          checked={data.user_ids.includes(user.id)}
+                          onChange={(e) => {
+                              const userId = parseInt(e.target.value);
+                              setData("user_ids", e.target.checked
+                                  ? [...data.user_ids, userId]
+                                  : data.user_ids.filter((id) => id !== userId)
+                              );
+                          }}
+                          className="text-[#B5B5B8] focus:ring-[#B5B5B8]"
+                      />
+                      <label htmlFor={`user-${user.id}`} className="text-white">
+                          {user.name}
+                      </label>
+                  </div>
+              ))}
+          </div>
+          <InputError message={errors.user_ids} className="mt-2" />
+      </div>
+
+      <div className="mt-4">
+          <InputLabel htmlFor="role_ids" value="Assigned Roles" />
+          <div className="bg-[#172227] p-3 rounded-xl">
+              {roles
+                  .filter((role) => role.name !== "admin" && role.name !== "guest")
+                  .map((role) => (
+                      <div key={role.id} className="flex items-center space-x-2">
+                          <input
+                              type="checkbox"
+                              id={`role-${role.id}`}
+                              value={role.id}
+                              checked={data.role_ids.includes(role.id)}
+                              onChange={(e) => {
+                                  const roleId = parseInt(e.target.value);
+                                  setData("role_ids", e.target.checked
+                                      ? [...data.role_ids, roleId]
+                                      : data.role_ids.filter((id) => id !== roleId)
+                                  );
+                              }}
+                              className="text-[#B5B5B8] focus:ring-[#B5B5B8]"
+                          />
+                          <label htmlFor={`role-${role.id}`} className="text-white">
+                              {role.name}
+                          </label>
+                      </div>
+                  ))}
+          </div>
+          <InputError message={errors.role_ids} className="mt-2" />
       </div>
 
       <div className="mt-4 flex items-center justify-end">

@@ -7,6 +7,9 @@ import UpdateProfilePhotoForm from './Partials/UpdateProfilePhotoForm';
 
 export default function Edit({ mustVerifyEmail, status }) {
     const { auth } = usePage().props; // Récupère les données utilisateur
+    const profilePhotoName = auth.user?.profile_photo
+    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    : "default-avatar";
 
     return (
         <AuthenticatedLayout
@@ -27,14 +30,12 @@ export default function Edit({ mustVerifyEmail, status }) {
                             className="max-w-xl"
                         />
                     </div>
-
-                    <div className="bg-white p-4 shadow-sm sm:rounded-lg sm:p-8">
-                        <UpdateProfilePhotoForm 
-                            className="max-w-xl" 
-                            currentPhoto={auth.user?.profile_photo || "/default-avatar.png"} // Passe la photo actuelle ou une image par défaut
+                    <div className='bg-white p-4 shadow-sm sm:rounded-lg sm:p-8'>
+                        <UpdateProfilePhotoForm
+                            className="max-w-xl"
+                            currentPhoto={profilePhotoName || "default-avatar"} // Passe le nom de la photo ou un nom par défaut
                         />
                     </div>
-
                     <div className="bg-white p-4 shadow-sm sm:rounded-lg sm:p-8">
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>

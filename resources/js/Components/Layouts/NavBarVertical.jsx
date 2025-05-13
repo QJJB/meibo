@@ -1,11 +1,29 @@
 import { Link, usePage } from "@inertiajs/react";
 import NavLink from "./NavLink";
 import disconnectSVG from "../../../assets/disconnect.svg";
-import ppKirby from '../../../assets/pp/kirby.jpg'
+import ppStarfire from "../../../assets/pp/starfire.png";
+import ppBeastboy from "../../../assets/pp/beastboy.png";
+import ppCyborg from "../../../assets/pp/cyborg.png";
+import ppRaven from "../../../assets/pp/raven.png";
+import ppKirby from "../../../assets/pp/kirby.jpg";
+import ppRobin from "../../../assets/pp/robin.png";
 
 const NavBarVertical = () => {
     const { auth } = usePage().props; // Récupère les données utilisateur
-    const profilePhoto = auth.user?.profile_photo || '/default-avatar.png'; // Utilise une image par défaut si aucune photo n'est définie
+    const profilePhotoName = auth.user?.profile_photo
+    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    : "default-avatar";
+
+    const photoMap = {
+        starfire: ppStarfire,
+        beastboy: ppBeastboy,
+        cyborg: ppCyborg,
+        raven: ppRaven,
+        kirby: ppKirby,
+        robin: ppRobin,
+    };
+
+    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
 
     const { url } = usePage();
     const currentPath = url ? new URL(url, window.location.href).pathname : "/";
@@ -149,7 +167,7 @@ const NavBarVertical = () => {
                         className={`w-7 h-7 rounded-full overflow-hidden hover:scale-110 transition-all duration-200`}
                     >
                         <img
-                            src={profilePhoto}
+                            src={profilePhotoPath}
                             alt="Avatar"
                             className="w-full h-full object-cover"
                         />

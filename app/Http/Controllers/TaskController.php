@@ -110,14 +110,18 @@ class TaskController extends Controller
 
         $validatedData = request()->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'required|date',
             'priority' => 'required',
             'status' => 'required|string',
-            'user_id' => 'nullable',
             'project_id' => 'required|exists:projects,id',
+            'user_ids' => 'array',
+            'user_ids.*' => 'exists:users,id',
+            'role_ids' => 'array',
+            'role_ids.*' => 'exists:roles,id',
         ]);
+
+        $validatedData['type'] = $validatedData['type'] ?? 'task';
 
         // Ajoute les valeurs dynamiques qui ne sont pas dans la requête
         $validatedData['created_by'] = Auth::id();
@@ -126,8 +130,12 @@ class TaskController extends Controller
         $task = Task::create($validatedData);
 
         // Vérifie si un utilisateur a été sélectionné avant d'attacher
-        if (!empty($validatedData['user_id']) && $validatedData['user_id']!=='no user found') {
-            $task->assignees()->attach($validatedData['user_id']);
+        if (!empty($validatedData['user_ids']) && $validatedData['user_ids']!=='no user found') {
+            $task->assignees()->attach($validatedData['user_ids']);
+        }
+
+        if (!empty($validatedData['role_ids']) && $validatedData['role_ids']!=='no roles found') {
+            $task->roles()->attach($validatedData['role_ids']);
         }
     }
 
@@ -187,7 +195,6 @@ class TaskController extends Controller
 
         $validatedData = request()->validate([
             'title' => 'required|string|max:255',
-            'type' => 'required|string|max:255',
             'description' => 'nullable|string',
             'due_date' => 'required|date',
             'priority' => 'required',

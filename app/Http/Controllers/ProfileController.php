@@ -17,23 +17,14 @@ class ProfileController extends Controller
     public function updatePhoto(Request $request)
     {
         $request->validate([
-            'profile_photo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Valide le fichier
+            'default_photo' => 'nullable|string',
         ]);
 
         $user = $request->user();
 
-        // Supprime l'ancienne photo si elle existe
-        if ($user->profile_photo) {
-            Storage::delete($user->profile_photo);
+        if ($request->default_photo) {
+            $user->update(['profile_photo' => $request->default_photo]); // Enregistre uniquement le nom
         }
-
-        // Stocke la nouvelle photo
-        $path = $request->file('profile_photo')->store('profile_photos', 'public');
-
-        // Met à jour l'utilisateur
-        $user->update([
-            'profile_photo' => $path,
-        ]);
 
         return back()->with('success', 'Profile photo updated successfully.');
     }

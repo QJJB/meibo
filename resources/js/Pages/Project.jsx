@@ -15,7 +15,7 @@ export default function Project() {
                     users={users}
                 />
                 <Team users={users} />
-                <Tasks users={users} projectId={projects.id} />
+                <Tasks users={users} projectId={projects.id} roles={roles} />
             </div>
         </AuthenticatedLayout>
     );

@@ -1,8 +1,30 @@
-import ppKirby from '../../../../assets/pp/kirby.jpg';
 import arrowSVG from '../../../../assets/arrow.svg';
 import EditProjectButton from '../EditProjectButton';
+import ppStarfire from "../../../../assets/pp/starfire.png";
+import ppBeastboy from "../../../../assets/pp/beastboy.png";
+import ppCyborg from "../../../../assets/pp/cyborg.png";
+import ppRaven from "../../../../assets/pp/raven.png";
+import ppKirby from "../../../../assets/pp/kirby.jpg";
+import ppRobin from "../../../../assets/pp/robin.png";
+import { usePage } from '@inertiajs/react';
 
 const Description = ({projects, roles, users}) => {
+
+    const { auth } = usePage().props; // Récupère les données utilisateur
+    const profilePhotoName = auth.user?.profile_photo
+    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    : "default-avatar";
+
+    const photoMap = {
+        starfire: ppStarfire,
+        beastboy: ppBeastboy,
+        cyborg: ppCyborg,
+        raven: ppRaven,
+        kirby: ppKirby,
+        robin: ppRobin,
+    };
+
+    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
 
     function formatDate(dateString) {
         const options = { year: 'numeric', month: 'short', day: '2-digit' };
@@ -30,7 +52,7 @@ const Description = ({projects, roles, users}) => {
                 <div key={admin.id} className="flex align-center mb-2">
                     <div className="w-5 h-5 rounded-full overflow-hidden mr-[10px]">
                         <img
-                            src={ppKirby}
+                            src={profilePhotoPath}
                             alt="Avatar"
                             className="w-full h-full object-cover"
                         />

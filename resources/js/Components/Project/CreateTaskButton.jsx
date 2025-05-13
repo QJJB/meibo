@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import CreateTaskForm from "./CreateTaskForm";
 
-function CreateTaskButton({ projectId, users }) {
+function CreateTaskButton({ projectId, users, roles }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -49,6 +49,7 @@ function CreateTaskButton({ projectId, users }) {
               projectId={projectId}
               users={users}
               onSuccess={closeModal} // Ferme la modal après succès
+              roles={roles}
             />
           </div>
         </div>

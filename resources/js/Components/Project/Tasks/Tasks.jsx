@@ -3,7 +3,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import CreateTaskButton from "../CreateTaskButton";
 dayjs.extend(customParseFormat);
 
-function Tasks({users, projectId}) {
+function Tasks({users, projectId, roles}) {
 
     const todayFormatted = dayjs().format("MMM, YYYY");
     return (
@@ -18,7 +18,7 @@ function Tasks({users, projectId}) {
                         {todayFormatted}
                     </p>
                 </div>
-                <CreateTaskButton users={users} projectId={projectId} />
+                <CreateTaskButton users={users} projectId={projectId} roles={roles} />
             </div>
 
             <div className="body flex justify-between h-full py-[30px]">

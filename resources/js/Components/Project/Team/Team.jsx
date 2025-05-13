@@ -1,6 +1,30 @@
-import ppKirby from '../../../../assets/pp/kirby.jpg';
+import arrowSVG from '../../../../assets/arrow.svg';
+import EditProjectButton from '../EditProjectButton';
+import ppStarfire from "../../../../assets/pp/starfire.png";
+import ppBeastboy from "../../../../assets/pp/beastboy.png";
+import ppCyborg from "../../../../assets/pp/cyborg.png";
+import ppRaven from "../../../../assets/pp/raven.png";
+import ppKirby from "../../../../assets/pp/kirby.jpg";
+import ppRobin from "../../../../assets/pp/robin.png";
+import { usePage } from '@inertiajs/react';
 
 const Team = ({users}) => {
+    const { auth } = usePage().props; // Récupère les données utilisateur
+    const profilePhotoName = auth.user?.profile_photo
+    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    : "default-avatar";
+
+    const photoMap = {
+        starfire: ppStarfire,
+        beastboy: ppBeastboy,
+        cyborg: ppCyborg,
+        raven: ppRaven,
+        kirby: ppKirby,
+        robin: ppRobin,
+    };
+
+    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
+
     return (
         <div className="relative agenda bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide row-span-2">
             <div className="bg-dark-secondary sticky top-0 head flex justify-between pb-4 px-[30px] py-[30px]">
@@ -22,7 +46,7 @@ const Team = ({users}) => {
                         <div className="flex items-center gap-3">
                             <div className='w-10 h-10 rounded-full overflow-hidden'>
                                 <img
-                                    src={ppKirby}
+                                    src={profilePhotoPath}
                                     alt="Avatar"
                                     className="w-full h-full object-cover"
                                 />
