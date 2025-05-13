@@ -5,8 +5,9 @@ import ppRaven from "../../../../assets/pp/raven.png";
 import ppKirby from "../../../../assets/pp/kirby.jpg";
 import ppRobin from "../../../../assets/pp/robin.png";
 import { usePage } from '@inertiajs/react';
+import ManageButton from "../ManageButton";
 
-const Team = ({users}) => {
+const Team = ({users, projects}) => {
     const { auth } = usePage().props; // Récupère les données utilisateur
     const profilePhotoName = auth.user?.profile_photo
     ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
@@ -32,7 +33,7 @@ const Team = ({users}) => {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">{users.length} {users.length > 1 ? 'members' : 'member'}</p>
                 </div>
                 <div className="right ">
-                    <button className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px]">Manage</button>
+                    <ManageButton projects={projects} />
                 </div>
             </div>
 
