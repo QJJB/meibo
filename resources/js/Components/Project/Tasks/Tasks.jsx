@@ -1,13 +1,15 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
+import Column from "./Column";
+import Separator from "./Separator";
 import CreateTaskButton from "../CreateTaskButton";
 dayjs.extend(customParseFormat);
 
-function Tasks({users, projectId, roles}) {
+function Tasks({tasksTodo, tasksInProgress, tasksDone, users, projectId, roles}) {
 
     const todayFormatted = dayjs().format("MMM, YYYY");
     return (
-        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
+        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-auto ">
             <div className="head flex justify-between">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
@@ -22,37 +24,13 @@ function Tasks({users, projectId, roles}) {
             </div>
 
             <div className="body flex justify-between h-full py-[30px]">
-                <div className="separator min-w-[3px] self-stretch bg-header-separation rounded-[3px] mt-[50px]"></div>
-
-                <div className="todos next w-full px-[10px] grid grid-rows-4 min-h-[120px]">
-                    <h3
-                        className='text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em]'
-                    >
-                        todos
-                    </h3>
-                </div>
-
-                <div className="separator min-w-[3px] self-stretch bg-header-separation rounded-[3px] mt-[50px]"></div>
-
-                <div className="inprogress next w-full px-[10px] grid grid-rows-4 min-h-[120px]">
-                    <h3
-                        className='text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em]'
-                    >
-                        in progress
-                    </h3>
-                </div>
-
-                <div className="separator min-w-[3px] self-stretch bg-header-separation rounded-[3px] mt-[50px]"></div>
-
-                <div className="complete next w-full px-[10px] grid grid-rows-4 min-h-[120px]">
-                    <h3
-                        className='text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em]'
-                    >
-                        complete
-                    </h3>
-                </div>
-
-                <div className="separator min-w-[3px] self-stretch bg-header-separation rounded-[3px] mt-[50px]"></div>
+                <Separator />
+                <Column title={"todos"} tasks={tasksTodo}/>
+                <Separator />
+                <Column title={"in progress"} tasks={tasksInProgress}/>
+                <Separator />
+                <Column title={"complete"} tasks={tasksDone}/>
+                <Separator />
             </div>
         </div>
     );
