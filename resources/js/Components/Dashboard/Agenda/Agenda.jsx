@@ -19,8 +19,8 @@ dayjs.extend(customParseFormat);
 
 const Agenda = ({ projects, auth }) => {
     const profilePhotoName = auth.user?.profile_photo
-    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
-    : "default-avatar";
+        ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+        : "default-avatar";
 
     const photoMap = {
         starfire: ppStarfire,
@@ -113,11 +113,10 @@ const Agenda = ({ projects, auth }) => {
                     </div>
                     <button
                         className={`today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] border-2 px-[25px] py-[5px] rounded-[20px] hover:cursor-pointer
-                        ${
-                            activeDay.isSame(dayjs(), "day")
+                        ${activeDay.isSame(dayjs(), "day")
                                 ? "text-yellow-meibo"
                                 : "text-gray-title-secondary hover:text-yellow-meibo"
-                        }`}
+                            }`}
                         onClick={() => setActiveDay(dayjs())}
                     >
                         Today
@@ -129,11 +128,10 @@ const Agenda = ({ projects, auth }) => {
 
                 <div className="day prev w-full px-[10px] grid grid-rows-4 min-h-[200px]">
                     <h3
-                        className={`text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px] ${
-                            previousDay.isSame(dayjs(), "day")
-                                ? "text-white-title"
-                                : "text-gray-title-secondary"
-                        }`}
+                        className={`text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px] ${previousDay.isSame(dayjs(), "day")
+                            ? "text-white-title"
+                            : "text-gray-title-secondary"
+                            }`}
                     >
                         {previousDay.date()}
                     </h3>
@@ -147,7 +145,7 @@ const Agenda = ({ projects, auth }) => {
                             {showPreviousDay.map((task, index) => (
                                 <div className="task bg-yellow-meibo border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
                                     <div className="left flex items-center">
-                                        <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
+                                        <div className="w-7 aspect-square rounded-full overflow-hidden mr-[10px]">
                                             <img
                                                 src={profilePhotoPath}
                                                 alt="Avatar"
@@ -181,11 +179,10 @@ const Agenda = ({ projects, auth }) => {
 
                 <div className="day active w-full px-[10px] grid grid-rows-4 min-h-[120px]">
                     <h3
-                        className={`text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px] ${
-                            activeDay.isSame(dayjs(), "day")
-                                ? "text-white-title"
-                                : "text-gray-title-secondary"
-                        }`}
+                        className={`text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px] ${activeDay.isSame(dayjs(), "day")
+                            ? "text-white-title"
+                            : "text-gray-title-secondary"
+                            }`}
                     >
                         {activeDay.date()}
                     </h3>
@@ -198,7 +195,7 @@ const Agenda = ({ projects, auth }) => {
                             {showActiveDay.map((task, index) => (
                                 <div className="task bg-yellow-meibo border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
                                     <div className="left flex items-center">
-                                        <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
+                                        <div className="w-7 aspect-square rounded-full overflow-hidden mr-[10px]">
                                             <img
                                                 src={profilePhotoPath}
                                                 alt="Avatar"
@@ -232,11 +229,10 @@ const Agenda = ({ projects, auth }) => {
 
                 <div className="day next w-full px-[10px] grid grid-rows-4 min-h-[120px]">
                     <h3
-                        className={`text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px] ${
-                            nextDay.isSame(dayjs(), "day")
-                                ? "text-white-title"
-                                : "text-gray-title-secondary"
-                        }`}
+                        className={`text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em] text-center mb-[15px] ${nextDay.isSame(dayjs(), "day")
+                            ? "text-white-title"
+                            : "text-gray-title-secondary"
+                            }`}
                     >
                         {nextDay.date()}
                     </h3>
@@ -249,7 +245,7 @@ const Agenda = ({ projects, auth }) => {
                             {showNextDay.map((task, index) => (
                                 <div className="task bg-yellow-meibo border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px]">
                                     <div className="left flex items-center">
-                                        <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
+                                        <div className="w-7 aspect-square rounded-full overflow-hidden mr-[10px]">
                                             <img
                                                 src={profilePhotoPath}
                                                 alt="Avatar"
