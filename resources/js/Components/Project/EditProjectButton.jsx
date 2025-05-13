@@ -20,7 +20,7 @@ function EditProjectButton({ project }) {
             {/* Bouton Edit */}
             <button
                 onMouseDown={openModal}
-                className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px] hover:bg-yellow-meibo hover:text-dark-primary hover:cursor-pointer"
+                className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px] hover:bg-yellow-meibo hover:text-dark-primary hover:cursor-pointer hover:border-yellow-meibo"
             >
                 Edit
             </button>
