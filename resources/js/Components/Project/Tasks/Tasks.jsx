@@ -7,7 +7,7 @@ dayjs.extend(customParseFormat);
 function Tasks({tasksTodo, tasksInProgress, tasksDone}) {
     const todayFormatted = dayjs().format("MMM, YYYY");
     return (
-        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
+        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-auto ">
             <div className="head flex justify-between">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
@@ -21,7 +21,7 @@ function Tasks({tasksTodo, tasksInProgress, tasksDone}) {
             </div>
             <div className="body flex justify-between h-full py-[30px]">
                 <Separator />
-                <Column title={"todo"} tasks={tasksTodo}/>
+                <Column title={"todos"} tasks={tasksTodo}/>
                 <Separator />
                 <Column title={"in progress"} tasks={tasksInProgress}/>
                 <Separator />

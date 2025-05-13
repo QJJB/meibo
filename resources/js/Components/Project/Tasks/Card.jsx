@@ -2,28 +2,25 @@ import ppKirby from '../../../../assets/pp/kirby.jpg';
 import handSVG from '../../../../assets/hand.svg';
 
 import dayjs from "dayjs";
-// import customParseFormat from "dayjs/plugin/customParseFormat";
-// dayjs.extend(customParseFormat);
 
 function Card({task}) {
-    console.log("BIEN",task)
     return (
-        <div className="task cursor-grab bg-header-separation rounded-[15px] py-[18px] px-[15px]">
+        <div className="task cursor-grab bg-dark-tertiary rounded-[8px] py-[10px] px-[12px]">
             <div className="head flex justify-between items-center mb-[5px]">
                 <div className="left flex items-center gap-[10px]">
-                    <h4 className="text-[20px] leading-[20px] font-semibold [letter-spacing:-0.05em]">
+                    <h4 className="text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em]">
                         {task.title}
                     </h4>
                     <div className="role">front</div>
                 </div>
                 <div className="right flex items-center">
                     <p className="[letter-spacing:-0.05em]">
-                        {dayjs(task.due_date).format('MMM D')}
+                        {dayjs(task.due_date).format('MMM D').toLowerCase()}
                     </p>
                 </div>
             </div>
             <div className="body min-h-[57px]">
-                <p className="text-[16px] leading-[16px] text-yellow-meibo mb-[25px] [letter-spacing:-0.05em]">
+                <p className="text-[15px] leading-[16px] text-yellow-meibo mb-[25px] [letter-spacing:-0.05em] line-clamp-2">
                     {task.description}
                 </p>
             </div>
