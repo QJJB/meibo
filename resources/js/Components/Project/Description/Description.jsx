@@ -36,7 +36,6 @@ const Description = ({ projects, roles, users }) => {
         Inertia.delete(route("projects.destroy", projectId), {
             onSuccess: () => {
                 setIsLoading(false); // Désactive le chargement
-                window.location.href = "/dashboard"; // Redirige vers le dashboard
             },
         });
     }

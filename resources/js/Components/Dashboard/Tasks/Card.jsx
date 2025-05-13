@@ -52,7 +52,7 @@ function Card({ tasks, projects }) {
                 return (
                     <div
                         key={task.id}
-                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:bg-hover-to-project transition duration-300 ease-in-out"
+                        className="task-card bg bg-dark-tertiary [width:calc(100%-30px)] mx-auto rounded-[20px] hover:bg-hover-to-project transition duration-300 ease-in-out hover: cursor-pointer"
                         onClick={() => {
                             if (project) {
                                 window.location.href = `/project/${project.id}`;

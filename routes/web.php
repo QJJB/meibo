@@ -37,9 +37,11 @@ Route::middleware('auth')->group(function () {
 
 // Test route création de lien d'ajout user
 Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
-    ->name('project.invite')
+    ->name('projects.invite.accept')
     ->middleware('signed');
 
+Route::get('/projects/{project}/invite', [InvitationController::class, 'generateInviteLink'])
+    ->name('projects.invite.generate');
 
 Route::post('/projects/{id}/favorite', [ProjectController::class, 'toggleFavorite'])->name('projects.toggleFavorite');
 

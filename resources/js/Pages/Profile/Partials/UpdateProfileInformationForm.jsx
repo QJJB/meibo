@@ -94,7 +94,7 @@ export default function UpdateProfileInformation({
                 )}
 
                 <div className="flex items-center gap-4">
-                    <ProfilSaveButton disabled={processing}>
+                    <ProfilSaveButton disabled={processing} className="hover: cursor-pointer">
                         Save
                     </ProfilSaveButton>
 

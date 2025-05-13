@@ -79,7 +79,7 @@ export default function UpdateProfilePhotoForm({ className, currentPhoto }) {
                             <img
                                 src={photoMap[photoName]}
                                 alt={photoName}
-                                className={`w-16 h-16 rounded-full object-cover border-2 ${data.default_photo === photoName ? "border-blue-500" : "border-gray-300"
+                                className={`w-16 h-16 rounded-full object-cover border-2 hover: cursor-pointer ${data.default_photo === photoName ? "border-blue-500" : "border-gray-300"
                                     }`}
                             />
                         </label>
@@ -92,7 +92,7 @@ export default function UpdateProfilePhotoForm({ className, currentPhoto }) {
 
             <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700hover: cursor-pointer"
                 disabled={processing}
             >
                 {processing ? "Updating..." : "Update Photo"}
