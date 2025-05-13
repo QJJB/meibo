@@ -47,7 +47,7 @@ export default function UpdateProfilePhotoForm({ className, currentPhoto }) {
         <form onSubmit={handleSubmit} className={`space-y-4 ${className}`}>
             <div>
                 <label className="block text-sm font-medium text-gray-700">
-                    Profile Photo
+                    Profile Picture
                 </label>
 
                 {/* Aperçu de la photo */}
@@ -63,9 +63,9 @@ export default function UpdateProfilePhotoForm({ className, currentPhoto }) {
             {/* Choix des photos par défaut */}
             <div>
                 <label className="block text-sm font-medium text-gray-700">
-                    Choose a Default Photo
+                    Choose a Default Profile Picture
                 </label>
-                <div className="mt-2 grid grid-cols-4 gap-4">
+                <div className="mt-2 grid grid-flow-col auto-cols-max gap-4">
                     {Object.keys(photoMap).map((photoName, index) => (
                         <label key={index} className="flex flex-col items-center">
                             <input
@@ -79,9 +79,8 @@ export default function UpdateProfilePhotoForm({ className, currentPhoto }) {
                             <img
                                 src={photoMap[photoName]}
                                 alt={photoName}
-                                className={`w-16 h-16 rounded-full object-cover border-2 ${
-                                    data.default_photo === photoName ? "border-blue-500" : "border-gray-300"
-                                }`}
+                                className={`w-16 h-16 rounded-full object-cover border-2 ${data.default_photo === photoName ? "border-blue-500" : "border-gray-300"
+                                    }`}
                             />
                         </label>
                     ))}
