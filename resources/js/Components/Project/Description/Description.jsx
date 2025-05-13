@@ -125,11 +125,11 @@ const Description = ({ projects, roles, users }) => {
                             {projects.name}
                         </p>
                     </div>
-                    <div className="right">
+                    <div className="right flex justify-center">
                         <EditProjectButton project={projects} />
                         <button
                             onClick={() => setIsModalOpen(true)} // Ouvre la modal
-                            className="ml-4 p-2 hover: cursor-pointer"
+                            className="ml-4 hover: cursor-pointer"
                             title="Delete Project"
                         >
                             <img src={binSVG} alt="Delete" className="w-6 h-6" />
