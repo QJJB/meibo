@@ -6,7 +6,6 @@ import CreateTaskButton from "../CreateTaskButton";
 dayjs.extend(customParseFormat);
 
 function Tasks({tasksTodo, tasksInProgress, tasksDone, users, projectId, roles}) {
-
     const todayFormatted = dayjs().format("MMM, YYYY");
     return (
         <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-auto ">
@@ -25,11 +24,11 @@ function Tasks({tasksTodo, tasksInProgress, tasksDone, users, projectId, roles})
 
             <div className="body flex justify-between h-full py-[30px]">
                 <Separator />
-                <Column title={"todos"} tasks={tasksTodo}/>
+                <Column title={"todos"} tasks={tasksTodo} projectId={projectId}/>
                 <Separator />
-                <Column title={"in progress"} tasks={tasksInProgress}/>
+                <Column title={"in progress"} tasks={tasksInProgress} projectId={projectId}/>
                 <Separator />
-                <Column title={"complete"} tasks={tasksDone}/>
+                <Column title={"complete"} tasks={tasksDone} projectId={projectId}/>
                 <Separator />
             </div>
         </div>
