@@ -66,8 +66,8 @@ function Tasks({
     }
 
     return (
-        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] pb-[30px] pt-0 overflow-auto scrollbar-custom relative">
-            <div className="head flex justify-between sticky top-0 bg-dark-secondary py-[30px]">
+        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] pb-[30px] pt-0 overflow-auto scrollbar-custom">
+            <div className="head flex justify-between top-0 bg-dark-secondary py-[30px]">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
                         Tasks

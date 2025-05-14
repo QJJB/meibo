@@ -26,7 +26,7 @@ function ManageButton({ projects, users, roles }) {
             {/* Modal */}
             {isModalOpen && (
                 <div
-                    className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center z-50"
+                    className="fixed inset-0 bg-opacity-50 backdrop-blur-md flex items-center justify-center"
                     onMouseDown={handleBackgroundClick}
                 >
                     <div className="bg-[#172227] rounded-lg p-6 w-[90%] max-w-lg max-h-[90vh] overflow-y-auto scrollbar-hide">
