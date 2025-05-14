@@ -36,19 +36,19 @@ function Tasks({
 
     function handleDragEnd(event) {
         const { active, over } = event;
-    
+
         setActiveTask(null);
         if (!over) return;
-    
+
         const taskId = active.id;
         const destination = over.id;
-    
+
         const lists = {
             todo: [tasksTodoState, setTasksTodoState],
             in_progress: [tasksInProgressState, setTasksInProgressState],
             done: [tasksDoneState, setTasksDoneState],
         };
-    
+
         let origin = null;
         for (const key in lists) {
             if (lists[key][0].some((task) => task.id === taskId)) {
@@ -56,21 +56,21 @@ function Tasks({
                 break;
             }
         }
-    
+
         if (!origin) return;
-    
+
         // Origin = Destination : Reset ( ReRender )
         if (origin === destination) {
             const [, setList] = lists[origin];
             setList((prev) => [...prev]);
             return;
         }
-    
+
         // Delete Task ( Origin )
         const [originList, setOriginList] = lists[origin];
         const movedTask = originList.find((task) => task.id === taskId);
         setOriginList((prev) => prev.filter((task) => task.id !== taskId));
-    
+
         // Add Task ( Destination )
         const [, setDestinationList] = lists[destination];
         setDestinationList((prev) => [...prev, movedTask]);
@@ -80,15 +80,15 @@ function Tasks({
         return tasks.slice().sort((a, b) => {
             const dateA = new Date(a.due_date);
             const dateB = new Date(b.due_date);
-    
+
             if (dateA < dateB) return -1;
             if (dateA > dateB) return 1;
-    
+
             return a.priority - b.priority;
         });
     }
 
-    console.log("TasksTodo : ", tasksTodoState)
+    console.log("TasksTodo : ", tasksTodoState);
 
     return (
         <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-hidden">
@@ -141,24 +141,28 @@ function Tasks({
                     </Column>
                     <Separator />
                     <Column id="in_progress">
-                        {getSortedTasks(tasksInProgressState).map((task) => (
-                            <Card
-                                key={task.id}
-                                task={task}
-                                projectId={projectId}
-                            />
-                        ))}
+                        {getSortedTasks(tasksInProgressState).map((task) =>
+                            activeTask?.id === task.id ? null : (
+                                <Card
+                                    key={task.id}
+                                    task={task}
+                                    projectId={projectId}
+                                />
+                            )
+                        )}
                     </Column>
                     <Separator />
 
                     <Column id="done">
-                        {getSortedTasks(tasksDoneState.map((task) => (
-                            <Card
-                                key={task.id}
-                                task={task}
-                                projectId={projectId}
-                            />
-                        ))}
+                        {getSortedTasks(tasksDoneState).map((task) =>
+                            activeTask?.id === task.id ? null : (
+                                <Card
+                                    key={task.id}
+                                    task={task}
+                                    projectId={projectId}
+                                />
+                            )
+                        )}
                     </Column>
                     <Separator />
                 </div>
