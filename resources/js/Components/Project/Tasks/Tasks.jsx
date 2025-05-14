@@ -18,62 +18,70 @@ function Tasks({
     const todayFormatted = dayjs().format("MMM, YYYY");
 
     const [tasksTodoState, setTasksTodoState] = useState(tasksTodo);
-    const [tasksInProgressState, setTasksInProgressState] = useState(tasksInProgress);
+    const [tasksInProgressState, setTasksInProgressState] =
+        useState(tasksInProgress);
     const [tasksDoneState, setTasksDoneState] = useState(tasksDone);
 
-    console.log("DATA:", tasksTodo)
-    console.log("STATE:", tasksTodoState)
-    console.log("DATA:", tasksInProgress)
-    console.log("STATE:", tasksInProgressState)
-    console.log("DATA:", tasksDone)
-    console.log("STATE:", tasksDoneState)
+    console.log("DATA TODO:", tasksTodo);
+    console.log("STATE TODO:", tasksTodoState);
+    console.log("DATA INPROGRESS:", tasksInProgress);
+    console.log("STATE INPROGRESS:", tasksInProgressState);
+    console.log("DATA: DONE", tasksDone);
+    console.log("STATE: DONE", tasksDoneState);
 
     function handleDragEnd(event) {
         const { active, over } = event;
-    
+
         if (!over) return;
-    
+
         const taskId = active.id;
         const destination = over.id;
-    
+
         // Origin - Task : tasksTodoState ? tasksInProgressState ? tasksDoneState ?
         let origin = null;
-        if (tasksTodoState.find(task => task.id === taskId)) {
+        if (tasksTodoState.find((task) => task.id === taskId)) {
             origin = "todo";
-        } else if (tasksInProgressState.find(task => task.id === taskId)) {
+        } else if (tasksInProgressState.find((task) => task.id === taskId)) {
             origin = "in_progress";
-        } else if (tasksDoneState.find(task => task.id === taskId)) {
+        } else if (tasksDoneState.find((task) => task.id === taskId)) {
             origin = "done";
         }
-    
+
         // Origin === Destination : STOP
         if (origin === destination) return;
-    
+
         // Suppression de la Task de Origin
         let movedTask = null;
         if (origin === "todo") {
-            movedTask = tasksTodoState.find(task => task.id === taskId);
-            setTasksTodoState(prev => prev.filter(task => task.id !== taskId));
+            movedTask = tasksTodoState.find((task) => task.id === taskId);
+            setTasksTodoState((prev) =>
+                prev.filter((task) => task.id !== taskId)
+            );
         } else if (origin === "in_progress") {
-            movedTask = tasksInProgressState.find(task => task.id === taskId);
-            setTasksInProgressState(prev => prev.filter(task => task.id !== taskId));
+            movedTask = tasksInProgressState.find((task) => task.id === taskId);
+            setTasksInProgressState((prev) =>
+                prev.filter((task) => task.id !== taskId)
+            );
         } else if (origin === "done") {
-            movedTask = tasksDoneState.find(task => task.id === taskId);
-            setTasksDoneState(prev => prev.filter(task => task.id !== taskId));
+            movedTask = tasksDoneState.find((task) => task.id === taskId);
+            setTasksDoneState((prev) =>
+                prev.filter((task) => task.id !== taskId)
+            );
         }
-    
+
         // Ajouter de la Taks dans la Destination
         if (destination === "todo") {
-            setTasksTodoState(prev => [...prev, movedTask]);
+            setTasksTodoState((prev) => [...prev, movedTask]);
         } else if (destination === "in_progress") {
-            setTasksInProgressState(prev => [...prev, movedTask]);
+            setTasksInProgressState((prev) => [...prev, movedTask]);
         } else if (destination === "done") {
-            setTasksDoneState(prev => [...prev, movedTask]);
+            setTasksDoneState((prev) => [...prev, movedTask]);
         }
     }
 
     return (
-        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-auto ">
+        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-hidden">
+            {/* Sticky header that sticks at its original position */}
             <div className="head flex justify-between">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
@@ -81,7 +89,22 @@ function Tasks({
                     </h2>
                     <div className="separator w-[3px] h-[33px] bg-header-separation rounded-[3px]"></div>
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">
-                        {todayFormatted}
+                        <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">
+                            {tasksTodoState.length +
+                                tasksInProgressState.length ===
+                            0
+                                ? "No tasks remaining"
+                                : `${
+                                      tasksTodoState.length +
+                                      tasksInProgressState.length
+                                  } task${
+                                      tasksTodoState.length +
+                                          tasksInProgressState.length >
+                                      1
+                                          ? "s"
+                                          : ""
+                                  } left`}
+                        </p>
                     </p>
                 </div>
                 <CreateTaskButton
