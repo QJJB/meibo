@@ -15,8 +15,10 @@ export default function Project() {
                     roles={roles}
                     users={users}
                 />
-                <Team users={users} 
+                <Team
+                    users={users}
                     projects={projects}
+                    roles={roles}
                 />
                 <Tasks users={users} roles={roles} projectId={projects.id} tasksTodo={tasksTodo} tasksInProgress={tasksInProgress} tasksDone={tasksDone}/>
             </div>

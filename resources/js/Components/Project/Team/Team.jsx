@@ -7,7 +7,7 @@ import ppRobin from "../../../../assets/pp/robin.png";
 import { usePage } from '@inertiajs/react';
 import ManageButton from "../ManageButton";
 
-const Team = ({users, projects}) => {
+const Team = ({users, projects, roles}) => {
     const { auth } = usePage().props; // Récupère les données utilisateur
     const profilePhotoName = auth.user?.profile_photo
     ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
@@ -33,14 +33,14 @@ const Team = ({users, projects}) => {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">{users.length} {users.length > 1 ? 'members' : 'member'}</p>
                 </div>
                 <div className="right ">
-                    <ManageButton projects={projects} />
+                    <ManageButton projects={projects} users={users} roles={roles}/>
                 </div>
             </div>
 
             <div className="block-role h-[140px] pl-8 mt-5">
-            
+
                 {users.map(user => (
-                    <div className="flex justify-between w-full gap-[24px] mb-3">
+                    <div key={user.id} className="flex justify-between w-full gap-[24px] mb-3">
 
                         <div className="flex items-center gap-3">
                             <div className='w-10 h-10 rounded-full overflow-hidden'>
@@ -52,17 +52,17 @@ const Team = ({users, projects}) => {
                             </div>
                             <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">{user.name}</p>
                         </div>
-   
+
                         <div className="gap-2 flex items-center flex-row-reverse pr-[30px]">
                             {user.roles.map(role=>(
-                                <p className="bg-accent rounded-lg px-3">{role.name}</p>
+                                <p key={role.id} className="bg-accent rounded-lg px-3">{role.name}</p>
                             ))}
                         </div>
 
                     </div>
                 ))}
-                
-                
+
+
             </div>
 
         </div>
