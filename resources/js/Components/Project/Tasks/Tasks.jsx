@@ -1,8 +1,9 @@
-import { useEffect, useState, useRef } from "react";
-import { DndContext } from "@dnd-kit/core";
+import { useState } from "react";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import Column from "./Column";
+import Card from "./Card";
 import Separator from "./Separator";
 import CreateTaskButton from "../CreateTaskButton";
 dayjs.extend(customParseFormat);
@@ -15,69 +16,79 @@ function Tasks({
     projectId,
     roles,
 }) {
-    const todayFormatted = dayjs().format("MMM, YYYY");
-
     const [tasksTodoState, setTasksTodoState] = useState(tasksTodo);
     const [tasksInProgressState, setTasksInProgressState] =
         useState(tasksInProgress);
     const [tasksDoneState, setTasksDoneState] = useState(tasksDone);
 
-    console.log("DATA TODO:", tasksTodo);
-    console.log("STATE TODO:", tasksTodoState);
-    console.log("DATA INPROGRESS:", tasksInProgress);
-    console.log("STATE INPROGRESS:", tasksInProgressState);
-    console.log("DATA: DONE", tasksDone);
-    console.log("STATE: DONE", tasksDoneState);
+    const [activeTask, setActiveTask] = useState(null);
+
+    function handleDragStart(event) {
+        const taskId = event.active.id;
+        const allTasks = [
+            ...tasksTodoState,
+            ...tasksInProgressState,
+            ...tasksDoneState,
+        ];
+        const task = allTasks.find((t) => t.id === taskId);
+        setActiveTask(task);
+    }
 
     function handleDragEnd(event) {
         const { active, over } = event;
-
+    
+        setActiveTask(null);
         if (!over) return;
-
+    
         const taskId = active.id;
         const destination = over.id;
-
-        // Origin - Task : tasksTodoState ? tasksInProgressState ? tasksDoneState ?
+    
+        const lists = {
+            todo: [tasksTodoState, setTasksTodoState],
+            in_progress: [tasksInProgressState, setTasksInProgressState],
+            done: [tasksDoneState, setTasksDoneState],
+        };
+    
         let origin = null;
-        if (tasksTodoState.find((task) => task.id === taskId)) {
-            origin = "todo";
-        } else if (tasksInProgressState.find((task) => task.id === taskId)) {
-            origin = "in_progress";
-        } else if (tasksDoneState.find((task) => task.id === taskId)) {
-            origin = "done";
+        for (const key in lists) {
+            if (lists[key][0].some((task) => task.id === taskId)) {
+                origin = key;
+                break;
+            }
         }
-
-        // Origin === Destination : STOP
-        if (origin === destination) return;
-
-        // Suppression de la Task de Origin
-        let movedTask = null;
-        if (origin === "todo") {
-            movedTask = tasksTodoState.find((task) => task.id === taskId);
-            setTasksTodoState((prev) =>
-                prev.filter((task) => task.id !== taskId)
-            );
-        } else if (origin === "in_progress") {
-            movedTask = tasksInProgressState.find((task) => task.id === taskId);
-            setTasksInProgressState((prev) =>
-                prev.filter((task) => task.id !== taskId)
-            );
-        } else if (origin === "done") {
-            movedTask = tasksDoneState.find((task) => task.id === taskId);
-            setTasksDoneState((prev) =>
-                prev.filter((task) => task.id !== taskId)
-            );
+    
+        if (!origin) return;
+    
+        // Origin = Destination : Reset ( ReRender )
+        if (origin === destination) {
+            const [, setList] = lists[origin];
+            setList((prev) => [...prev]);
+            return;
         }
-
-        // Ajouter de la Taks dans la Destination
-        if (destination === "todo") {
-            setTasksTodoState((prev) => [...prev, movedTask]);
-        } else if (destination === "in_progress") {
-            setTasksInProgressState((prev) => [...prev, movedTask]);
-        } else if (destination === "done") {
-            setTasksDoneState((prev) => [...prev, movedTask]);
-        }
+    
+        // Delete Task ( Origin )
+        const [originList, setOriginList] = lists[origin];
+        const movedTask = originList.find((task) => task.id === taskId);
+        setOriginList((prev) => prev.filter((task) => task.id !== taskId));
+    
+        // Add Task ( Destination )
+        const [, setDestinationList] = lists[destination];
+        setDestinationList((prev) => [...prev, movedTask]);
     }
+
+    function getSortedTasks(tasks) {
+        return tasks.slice().sort((a, b) => {
+            const dateA = new Date(a.due_date);
+            const dateB = new Date(b.due_date);
+    
+            if (dateA < dateB) return -1;
+            if (dateA > dateB) return 1;
+    
+            return a.priority - b.priority;
+        });
+    }
+
+    console.log("TasksTodo : ", tasksTodoState)
 
     return (
         <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-hidden">
@@ -113,31 +124,54 @@ function Tasks({
                     roles={roles}
                 />
             </div>
-            <DndContext onDragEnd={handleDragEnd}>
+            <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
                 <div className="body flex justify-between h-full py-[30px]">
+                    {/* <h3 className="text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] mb-[32px] px-[10px]">{title}</h3> */}
                     <Separator />
-                    <Column
-                        id="todo"
-                        title={"todos"}
-                        tasks={tasksTodoState}
-                        projectId={projectId}
-                    />
+                    <Column id="todo">
+                        {getSortedTasks(tasksTodoState).map((task) =>
+                            activeTask?.id === task.id ? null : (
+                                <Card
+                                    key={task.id}
+                                    task={task}
+                                    projectId={projectId}
+                                />
+                            )
+                        )}
+                    </Column>
                     <Separator />
-                    <Column
-                        id="in_progress"
-                        title={"in progress"}
-                        tasks={tasksInProgressState}
-                        projectId={projectId}
-                    />
+                    <Column id="in_progress">
+                        {getSortedTasks(tasksInProgressState).map((task) => (
+                            <Card
+                                key={task.id}
+                                task={task}
+                                projectId={projectId}
+                            />
+                        ))}
+                    </Column>
                     <Separator />
-                    <Column
-                        id="done"
-                        title={"complete"}
-                        tasks={tasksDoneState}
-                        projectId={projectId}
-                    />
+
+                    <Column id="done">
+                        {getSortedTasks(tasksDoneState.map((task) => (
+                            <Card
+                                key={task.id}
+                                task={task}
+                                projectId={projectId}
+                            />
+                        ))}
+                    </Column>
                     <Separator />
                 </div>
+
+                <DragOverlay>
+                    {activeTask ? (
+                        <Card
+                            task={activeTask}
+                            projectId={projectId}
+                            isOverlay
+                        />
+                    ) : null}
+                </DragOverlay>
             </DndContext>
         </div>
     );
