@@ -21,12 +21,6 @@ function Tasks({
     const [tasksInProgressState, setTasksInProgressState] = useState(tasksInProgress);
     const [tasksDoneState, setTasksDoneState] = useState(tasksDone);
 
-    console.log("DATA:", tasksTodo)
-    console.log("STATE:", tasksTodoState)
-    console.log("DATA:", tasksInProgress)
-    console.log("STATE:", tasksInProgressState)
-    console.log("DATA:", tasksDone)
-    console.log("STATE:", tasksDoneState)
 
     function handleDragEnd(event) {
         const { active, over } = event;
@@ -73,8 +67,8 @@ function Tasks({
     }
 
     return (
-        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-auto ">
-            <div className="head flex justify-between">
+        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] pb-[30px] pt-0 overflow-auto scrollbar-custom relative">
+            <div className="head flex justify-between sticky top-0 bg-dark-secondary pt-[30px]">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
                         Tasks
