@@ -173,7 +173,7 @@ class RoleController extends Controller
         Role::create($validatedData);
 
 
-        return redirect()->route('projects.show', $project->id)->with('success', 'Les rôles ont été mis à jour.');
+        //return redirect()->route('projects.show', $project->id)->with('success', 'Les rôles ont été mis à jour.');
     }
 
     /*public function addNewRolesForAUser(Request $request, $id)
@@ -236,7 +236,7 @@ class RoleController extends Controller
             ->firstOrFail();
 
         // Récupère le rôle sélectionné (si un seul envoyé)
-        $roleID = $request->roles[$user][0];
+        $roleID = $request->role_id;
 
         // Vérifie si le rôle est déjà attribué à ce membre
         $alreadyHasRole = ProjectRole::where('project_members_id', $projectMember->id)

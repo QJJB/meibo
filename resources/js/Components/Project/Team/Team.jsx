@@ -5,9 +5,10 @@ import ppRaven from "../../../../assets/pp/raven.png";
 import ppKirby from "../../../../assets/pp/kirby.jpg";
 import ppRobin from "../../../../assets/pp/robin.png";
 import { usePage } from '@inertiajs/react';
+import ManageButton from "../ManageButton";
 import Invite from "./Invite";
 
-const Team = ({users, projectId}) => {
+const Team = ({users, projects, roles, projectId}) => {
     const { auth } = usePage().props;
     const photoMap = {
         starfire: ppStarfire,
@@ -27,7 +28,7 @@ const Team = ({users, projectId}) => {
                     <p className="text-gray-title-secondary text-[23px] leading-[23px] font-semibold [letter-spacing:-0.05em]">{users.length} {users.length > 1 ? 'members' : 'member'}</p>
                 </div>
                 <div className="right ">
-                    <button className="today text-[20px] leading-[20px] [letter-spacing:-0.05em] font-[500] text-yellow-meibo border-2 px-[20px] py-[5px] rounded-[20px]">Manage</button>
+                    <ManageButton projects={projects} users={users} roles={roles}/>
                 </div>
             </div>
 
