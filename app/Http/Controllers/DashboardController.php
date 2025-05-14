@@ -21,7 +21,6 @@ class DashboardController extends Controller
             $creator = User::find($project->pivot->user_id);
             $project->creator_name = $creator ? $creator->name : 'Inconnu';
             $project->creator_id = $creator->id;
-
             $tasks = $project->tasks;
             $totalTasks = $tasks->count();
             $doneTasks = $tasks->where('status', 'done')->count();

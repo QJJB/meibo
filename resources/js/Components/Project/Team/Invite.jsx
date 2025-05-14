@@ -1,4 +1,3 @@
-import { Inertia } from "@inertiajs/inertia";
 import React, { useState } from "react";
 
 export default function Invite({ projectId }) {
@@ -6,45 +5,46 @@ export default function Invite({ projectId }) {
     const [inviteLink, setInviteLink] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    function fetchInviteLink() {
+    async function fetchInviteLink() {
         setIsLoading(true);
-        Inertia.get(route("projects.invite.generate", projectId), {}, {
-            onSuccess: (page) => {
-                setInviteLink(page.props.invite_url); // Récupère le lien depuis les props
-                setIsLoading(false);
-            },
-            onError: () => {
-                setIsLoading(false);
-                alert("Une erreur s'est produite lors de la génération du lien.");
-            },
-        });
+        try {
+            const response = await fetch(route("projects.invite.generate", projectId), {
+                headers: {
+                    "X-Requested-With": "XMLHttpRequest",
+                    "Accept": "application/json",
+                },
+            });
+            const data = await response.json();
+            setInviteLink(data.invite_url || "");
+        } catch (e) {
+            alert("Une erreur s'est produite lors de la génération du lien.");
+        }
+        setIsLoading(false);
     }
 
     function copyToClipboard() {
+        if (!inviteLink) return;
         navigator.clipboard.writeText(inviteLink).then(() => {
-            alert("Lien copié dans le presse-papiers !");
         });
     }
 
     return (
         <>
-            {/* Bouton pour ouvrir la modal */}
             <button
                 onClick={() => {
                     setIsModalOpen(true);
-                    fetchInviteLink(); // Récupère le lien lorsque la modal s'ouvre
+                    fetchInviteLink();
                 }}
                 className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
             >
                 Invite a Friend
             </button>
 
-            {/* Modal */}
             {isModalOpen && (
-                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 backdrop-blur-sm z-50">
+                <div className="fixed inset-0 flex items-center justify-center bg-opacity-50 backdrop-blur-sm z-50">
                     <div className="bg-white p-6 rounded-lg shadow-lg w-96 border border-gray-300">
-                        <h1 className="text-2xl font-bold mb-4">Invite a Friend</h1>
-                        <p className="mb-4">Voici votre lien d'invitation :</p>
+                        <h1 className="text-2xl font-bold mb-4 text-[#222D3C]">Invite a Friend</h1>
+                        <p className="mb-4 text-[#606A78]">Voici votre lien d'invitation :</p>
                         {isLoading ? (
                             <p>Chargement...</p>
                         ) : (
@@ -54,12 +54,13 @@ export default function Invite({ projectId }) {
                                     value={inviteLink}
                                     readOnly
                                     className="flex-1 px-2 py-1 border rounded"
+                                    onFocus={e => e.target.select()}
                                 />
                                 <button
                                     onClick={copyToClipboard}
                                     className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
                                 >
-                                    Copy
+                                    Copier
                                 </button>
                             </div>
                         )}
@@ -68,7 +69,7 @@ export default function Invite({ projectId }) {
                                 onClick={() => setIsModalOpen(false)}
                                 className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
                             >
-                                Close
+                                Fermer
                             </button>
                         </div>
                     </div>

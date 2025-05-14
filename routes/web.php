@@ -40,7 +40,7 @@ Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
     ->name('projects.invite.accept')
     ->middleware('signed');
 
-Route::get('/projects/{project}/invite', [InvitationController::class, 'generateInviteLink'])
+Route::get('/projects/{project}/invite-link', [InvitationController::class, 'generateInviteLink'])
     ->name('projects.invite.generate');
 
 Route::post('/projects/{id}/favorite', [ProjectController::class, 'toggleFavorite'])->name('projects.toggleFavorite');
