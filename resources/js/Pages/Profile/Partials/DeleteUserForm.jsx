@@ -60,7 +60,7 @@ export default function DeleteUserForm({ className = "" }) {
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>
+            <DangerButton onClick={confirmUserDeletion} className="hover: cursor-pointer">
                 Delete Account
             </DangerButton>
 
@@ -105,11 +105,11 @@ export default function DeleteUserForm({ className = "" }) {
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>
+                        <SecondaryButton onClick={closeModal} className="hover: cursor-pointer">
                             Cancel
                         </SecondaryButton>
 
-                        <DangerButton className="ms-3" disabled={processing}>
+                        <DangerButton className="ms-3" disabled={processing} >
                             Delete Account
                         </DangerButton>
                     </div>

@@ -1,11 +1,29 @@
-import ppKirby from '../../../../assets/pp/kirby.jpg';
-import handSVG from '../../../../assets/hand.svg';
+import { useDraggable } from "@dnd-kit/core";
+
+import ppKirby from "../../../../assets/pp/kirby.jpg";
+import handSVG from "../../../../assets/hand.svg";
 
 import dayjs from "dayjs";
 
-function Card({task}) {
+function Card({ task }) {
+    const { attributes, listeners, setNodeRef, transform } = useDraggable({
+        id: task.id,
+    });
+
+    const style = transform
+        ? {
+              transform: `translate(${transform.x}px, ${transform.y}px)`,
+          }
+        : undefined;
+
     return (
-        <div className="task cursor-grab bg-dark-tertiary rounded-[8px] py-[10px] px-[12px]">
+        <div
+            ref={setNodeRef}
+            {...listeners}
+            {...attributes}
+            className="task cursor-grab bg-dark-tertiary rounded-[8px] py-[10px] px-[12px]"
+            style={style}
+        >
             <div className="head flex justify-between items-center mb-[5px]">
                 <div className="left flex items-center gap-[10px]">
                     <h4 className="text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em]">
@@ -15,7 +33,7 @@ function Card({task}) {
                 </div>
                 <div className="right flex items-center">
                     <p className="[letter-spacing:-0.05em]">
-                        {dayjs(task.due_date).format('MMM D').toLowerCase()}
+                        {dayjs(task.due_date).format("MMM D").toLowerCase()}
                     </p>
                 </div>
             </div>

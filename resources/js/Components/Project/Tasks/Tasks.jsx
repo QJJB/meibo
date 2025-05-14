@@ -1,3 +1,5 @@
+import { useEffect, useState, useRef } from "react";
+import { DndContext } from "@dnd-kit/core";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import Column from "./Column";
@@ -5,9 +7,71 @@ import Separator from "./Separator";
 import CreateTaskButton from "../CreateTaskButton";
 dayjs.extend(customParseFormat);
 
-function Tasks({tasksTodo, tasksInProgress, tasksDone, users, projectId, roles}) {
-
+function Tasks({
+    tasksTodo,
+    tasksInProgress,
+    tasksDone,
+    users,
+    projectId,
+    roles,
+}) {
     const todayFormatted = dayjs().format("MMM, YYYY");
+
+    const [tasksTodoState, setTasksTodoState] = useState(tasksTodo);
+    const [tasksInProgressState, setTasksInProgressState] = useState(tasksInProgress);
+    const [tasksDoneState, setTasksDoneState] = useState(tasksDone);
+
+    console.log("DATA:", tasksTodo)
+    console.log("STATE:", tasksTodoState)
+    console.log("DATA:", tasksInProgress)
+    console.log("STATE:", tasksInProgressState)
+    console.log("DATA:", tasksDone)
+    console.log("STATE:", tasksDoneState)
+
+    function handleDragEnd(event) {
+        const { active, over } = event;
+    
+        if (!over) return;
+    
+        const taskId = active.id;
+        const destination = over.id;
+    
+        // Origin - Task : tasksTodoState ? tasksInProgressState ? tasksDoneState ?
+        let origin = null;
+        if (tasksTodoState.find(task => task.id === taskId)) {
+            origin = "todo";
+        } else if (tasksInProgressState.find(task => task.id === taskId)) {
+            origin = "in_progress";
+        } else if (tasksDoneState.find(task => task.id === taskId)) {
+            origin = "done";
+        }
+    
+        // Origin === Destination : STOP
+        if (origin === destination) return;
+    
+        // Suppression de la Task de Origin
+        let movedTask = null;
+        if (origin === "todo") {
+            movedTask = tasksTodoState.find(task => task.id === taskId);
+            setTasksTodoState(prev => prev.filter(task => task.id !== taskId));
+        } else if (origin === "in_progress") {
+            movedTask = tasksInProgressState.find(task => task.id === taskId);
+            setTasksInProgressState(prev => prev.filter(task => task.id !== taskId));
+        } else if (origin === "done") {
+            movedTask = tasksDoneState.find(task => task.id === taskId);
+            setTasksDoneState(prev => prev.filter(task => task.id !== taskId));
+        }
+    
+        // Ajouter de la Taks dans la Destination
+        if (destination === "todo") {
+            setTasksTodoState(prev => [...prev, movedTask]);
+        } else if (destination === "in_progress") {
+            setTasksInProgressState(prev => [...prev, movedTask]);
+        } else if (destination === "done") {
+            setTasksDoneState(prev => [...prev, movedTask]);
+        }
+    }
+
     return (
         <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-auto ">
             <div className="head flex justify-between">
@@ -20,18 +84,38 @@ function Tasks({tasksTodo, tasksInProgress, tasksDone, users, projectId, roles})
                         {todayFormatted}
                     </p>
                 </div>
-                <CreateTaskButton users={users} projectId={projectId} roles={roles} />
+                <CreateTaskButton
+                    users={users}
+                    projectId={projectId}
+                    roles={roles}
+                />
             </div>
-
-            <div className="body flex justify-between h-full py-[30px]">
-                <Separator />
-                <Column title={"todos"} tasks={tasksTodo}/>
-                <Separator />
-                <Column title={"in progress"} tasks={tasksInProgress}/>
-                <Separator />
-                <Column title={"complete"} tasks={tasksDone}/>
-                <Separator />
-            </div>
+            <DndContext onDragEnd={handleDragEnd}>
+                <div className="body flex justify-between h-full py-[30px]">
+                    <Separator />
+                    <Column
+                        id="todo"
+                        title={"todos"}
+                        tasks={tasksTodoState}
+                        projectId={projectId}
+                    />
+                    <Separator />
+                    <Column
+                        id="in_progress"
+                        title={"in progress"}
+                        tasks={tasksInProgressState}
+                        projectId={projectId}
+                    />
+                    <Separator />
+                    <Column
+                        id="done"
+                        title={"complete"}
+                        tasks={tasksDoneState}
+                        projectId={projectId}
+                    />
+                    <Separator />
+                </div>
+            </DndContext>
         </div>
     );
 }

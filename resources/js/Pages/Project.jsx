@@ -9,14 +9,15 @@ export default function Project() {
 
     return (
         <AuthenticatedLayout>
+            <Head title={`Project - ${projects.name}`} />
             <div className="grid grid-cols-[2fr_1fr] grid-rows-[1fr_3fr] gap-[15px] h-[100vh] p-[15px] box-border">
                 <Description
                     projects={projects}
                     roles={roles}
                     users={users}
                 />
-                <Team users={users} />
-                <Tasks tasksTodo={tasksTodo} tasksInProgress={tasksInProgress} tasksDone={tasksDone}/>
+                <Team users={users} projectId={projects.id} />
+                <Tasks users={users} roles={roles} projectId={projects.id} tasksTodo={tasksTodo} tasksInProgress={tasksInProgress} tasksDone={tasksDone}/>
             </div>
         </AuthenticatedLayout>
     );

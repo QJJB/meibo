@@ -253,7 +253,7 @@ class ProjectController extends Controller
         }
         $project->delete();
 
-        return redirect()->route('projects.index')->with('success', 'Project deleted successfully.');
+        return redirect()->route('dashboard')->with('success', 'Project deleted successfully.');
     }
 
     // Mettre le projet en favori
