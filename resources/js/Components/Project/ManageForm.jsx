@@ -9,6 +9,9 @@ function ManageForm({ projects, onClose, users, roles }) {
     const [activeUserId, setActiveUserId] = useState(null); // utilisateur en cours d'ajout de rôle
     const [selectedRoles, setSelectedRoles] = useState({});
     const [showAddRoleForm, setShowAddRoleForm] = useState(false);
+    const [editedRole, setEditedRole] = useState(null);
+    const [editedName, setEditedName] = useState('');
+
 
     const {
         data: newRoleData,
@@ -51,6 +54,32 @@ function ManageForm({ projects, onClose, users, roles }) {
 
     };
 
+    const handleUpdateRoleName = async (roleId) => {
+        if (editedName.trim() === '') return;
+
+        try {
+            await axios.put(route('projects.roles.update-name', { project: projects.id }), {
+                roles: {
+                    [roleId]: editedName
+                }
+            });
+
+            // Mets à jour localement les rôles après modification
+            setRoles(prev =>
+                prev.map(role =>
+                    role.id === roleId ? { ...role, name: editedName } : role
+                )
+            );
+
+            // Reset les états
+            setEditedRole(null);
+            setEditedName('');
+        } catch (error) {
+            console.error('Erreur lors de la mise à jour du nom du rôle', error);
+        }
+    };
+
+
 
 
     return (
@@ -59,7 +88,7 @@ function ManageForm({ projects, onClose, users, roles }) {
             <div className="block-role h-auto pl-8 mt-5">
                 {users && users.map(user => (
                     <div key={user.id} className="flex flex-col gap-2 mb-6">
-                        <div className="flex justify-between w-full gap-[24px]">
+                        <div className="flex justify-between w-full gap-[24px] relative">
                             <div className="flex items-center gap-3">
                                 <div className='w-10 h-10 rounded-full overflow-hidden'>
                                     <img
@@ -73,7 +102,7 @@ function ManageForm({ projects, onClose, users, roles }) {
                                 </p>
                             </div>
 
-                            <div className="gap-2 flex items-center flex-row-reverse pr-[30px]">
+                            <div className="mr-15 gap-2 flex items-center flex-row-reverse pr-[30px] overflow-x-auto">
                                 {user.roles?.map(role => (
                                     <p key={role.id} className="bg-accent rounded-lg px-3 text-white">
                                         {role.name}
@@ -84,7 +113,7 @@ function ManageForm({ projects, onClose, users, roles }) {
                             <button
                                 type="button"
                                 onClick={() => handleAddClick(user.id)}
-                                className="bg-red-500 rounded-lg py-1 px-3 text-white"
+                                className="bg-yellow-meibo rounded-lg py-1 px-3 text-black absolute right-1"
                             >
                                 Add
                             </button>
@@ -131,16 +160,41 @@ function ManageForm({ projects, onClose, users, roles }) {
             <h2 className="text-xl font-bold mb-4 text-white">All Roles</h2>
             <div className="block-role h-auto pl-8 mt-5">
                 {roles.map(role => (
-                    <div key={role.id} className="flex justify-between w-full gap-[24px] mb-3" >
-                        <p className="bg-accent rounded-lg px-3 text-white">{role.name}</p>
+                    <div key={role.id} className="flex justify-between w-full gap-[24px] mb-3">
+                        {editedRole === role.id ? (
+                            <input
+                                type="text"
+                                value={editedName}
+                                onChange={(e) => setEditedName(e.target.value)}
+                                onBlur={() => handleUpdateRoleName(role.id)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        handleUpdateRoleName(role.id);
+                                    }
+                                }}
+                                className="bg-white text-black rounded px-2 py-1 w-full"
+                                autoFocus
+                            />
+                        ) : (
+                            <p
+                                className="bg-accent rounded-lg px-3 text-white cursor-pointer"
+                                onClick={() => {
+                                    setEditedRole(role.id);
+                                    setEditedName(role.name);
+                                }}
+                            >
+                                {role.name}
+                            </p>
+                        )}
                     </div>
                 ))}
+
 
                 {!showAddRoleForm ? (
                     <button
                         type="button"
                         onClick={() => setShowAddRoleForm(true)}
-                        className="bg-red-500 rounded-lg py-1 px-3 text-white mt-4"
+                        className="bg-yellow-meibo rounded-lg py-1 px-3 text-black mt-4"
                     >
                         Add new roles
                     </button>
