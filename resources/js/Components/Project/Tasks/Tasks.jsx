@@ -21,7 +21,6 @@ function Tasks({
     const [tasksInProgressState, setTasksInProgressState] = useState(tasksInProgress);
     const [tasksDoneState, setTasksDoneState] = useState(tasksDone);
 
-
     function handleDragEnd(event) {
         const { active, over } = event;
 
@@ -92,6 +91,8 @@ function Tasks({
                         title={"todos"}
                         tasks={tasksTodoState}
                         projectId={projectId}
+                        users={users}
+                        roles={roles}
                     />
                     <Separator />
                     <Column
@@ -99,6 +100,8 @@ function Tasks({
                         title={"in progress"}
                         tasks={tasksInProgressState}
                         projectId={projectId}
+                        users={users}
+                        roles={roles}
                     />
                     <Separator />
                     <Column
@@ -106,6 +109,8 @@ function Tasks({
                         title={"complete"}
                         tasks={tasksDoneState}
                         projectId={projectId}
+                        users={users}
+                        roles={roles}
                     />
                     <Separator />
                 </div>

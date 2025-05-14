@@ -15,12 +15,14 @@ class DashboardController extends Controller
         $user = Auth::user();
 
         // Récupère les projets auxquels l'utilisateur est associé
-        $projects = $user->projects()->withPivot('user_id')->get();
+        $projects = $user->projects()->get();
 
         foreach ($projects as $project) {
-            $creator = User::find($project->pivot->user_id);
+            // Utilise le champ creator_id du projet
+            $creator = User::find($project->creator_id);
             $project->creator_name = $creator ? $creator->name : 'Inconnu';
-            $project->creator_id = $creator->id;
+            $project->creator_id = $creator ? $creator->id : null;
+
             $tasks = $project->tasks;
             $totalTasks = $tasks->count();
             $doneTasks = $tasks->where('status', 'done')->count();
@@ -31,21 +33,16 @@ class DashboardController extends Controller
                 ->whereNotIn('name', ['admin', 'guest'])
                 ->get();
 
-            // Récupérer les users du projects
-            $users = User::find($project->pivot->user_id);
-            $project->users = $users;
-
+            // Récupérer les users du projet (si besoin)
+            $project->users = $project->users;
         }
 
         // Récupère les tâches auxquelles l'utilisateur est assigné
         $tasks = $user->tasks;
 
-
-
         return Inertia::render('Dashboard', [
             'projects' => $projects,
             'tasks' => $tasks,
-            // 'creator' => $creator
         ]);
     }
 }

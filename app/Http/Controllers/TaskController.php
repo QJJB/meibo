@@ -210,7 +210,6 @@ class TaskController extends Controller
             $task->assignees()->sync([$validatedData['user_id']]);
         }
 
-        return redirect()->route('projects.index')->with('success', 'Task updated successfully.');
     }
 
     public function destroy($projectId, $taskId)

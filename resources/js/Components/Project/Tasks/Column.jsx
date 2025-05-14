@@ -1,7 +1,7 @@
 import { useDroppable } from '@dnd-kit/core';
 import Card from './Card';
 
-function Column({ id, title, tasks, projectId}) {
+function Column({ id, title, tasks, projectId, users, roles }) {
 
     const { setNodeRef } = useDroppable({
         id: id,
@@ -15,7 +15,7 @@ function Column({ id, title, tasks, projectId}) {
 
                 {/* Map ici */}
                 {tasks.map(task => (
-                    <Card key={task.id} task={task} projectId={projectId}/>
+                    <Card key={task.id} task={task} projectId={projectId} users={users} roles={roles}/>
                 ))}
 
             </div>

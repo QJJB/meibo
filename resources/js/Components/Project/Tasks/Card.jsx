@@ -1,11 +1,10 @@
 import { useDraggable } from "@dnd-kit/core";
-
 import ppKirby from "../../../../assets/pp/kirby.jpg";
 import handSVG from "../../../../assets/hand.svg";
-
+import EditTaskButton from "../EditTaskButton";
 import dayjs from "dayjs";
 
-function Card({ task }) {
+function Card({ task, users, roles }) {
     const { attributes, listeners, setNodeRef, transform } = useDraggable({
         id: task.id,
     });
@@ -49,6 +48,12 @@ function Card({ task }) {
                         alt="Avatar"
                         className="w-full h-full object-cover"
                     />
+                </div>
+                <div
+                    onPointerDown={e => e.stopPropagation()}
+                    onClick={e => e.stopPropagation()}
+                >
+                <EditTaskButton task={task} users={users} roles={roles} />
                 </div>
                 <div className="hand w-5 h-5 flex justify-center">
                     <img src={handSVG} alt="Hand icon" />
