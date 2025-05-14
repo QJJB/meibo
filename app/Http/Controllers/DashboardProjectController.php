@@ -28,7 +28,7 @@ class DashboardProjectController extends Controller
         }*/
 
         $user = Auth::user();
-        $project = Project::findOrFail($project_id); // Récupère le projet ou renvoie une erreur 404
+        $project = Project::with('creator')->findOrFail($project_id); // Récupère le projet ou renvoie une erreur 404
 
         // Vérifie si l'utilisateur connecté est associé au projet
         if (!$project->users->contains($user)) {
@@ -47,6 +47,7 @@ class DashboardProjectController extends Controller
                 'id' => $member->user->id,
                 'name' => $member->user->name,
                 'email' => $member->user->email,
+                'profile_photo' => $member->user->profile_photo,
                 'roles' => $member->roles->map(function ($role) {
                     return [
                         'id' => $role->id,

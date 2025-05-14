@@ -133,6 +133,9 @@ class ProjectController extends Controller
             'end_date' => 'required|date|after_or_equal:start_date',
         ]);
 
+        // Ajoute le créateur du projet
+        $validatedData['creator_id'] = Auth::id();
+
         // Nettoyage des données pour éviter les attaques XSS
         $validatedData['name'] = strip_tags($validatedData['name']);
         $validatedData['description'] = isset($validatedData['description']) ? strip_tags($validatedData['description']) : null;
@@ -144,27 +147,24 @@ class ProjectController extends Controller
         $user = Auth::user();
         $project->users()->attach($user->id);
 
-        // récupère le dernier user ajouter à un projet
+        // Récupère le dernier user ajouté à un projet
         $projectUser = ProjectUser::where('project_id', $project->id)
             ->where('user_id', $user->id)
             ->first();
 
-        // Récupère la dernière insertion dans la table project_members
-        //dd($lastInsertedId);
-
         // Création des rôles
         $adminRole = Role::create(['name' => 'admin', 'project_id' => $project->id]);
         $guestRole = Role::create(['name' => 'guest', 'project_id' => $project->id]);
-        //dd($adminRole->id);
 
-        // Lier les id créer aux permissions
+        // Lier les id créés aux permissions
         $adminRole->permissions()->attach([1,2,3,4,5]);
         $guestRole->permissions()->attach([1]);
 
-        //Associer id recuperer et le lier au role admin
+        // Associer id récupéré et le lier au rôle admin
         $projectUser->project_roles()->create([
             'role_id' => $adminRole->id
         ]);
+
 
         // Création des permissions pour l'Admin
     }

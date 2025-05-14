@@ -6,6 +6,7 @@ import { Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 import NavBarVertical from "@/Components/Layouts/NavBarVertical";
 
+
 export default function AuthenticatedLayout({ children }) {
     const user = usePage().props.auth.user;
     const [showingNavigationDropdown, setShowingNavigationDropdown] =

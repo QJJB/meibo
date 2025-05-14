@@ -8,35 +8,36 @@ import ppRaven from "../../../../assets/pp/raven.png";
 import ppKirby from "../../../../assets/pp/kirby.jpg";
 import ppRobin from "../../../../assets/pp/robin.png";
 import binSVG from "../../../../assets/bin.svg";
-import { usePage } from '@inertiajs/react';
 import { Inertia } from "@inertiajs/inertia";
 
+const photoMap = {
+    starfire: ppStarfire,
+    beastboy: ppBeastboy,
+    cyborg: ppCyborg,
+    raven: ppRaven,
+    kirby: ppKirby,
+    robin: ppRobin,
+};
+
 const Description = ({ projects, roles, users }) => {
-    const { auth } = usePage().props; // Récupère les données utilisateur
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
 
-    const profilePhotoName = auth.user?.profile_photo
-        ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
+    // On suppose que le backend envoie projects.creator avec profile_photo
+    const creator = projects.creator;
+    // Récupère le nom de la photo du créateur (sans extension)
+    const creatorPhotoName = creator && creator.profile_photo
+        ? creator.profile_photo.split('/').pop().split('.')[0]
         : "default-avatar";
-
-    const photoMap = {
-        starfire: ppStarfire,
-        beastboy: ppBeastboy,
-        cyborg: ppCyborg,
-        raven: ppRaven,
-        kirby: ppKirby,
-        robin: ppRobin,
-    };
-
-    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
+    // Utilise l'avatar custom si dispo, sinon la photo du créateur, sinon un avatar par défaut
+    const creatorPhotoPath = photoMap[creatorPhotoName]
+        || creator?.profile_photo
+        || "/default-avatar.png";
 
     function handleDeleteProject(projectId) {
-        setIsLoading(true); // Active l'animation de chargement
+        setIsLoading(true);
         Inertia.delete(route("projects.destroy", projectId), {
-            onSuccess: () => {
-                setIsLoading(false); // Désactive le chargement
-            },
+            onSuccess: () => setIsLoading(false),
         });
     }
 
@@ -44,39 +45,12 @@ const Description = ({ projects, roles, users }) => {
         const options = { year: 'numeric', month: 'short', day: '2-digit' };
         const date = new Date(dateString);
         const formattedDate = date.toLocaleDateString('en-US', options).toUpperCase();
-
-        // Séparer le jour du reste de la date
         const [month, day, year] = formattedDate.split(' ');
         return (
             <>
                 {month} <span className="text-[#F7D539]">{day}</span> {year}
             </>
         );
-    }
-
-    function showAdmin() {
-        const admins = users.filter(user =>
-            user.roles.some(role => role.name === "admin")
-        );
-
-        if (admins.length > 0) {
-            return admins.map(admin => (
-                <div key={admin.id} className="flex align-center mb-2">
-                    <div className="w-5 h-5 rounded-full overflow-hidden mr-[10px]">
-                        <img
-                            src={profilePhotoPath}
-                            alt="Avatar"
-                            className="w-full h-full object-cover"
-                        />
-                    </div>
-                    <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">
-                        {admin.name.toLowerCase()}
-                    </p>
-                </div>
-            ));
-        } else {
-            return <p>No admin found</p>;
-        }
     }
 
     return (
@@ -103,9 +77,9 @@ const Description = ({ projects, roles, users }) => {
                                 className={`px-4 py-2 rounded text-white ${
                                     isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-600 hover:bg-red-700"
                                 }`}
-                                disabled={isLoading} // Désactive le bouton si isLoading est true
+                                disabled={isLoading}
                             >
-                                {isLoading ? "Deleting..." : "Delete"} {/* Change le texte en fonction de isLoading */}
+                                {isLoading ? "Deleting..." : "Delete"}
                             </button>
                         </div>
                     </div>
@@ -127,7 +101,7 @@ const Description = ({ projects, roles, users }) => {
                     <div className="right flex justify-center">
                         <EditProjectButton project={projects} />
                         <button
-                            onClick={() => setIsModalOpen(true)} // Ouvre la modal
+                            onClick={() => setIsModalOpen(true)}
                             className="ml-4 hover: cursor-pointer"
                             title="Delete Project"
                         >
@@ -163,10 +137,21 @@ const Description = ({ projects, roles, users }) => {
                         {projects.description}
                     </p>
                     <div className="owner flex overflow-auto scrollbar-hide">
-                        <p className="flex text-gray-title-secondary text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em] mr-2">
+                        <p className="flex items-center text-gray-title-secondary text-[18px] leading-[18px] font-semibold [letter-spacing:-0.05em] mr-2">
                             owner:
                         </p>
-                        <div className="h-[80px]">{showAdmin()}</div>
+                        <div className="h-[80px] flex items-center">
+                            <div className="w-10 h-10 rounded-full overflow-hidden mr-2">
+                                <img
+                                    src={creatorPhotoPath}
+                                    alt="Avatar"
+                                    className="w-full h-full object-cover"
+                                />
+                            </div>
+                            <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">
+                                {creator?.name?.toLowerCase() || "unknown"}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

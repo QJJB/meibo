@@ -24,12 +24,12 @@ function Tasks({
 
     function handleDragEnd(event) {
         const { active, over } = event;
-    
+
         if (!over) return;
-    
+
         const taskId = active.id;
         const destination = over.id;
-    
+
         // Origin - Task : tasksTodoState ? tasksInProgressState ? tasksDoneState ?
         let origin = null;
         if (tasksTodoState.find(task => task.id === taskId)) {
@@ -39,10 +39,10 @@ function Tasks({
         } else if (tasksDoneState.find(task => task.id === taskId)) {
             origin = "done";
         }
-    
+
         // Origin === Destination : STOP
         if (origin === destination) return;
-    
+
         // Suppression de la Task de Origin
         let movedTask = null;
         if (origin === "todo") {
@@ -55,7 +55,7 @@ function Tasks({
             movedTask = tasksDoneState.find(task => task.id === taskId);
             setTasksDoneState(prev => prev.filter(task => task.id !== taskId));
         }
-    
+
         // Ajouter de la Taks dans la Destination
         if (destination === "todo") {
             setTasksTodoState(prev => [...prev, movedTask]);

@@ -46,7 +46,6 @@ function EditProjectForm({ project, onClose }) {
                     value={data.description}
                     className="bg-[#172227] h-15 w-full rounded-xl p-3 text-white focus:border-[#B5B5B8] focus:ring-2 focus:ring-[#B5B5B8]"
                     onChange={(e) => setData("description", e.target.value)}
-                    required
                 />
                 <InputError message={errors.description} className="mt-2" />
             </div>

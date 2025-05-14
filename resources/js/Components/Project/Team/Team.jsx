@@ -8,11 +8,7 @@ import { usePage } from '@inertiajs/react';
 import Invite from "./Invite";
 
 const Team = ({users, projectId}) => {
-    const { auth } = usePage().props; // Récupère les données utilisateur
-    const profilePhotoName = auth.user?.profile_photo
-    ? auth.user.profile_photo.split('/').pop() // Récupère la dernière partie de l'URL
-    : "default-avatar";
-
+    const { auth } = usePage().props;
     const photoMap = {
         starfire: ppStarfire,
         beastboy: ppBeastboy,
@@ -21,8 +17,6 @@ const Team = ({users, projectId}) => {
         kirby: ppKirby,
         robin: ppRobin,
     };
-
-    const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
 
     return (
         <div className="relative agenda bg-dark-secondary rounded-[20px] overflow-auto scrollbar-hide row-span-2">
@@ -38,28 +32,37 @@ const Team = ({users, projectId}) => {
             </div>
 
             <div className="block-role h-[140px] pl-8 mt-5">
-            
-                {users.map(user => (
-                    <div className="flex justify-between w-full gap-[24px] mb-3">
+                {users.map(user => {
+                    const userPhotoName = user.profile_photo
+                        ? user.profile_photo.split('/').pop().split('.')[0]
+                        : "default-avatar";
+                    const userPhotoPath = photoMap[userPhotoName] || "/default-avatar.png";
+                    const isCurrentUser = auth.user && user.id === auth.user.id;
 
-                        <div className="flex items-center gap-3">
-                            <div className='w-10 h-10 rounded-full overflow-hidden'>
-                                <img
-                                    src={profilePhotoPath}
-                                    alt="Avatar"
-                                    className="w-full h-full object-cover"
-                                />
+                    return (
+                        <div className="flex justify-between w-full gap-[24px] mb-3" key={user.id}>
+                            <div className="flex items-center gap-3">
+                                <div className='w-10 h-10 rounded-full overflow-hidden'>
+                                    <img
+                                        src={userPhotoPath}
+                                        alt="Avatar"
+                                        className="w-full h-full object-cover"
+                                    />
+                                </div>
+                                <p
+                                    className={`text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em] ${isCurrentUser ? "text-white" : "text-gray-title-secondary"}`}
+                                >
+                                    {user.name}
+                                </p>
                             </div>
-                            <p className="text-gray-title-secondary text-[22px] leading-[22px] font-medium [letter-spacing:-0.05em]">{user.name}</p>
+                            <div className="gap-2 flex items-center flex-row-reverse pr-[30px]">
+                                {user.roles.map(role => (
+                                    <p className="bg-accent rounded-lg px-3" key={role.id || role.name}>{role.name}</p>
+                                ))}
+                            </div>
                         </div>
-   
-                        <div className="gap-2 flex items-center flex-row-reverse pr-[30px]">
-                            {user.roles.map(role=>(
-                                <p className="bg-accent rounded-lg px-3">{role.name}</p>
-                            ))}
-                        </div>
-                    </div>
-                ))}
+                    );
+                })}
                 <Invite projectId={projectId} />
             </div>
         </div>
