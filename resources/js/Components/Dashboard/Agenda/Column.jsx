@@ -31,12 +31,15 @@ const Column = ({ day, display, tasks, pp }) => {
                 ) : (
                     <>
                         {display.map((task, index) => {
-                            console.log(task);
+                            console.log("TASKKKKKKSSSSSSS",task);
 
                             return (
                                 <div
                                     key={index}
-                                    className="task bg-yellow-meibo border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px]"
+                                    onClick={(e) => {
+                                        window.location.href = `/project/${task.projectId}`;
+                                    }}
+                                    className="task bg-yellow-meibo border-[2px] border-gray-title-secondary rounded-[15px] h-[45px] flex items-center justify-between px-[10px] cursor-pointer"
                                 >
                                     <div className="left flex items-center">
                                         <div className="w-7 h-7 rounded-full overflow-hidden mr-[10px]">
