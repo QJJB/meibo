@@ -129,7 +129,7 @@ function Tasks({
                     {/* <h3 className="text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] mb-[32px] px-[10px]">{title}</h3> */}
                     <Separator />
                     <Column id="todo">
-                        {getSortedTasks(tasksTodoState).map((task) =>
+                        {[...tasksTodoState].reverse().map((task) =>
                             activeTask?.id === task.id ? null : (
                                 <Card
                                     key={task.id}
@@ -141,7 +141,7 @@ function Tasks({
                     </Column>
                     <Separator />
                     <Column id="in_progress">
-                        {getSortedTasks(tasksInProgressState).map((task) =>
+                        {[...tasksInProgressState].reverse().map((task) =>
                             activeTask?.id === task.id ? null : (
                                 <Card
                                     key={task.id}
@@ -154,7 +154,7 @@ function Tasks({
                     <Separator />
 
                     <Column id="done">
-                        {getSortedTasks(tasksDoneState).map((task) =>
+                        {[...tasksDoneState].reverse().map((task) =>
                             activeTask?.id === task.id ? null : (
                                 <Card
                                     key={task.id}
