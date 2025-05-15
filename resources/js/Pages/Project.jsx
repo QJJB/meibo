@@ -20,6 +20,7 @@ export default function Project() {
                     users={users}
                     projects={projects}
                     roles={roles}
+                    projectId={projects.id}
                 />
                 <Tasks users={users} roles={roles} projectId={projects.id} tasksTodo={tasksTodo} tasksInProgress={tasksInProgress} tasksDone={tasksDone}/>
             </div>
