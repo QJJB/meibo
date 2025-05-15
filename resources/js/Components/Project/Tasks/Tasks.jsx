@@ -135,6 +135,8 @@ function Tasks({
                                     key={task.id}
                                     task={task}
                                     projectId={projectId}
+                                    users={users}
+                                    roles={roles}
                                 />
                             )
                         )}
@@ -147,6 +149,8 @@ function Tasks({
                                     key={task.id}
                                     task={task}
                                     projectId={projectId}
+                                    users={users}
+                                    roles={roles}
                                 />
                             )
                         )}
@@ -160,6 +164,8 @@ function Tasks({
                                     key={task.id}
                                     task={task}
                                     projectId={projectId}
+                                    users={users}
+                                    roles={roles}
                                 />
                             )
                         )}
