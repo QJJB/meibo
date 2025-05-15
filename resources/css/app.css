@@ -11,9 +11,9 @@
     'Inter', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji',
     'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
-  --color-dark-tertiary: #171c22;
-  --color-dark-secondary: #121318;
-  --color-dark-primary: #0e0f14;
+  --color-dark-primary:   #0a0b10; /* plus sombre */
+  --color-dark-secondary: #151820; /* milieu équilibré */
+  --color-dark-tertiary:  #222834; /* plus clair, mais toujours dans les tons froids */
   --color-gray-icon: #64646c;
   --color-white-icon: #e8e8ea;
   --color-white-title: #b5b5b8;
