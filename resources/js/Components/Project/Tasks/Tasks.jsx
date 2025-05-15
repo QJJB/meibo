@@ -91,9 +91,9 @@ function Tasks({
     console.log("TasksTodo : ", tasksTodoState);
 
     return (
-        <div className="tasks bg-dark-secondary rounded-[20px] px-[30px] py-[30px] overflow-hidden">
+        <div className="tasks flex flex-col bg-dark-secondary rounded-[20px] px-[30px] py-[30px] gap-[20px] overflow-hidden">
             {/* Sticky header that sticks at its original position */}
-            <div className="head flex justify-between">
+            <div className="head flex justify-between ">
                 <div className="left flex gap-5 items-center">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
                         Tasks
@@ -124,51 +124,66 @@ function Tasks({
                     roles={roles}
                 />
             </div>
+            <div className="heading-col flex justify-between">
+                <h3 className="flex-1 text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] pl-[10px]">
+                    todo
+                </h3>
+                <h3 className="flex-1 text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] pl-[10px]">
+                    in progress
+                </h3>
+                <h3 className="flex-1 text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] pl-[10px]">
+                    complete
+                </h3>
+            </div>
             <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd}>
-                <div className="body flex justify-between h-full py-[30px]">
-                    {/* <h3 className="text-[18px] text-gray-title-secondary leading-[18px] font-semibold [letter-spacing:-0.05em] mb-[32px] px-[10px]">{title}</h3> */}
+                <div className="body flex justify-between h-full overflow-hidden">
                     <Separator />
                     <Column id="todo">
-                        {[...tasksTodoState].reverse().map((task) =>
-                            activeTask?.id === task.id ? null : (
-                                <Card
-                                    key={task.id}
-                                    task={task}
-                                    projectId={projectId}
-                                    users={users}
-                                    roles={roles}
-                                />
-                            )
-                        )}
+                        {[...tasksTodoState]
+                            .reverse()
+                            .map((task) =>
+                                activeTask?.id === task.id ? null : (
+                                    <Card
+                                        key={task.id}
+                                        task={task}
+                                        projectId={projectId}
+                                        users={users}
+                                        roles={roles}
+                                    />
+                                )
+                            )}
                     </Column>
                     <Separator />
                     <Column id="in_progress">
-                        {[...tasksInProgressState].reverse().map((task) =>
-                            activeTask?.id === task.id ? null : (
-                                <Card
-                                    key={task.id}
-                                    task={task}
-                                    projectId={projectId}
-                                    users={users}
-                                    roles={roles}
-                                />
-                            )
-                        )}
+                        {[...tasksInProgressState]
+                            .reverse()
+                            .map((task) =>
+                                activeTask?.id === task.id ? null : (
+                                    <Card
+                                        key={task.id}
+                                        task={task}
+                                        projectId={projectId}
+                                        users={users}
+                                        roles={roles}
+                                    />
+                                )
+                            )}
                     </Column>
                     <Separator />
-
                     <Column id="done">
-                        {[...tasksDoneState].reverse().map((task) =>
-                            activeTask?.id === task.id ? null : (
-                                <Card
-                                    key={task.id}
-                                    task={task}
-                                    projectId={projectId}
-                                    users={users}
-                                    roles={roles}
-                                />
-                            )
-                        )}
+                        {[...tasksDoneState]
+                            .reverse()
+                            .map((task) =>
+                                activeTask?.id === task.id ? null : (
+                                    <Card
+                                        key={task.id}
+                                        task={task}
+                                        projectId={projectId}
+                                        users={users}
+                                        roles={roles}
+                                    />
+                                )
+                            )}
                     </Column>
                     <Separator />
                 </div>
