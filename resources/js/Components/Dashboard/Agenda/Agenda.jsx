@@ -123,12 +123,9 @@ const Agenda = ({ projects, auth }) => {
             </div>
 
             <div className="body flex justify-between h-full py-[30px]">
-                <Column day={previousDay} tasks={tasksPreviousDay} display={displayPreviousDay} pp={profilePhotoPath}>
-                </Column>
-                <Column day={activeDay} tasks={tasksActiveDay} display={displayActiveDay} pp={profilePhotoPath}>
-                </Column>
-                <Column day={nextDay} tasks={tasksNextDay} display={displayNextDay} pp={profilePhotoPath}>
-                </Column>
+                <Column day={previousDay} tasks={tasksPreviousDay} display={displayPreviousDay} pp={profilePhotoPath} />
+                <Column day={activeDay} tasks={tasksActiveDay} display={displayActiveDay} pp={profilePhotoPath} />
+                <Column day={nextDay} tasks={tasksNextDay} display={displayNextDay} pp={profilePhotoPath} />
                 <Separator />
             </div>
         </div>
