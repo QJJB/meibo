@@ -3,6 +3,7 @@ import PrimaryButton from "@/Components/Form/PrimaryButton";
 import TextInput from "@/Components/Form/TextInput";
 import { useForm } from "@inertiajs/react";
 import React, { useState } from "react";
+import binSVG from "../../../assets/bin.svg";
 
 
 function ManageForm({ projects, onClose, users, roles }) {
@@ -79,6 +80,23 @@ function ManageForm({ projects, onClose, users, roles }) {
         }
     };
 
+    const handleDeleteRole = async (roleId) => {
+        if (!confirm("Es-tu sûr de vouloir supprimer ce rôle ?")) return;
+
+        try {
+            await axios.delete(route("projects.roles.destroy", {
+                project: projects.id,
+                role: roleId
+            }));
+
+            // Tu peux ici soit recharger les rôles depuis le backend,
+            // soit les filtrer localement
+            if (onClose) onClose(); // Recharge si le parent a une fonction onClose
+        } catch (error) {
+            console.error("Erreur lors de la suppression du rôle", error);
+            alert("Erreur lors de la suppression du rôle.");
+        }
+    };
 
 
 
@@ -185,7 +203,17 @@ function ManageForm({ projects, onClose, users, roles }) {
                             >
                                 {role.name}
                             </p>
+
                         )}
+                        <button
+                            type="button"
+                            onClick={() => handleDeleteRole(role.id)}
+                            className="ml-4 hover: cursor-pointer"
+                            title="Supprimer le rôle"
+                        >
+                            <img src={binSVG} alt="Supprimer" className="w-6 h-6" />
+                        </button>
+
                     </div>
                 ))}
 
