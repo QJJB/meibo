@@ -28,7 +28,7 @@ class DashboardProjectController extends Controller
         }*/
 
         $user = Auth::user();
-        $project = Project::with('creator')->findOrFail($project_id); // Récupère le projet ou renvoie une erreur 404
+        $project = Project::with('creator', 'users')->findOrFail($project_id); // Récupère le projet ou renvoie une erreur 404
 
         // Vérifie si l'utilisateur connecté est associé au projet
         if (!$project->users->contains($user)) {
@@ -57,23 +57,19 @@ class DashboardProjectController extends Controller
             ];
         });
 
-        //dd($users);
-
         //Récupérer les roles présents dans notre projet
         $roles = Role::where('project_id', $project->id)->get();
 
         // Récupérer les tâches par statut
-        $tasksTodo = $project->tasks()->where('status', 'todo')->get();
-        $tasksInProgress = $project->tasks()->where('status', 'in_progress')->get();
-        $tasksDone = $project->tasks()->where('status', 'done')->get();
+        $tasks = $project->tasks()->get()->groupBy('status');
 
         return Inertia::render('Project', [
             'projects' => $project,
             'users' => $users,
             'roles' => $roles,
-            'tasksTodo' => $tasksTodo,
-            'tasksInProgress' => $tasksInProgress,
-            'tasksDone' => $tasksDone,
+            'tasksTodo' => $tasks->get('todo', collect()),
+            'tasksInProgress' => $tasks->get('in_progress', collect()),
+            'tasksDone' => $tasks->get('done', collect()),
         ]);
     }
 }

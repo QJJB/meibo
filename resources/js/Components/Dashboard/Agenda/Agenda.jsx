@@ -44,13 +44,15 @@ const Agenda = ({ projects, auth }) => {
 
     const profilePhotoPath = photoMap[profilePhotoName] || "/default-avatar.png";
 
+    console.log(projects);
+
     const myTasks = projects.flatMap((project) =>
         project.tasks
             .filter((task) => task.created_by === auth.user.id)
             .map((task) => ({
                 projectId: project.id,
                 projectName: project.name,
-                profilePicture: project.users.profile_picture_path,
+                profilePicture: project.creator?.profile_picture_path ?? null,
                 dueDate: dayjs(task.due_date),
             }))
     );
