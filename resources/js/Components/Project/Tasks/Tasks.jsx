@@ -6,6 +6,8 @@ import Column from "./Column";
 import Card from "./Card";
 import Separator from "./Separator";
 import CreateTaskButton from "../CreateTaskButton";
+import { router } from '@inertiajs/react';
+
 dayjs.extend(customParseFormat);
 
 function Tasks({
@@ -74,6 +76,18 @@ function Tasks({
         // Add Task ( Destination )
         const [, setDestinationList] = lists[destination];
         setDestinationList((prev) => [...prev, movedTask]);
+
+        // ➕ Mise à jour dans la base via Inertia
+        router.put(
+            `/project/${projectId}/${taskId}/status-update`,
+            { status: destination },
+            {
+                preserveScroll: true,
+                onError: (errors) => {
+                    console.error("Erreur de mise à jour du statut :", errors);
+                },
+            }
+        );
     }
 
     function getSortedTasks(tasks) {

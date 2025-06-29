@@ -35,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('projects.tasks', TaskController::class);
 });
 
+// Modification des status d'une tâche
+Route::put('/project/{project}/{taskId}/status-update', [DashboardController::class, 'statusUpdate'])->name('project.tasks.status.update');
+
 // Test route création de lien d'ajout user
 Route::get('/project/join/{projectId}', [InvitationController::class, 'accept'])
     ->name('projects.invite.accept')

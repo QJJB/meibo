@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Project;
 use App\Models\Role;
+use Illuminate\Http\Request;
+use App\Models\Task;
+
 
 class DashboardController extends Controller
 {
@@ -85,5 +88,22 @@ class DashboardController extends Controller
             'projects' => $projects,
             'tasks' => $tasks,
         ]);
+    }
+
+    public function statusUpdate(Request $request, Project $project, $taskId)
+    {
+        $task = Task::findOrFail($taskId);
+
+        // Vérifie que la tâche appartient bien au projet
+        if ($task->project_id !== $project->id) {
+            abort(403, 'Cette tâche ne correspond pas à ce projet.');
+        }
+
+        $validated = $request->validate([
+            'status' => 'required|in:todo,in_progress,done',
+        ]);
+
+        $task->status = $validated['status'];
+        $task->save();
     }
 }
