@@ -3,7 +3,6 @@ import Card from "./Card";
 function Tasks({ tasks, projects, users, projectId}) {
     return (
         <div className="z-0 bg-dark-secondary rounded-[20px] overflow-auto scrollbar-custom relative row-span-2">
-            {/* Sticky header that sticks at its original position */}
             <div className="h-[70px] bg-dark-secondary z-0 sticky top-0">
                 <div className="header-tasks-dashboard sticky top-[30px] z-10 bg-dark-secondary flex justify-between items-center ml-[30px] w-[256px] pb-[10px]">
                     <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
