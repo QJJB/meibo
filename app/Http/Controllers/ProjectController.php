@@ -13,6 +13,7 @@ use App\Models\ProjectMember;
 use App\Models\User;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Traits\HasProjectPermission;
 
 /**
  * Class ProjectController
@@ -22,37 +23,8 @@ use Illuminate\Http\Request;
  */
 class ProjectController extends Controller
 {
-    // Vérification des autorisations
-    public function hasPermission($projectId)
-    {
-        $user = Auth::user();
-
-        $project = Project::findOrFail($projectId);
-
-        // Vérifie que l'utilisateur est bien associé au projet
-        if (!$project->users->contains($user)) {
-            abort(403, 'Unauthorized');
-        }
-
-        // Récupère le membre du projet pour cet utilisateur avec ses rôles et permissions
-        $member = $project->members()
-            ->where('user_id', $user->id)
-            ->with('roles.permissions')
-            ->first();
-
-        if (!$member) {
-            return collect(); // Retourne une collection vide si pas de rôle
-        }
-
-        // Extrait les noms des permissions sans doublons
-        $permissions = $member->roles
-            ->flatMap(fn($role) => $role->permissions)
-            ->pluck('name')
-            ->unique()
-            ->values(); // Réindexe proprement
-
-        return $permissions;
-    }
+    
+    use HasProjectPermission;
 
     // Affiche tous les projets associés à l'utilisateur connecté.
     public function index() : View
