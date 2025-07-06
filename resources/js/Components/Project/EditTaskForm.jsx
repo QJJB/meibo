@@ -2,7 +2,7 @@ import InputError from "@/Components/Form/InputError";
 import InputLabel from "@/Components/Form/InputLabel";
 import PrimaryButton from "@/Components/Form/PrimaryButton";
 import TextInput from "@/Components/Form/TextInput";
-import { useForm } from "@inertiajs/react";
+import { useForm, router } from "@inertiajs/react";
 
 function EditTaskForm({ task, users, roles, onClose, onSuccess }) {
   const { data, setData, put, processing, errors } = useForm({
@@ -21,6 +21,7 @@ function EditTaskForm({ task, users, roles, onClose, onSuccess }) {
     e.preventDefault();
     put(route("projects.tasks.update", { project: task.project_id, task: task.id }), {
       onSuccess: () => {
+        router.visit(window.location.pathname, { replace: true });
         if (onSuccess) onSuccess();
         if (onClose) onClose();
       },
