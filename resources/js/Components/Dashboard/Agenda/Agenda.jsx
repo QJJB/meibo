@@ -87,7 +87,7 @@ const Agenda = ({ projects, auth }) => {
         <div className="agenda bg-dark-secondary rounded-[20px] px-[30px] py-[30px]">
             <div className="head flex justify-between">
                 <div className="left flex gap-5 items-center">
-                    <h2 className="text-white-title text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
+                    <h2 className="text-red-500 text-[30px] leading-[30px] font-semibold [letter-spacing:-0.05em]">
                         Agenda
                     </h2>
                     <div className="separator w-[3px] h-[33px] bg-header-separation rounded-[3px]"></div>
