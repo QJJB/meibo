@@ -57,11 +57,18 @@ class DashboardProjectController extends Controller
             ];
         });
 
-        //Récupérer les roles présents dans notre projet
-        $roles = Role::where('project_id', $project->id)->get();
 
         // Récupérer les tâches par statut
-        $tasks = $project->tasks()->get()->groupBy('status');
+        $tasks = $project->tasks()->with(['assignees', 'roles'])->get()->groupBy('status');
+        // dd($tasks);
+
+        //Récupérer les roles présents dans notre projet
+        // $roles = Role::where('project_id', $project->id)->get();
+        $roles = Role::where('project_id', $project->id)
+            ->with(['tasks.assignees', 'tasks.roles'])
+            ->get();
+
+
 
         return Inertia::render('Project', [
             'projects' => $project,

@@ -51,7 +51,7 @@ class TaskController extends Controller
         ]);
     }
 
-    public function create($id) : View
+    public function create($id): View
     {
         $permissions = $this->hasPermission($id);
 
@@ -103,11 +103,11 @@ class TaskController extends Controller
         $task = Task::create($validatedData);
 
         // Vérifie si un utilisateur a été sélectionné avant d'attacher
-        if (!empty($validatedData['user_ids']) && $validatedData['user_ids']!=='no user found') {
+        if (!empty($validatedData['user_ids']) && $validatedData['user_ids'] !== 'no user found') {
             $task->assignees()->attach($validatedData['user_ids']);
         }
 
-        if (!empty($validatedData['role_ids']) && $validatedData['role_ids']!=='no roles found') {
+        if (!empty($validatedData['role_ids']) && $validatedData['role_ids'] !== 'no roles found') {
             $task->roles()->attach($validatedData['role_ids']);
         }
     }
@@ -145,6 +145,7 @@ class TaskController extends Controller
 
     public function update($projectId, $taskId)
     {
+        // dd(request());
         $permissions = $this->hasPermission($projectId);
 
         // Vérifie que l'utilisateur est autoriser à accéder au projet
@@ -172,16 +173,20 @@ class TaskController extends Controller
             'due_date' => 'required|date',
             'priority' => 'required',
             'status' => 'required|string',
-            'user_id' => 'nullable'
+            'user_ids' => 'nullable|array',
+            'user_ids.*' => 'exists:users,id',
         ]);
+
 
         // Met à jour la tâche avec les nouvelles valeurs
         $task->update($validatedData);
 
-        // Vérifie si un utilisateur a été sélectionné avant d'attacher
-        if (!empty($validatedData['user_id']) && $validatedData['user_id']!=='no user found') {
-            $task->assignees()->sync([$validatedData['user_id']]);
+        if (!empty($validatedData['user_ids'])) {
+            $task->assignees()->sync($validatedData['user_ids']);
+        } else {
+            $task->assignees()->sync([]); // Supprime les anciens liens si aucun utilisateur n’est sélectionné
         }
+
 
     }
 

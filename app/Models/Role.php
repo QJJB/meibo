@@ -15,15 +15,18 @@ class Role extends Model
 
     public $timestamps = false;
 
-    public function projects() {
+    public function projects()
+    {
         return $this->belongsToMany(Project::class, 'project_roles');
     }
 
-    public function users(){
+    public function users()
+    {
         return $this->belongsToMany(User::class, 'project_members', 'role_id', 'user_id');
     }
 
-    public function permissions(){
+    public function permissions()
+    {
         return $this->belongsToMany(Permission::class, 'role_permissions');
     }
 
@@ -31,6 +34,12 @@ class Role extends Model
     {
         return $this->belongsToMany(ProjectMember::class, 'project_roles', 'role_id', 'project_members_id');
     }
+
+    public function tasks()
+    {
+        return $this->belongsToMany(Task::class, 'task_roles');
+    }
+
 
     /*public function roles(){
         return $this->belongsTo(Project::class, 'id');
