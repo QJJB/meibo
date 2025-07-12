@@ -175,6 +175,7 @@ class TaskController extends Controller
             'status' => 'required|string',
             'user_ids' => 'nullable|array',
             'user_ids.*' => 'exists:users,id',
+            'role_ids' => 'nullable|array'
         ]);
 
 
@@ -187,7 +188,11 @@ class TaskController extends Controller
             $task->assignees()->sync([]); // Supprime les anciens liens si aucun utilisateur n’est sélectionné
         }
 
-
+        if (!empty($validatedData['role_ids'])) {
+            $task->roles()->sync($validatedData['role_ids']);
+        } else {
+            $task->roles()->sync([]); // Supprime les anciens liens si aucun utilisateur n’est sélectionné
+        }
     }
 
     public function destroy($projectId, $taskId)
